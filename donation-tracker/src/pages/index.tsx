@@ -1,4 +1,5 @@
 import * as React from "react"
+import TestComponent from "../components/testComponent"
 
 // styles
 const pageStyles = {
@@ -129,6 +130,7 @@ const links = [
 const IndexPage = () => {
   return (
     <main style={pageStyles}>
+      <TestComponent></TestComponent>
       <title>Home Page</title>
       <h1 style={headingStyles}>
         Congratulations
@@ -138,7 +140,7 @@ const IndexPage = () => {
       </h1>
       <p style={paragraphStyles}>
         Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this page
-        update in real-time. 😎
+        update in real-time. 😎 Wohoo...
       </p>
       <ul style={listStyles}>
         <li style={docLinkStyle}>
