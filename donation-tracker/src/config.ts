@@ -7,4 +7,8 @@ export default class PageConfiguration {
 	 * The maximum age of the locally cached data before it gets refreshed
 	 */
 	static MaxDataAgeInMinutes: number = 5;
+	/**
+	 * Option to turn logging to the browser console on or off
+	 */
+	static LogToConsole: boolean = true;
 }
