@@ -11,4 +11,8 @@ export default class PageConfiguration {
 	 * Option to turn logging to the browser console on or off
 	 */
 	static LogToConsole: boolean = true;
+	/**
+	 * Decide if the data should be refreshed automatically or only on explicit user interaction
+	 */
+	static AutoRefresh: boolean = true;
 }
