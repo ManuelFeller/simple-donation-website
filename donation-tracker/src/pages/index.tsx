@@ -1,5 +1,6 @@
 import * as React from "react"
 import TestComponent from "../components/testComponent"
+import DataStore from "../utils/dataStore"
 
 // styles
 const pageStyles = {
@@ -128,6 +129,9 @@ const links = [
 
 // markup
 const IndexPage = () => {
+  let data = new DataStore();
+  //data.refreshData();
+
   return (
     <main style={pageStyles}>
       <TestComponent></TestComponent>
