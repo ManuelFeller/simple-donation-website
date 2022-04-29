@@ -1,34 +1,133 @@
+import PageConfiguration from "../config";
 import { DonationItem } from "../types/donationItem";
 import { DonationList } from "../types/donationList";
 
+/**
+ * Class representing the dynamically loaded data (the number if items donated and still needed per donation campaign)
+ */
 export default class DataStore {
-	private dataSourceUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQM_VX8StPqet3KBtHzyLVSzqgC8jP2VgcK97Fs_UTI1thN2-za-MHSAc9bizcVMebIEhDf-0Di8arH/pub?gid=919395952&single=true&output=csv';
-	private maxDataAgeInMinutes = 5;
+
+	private static instance: DataStore;
+
+	private dataSourceUrl = PageConfiguration.DataSource;
+	private maxDataAgeInMinutes = PageConfiguration.MaxDataAgeInMinutes;
 	private hasLocalData: boolean;
+	private isRefreshing: boolean;
 	private localData: DonationList | null;
 
-	constructor() {
+	/**
+	 * DO NOT USE EXTERNALLY! Use DataStore.getInstance() instead!
+	 * Creates an instance and also try to load / update the local data if needed
+	 */
+	private constructor() {
+		this.debugLog('DataStore: Creating instance, trying to read local storage data');
 		let tmpData = localStorage.getItem('donationCache');
+		this.isRefreshing = false;
 		if (tmpData !== null) {
+			this.debugLog('DataStore: Local data found, loading into memory');
 			this.localData = JSON.parse(tmpData);
 			this.hasLocalData = true;
-			console.log(this.localData);
-			if (this.isDataOutdated(this.localData!.requestTime, this.maxDataAgeInMinutes)) {
+			if (this.isDataOutdated()) {
+				this.debugLog('DataStore: Local data outdated, querying online source scheduled');
 				setTimeout(this.refreshData.bind(this), 100);
+			} else {
+				// ToDo: auto-refresh (if configured)
 			}
 		} else {
+			this.debugLog('DataStore: No local data found, querying online source scheduled');
 			this.localData = null;
 			this.hasLocalData = false;
 			setTimeout(this.refreshData.bind(this), 100);
 		}
-		// ToDo: auto-refresh
+		
 	}
 
-	public getSecondsUntilRefresh() {
-		// new Date(dataTimeStamp).getTime()
+	/**
+	 * Get the instance of the data store that can be used.
+	 * (Using Singleton Pattern to avoid overlapping refreshes)
+	 * @returns The instance to use for data access
+	 */
+	static getInstance(): DataStore {
+		if (!DataStore.instance) {
+			DataStore.instance = new DataStore();
+		}
+		return DataStore.instance;
 	}
 
+	/**
+	 * Get all items (unfiltered)
+	 * @returns The list of items
+	 */
+	public publicGetAllItems(): Array<DonationItem> {
+		if (this.hasLocalData) {
+			return this.localData!.data;
+		} else {
+			return new Array<DonationItem>();
+		}
+	}
+
+	/**
+	 * Get items filtered for a campaign
+	 * @param campaignKey The campaign key
+	 * @returns The list of items that belong to the campaign
+	 */
+	public getItemsForCampaign(campaignKey: string): Array<DonationItem> {
+		const tempResult = new Array<DonationItem>();
+		if (this.hasLocalData) {
+			this.localData!.data.forEach(item => {
+				if (item.initiativeKey === campaignKey) {
+					tempResult.push(item);
+				}
+			});
+		}
+		return tempResult;
+	}
+
+	/**
+	 * Function to trigger a refresh (if data is already expired)
+	 */
+	public triggerRefresh() {
+		if (this.isDataOutdated()) {
+			this.refreshData();
+		}
+	}
+
+	/**
+	 * Function to check if a refresh is already possible
+	 * @returns A boolean information if a refresh trigger will execute or not
+	 */
+	public canRefreshAlready() {
+		return this.isDataOutdated();
+	}
+
+	/**
+	 * Function to check in how many seconds the next data refresh can / will be performed
+	 * @returns The number of seconds until the next data refresh
+	 */
+	public getSecondsUntilRefresh(): number {
+		if (this.isRefreshing) {
+			return 0;
+		} else {
+			if (this.localData === null) {
+				return 0;
+			} else {
+				const time = 1000 * 60 * this.maxDataAgeInMinutes;
+				const newUpdateTime = new Date(this.localData.requestTime).getTime() + time;
+				let remainingSeconds = Math.round((newUpdateTime - Date.now()) / 1000);
+				 if (remainingSeconds < 0) {
+					remainingSeconds = 0;
+				 }
+				return remainingSeconds;
+			}
+		}
+	}
+
+	/**
+	 * Internal function to load / refresh the local data
+	 */
 	private async refreshData() {
+		this.isRefreshing = true;
+		this.debugLog('DataStore: Data refresh started');
 		let data = await fetch(this.dataSourceUrl, {cache: "no-store"});
 		const content = await data.text();
 		const rows = content.split(`\n`);
@@ -38,45 +137,91 @@ export default class DataStore {
 			data: [],
 		};
 		if (rows.length > 0) {
-			// extract header
-			let header = this.parseCSVLine(rows[0]);
-			if (header.length >= 6) {
+			this.debugLog('DataStore: Data received');
+			// extract header line
+			let header = this.parseCsvLine(rows[0]);
+			if (header.length >= 7) {
 				try {
-					tmpParsedData.timeStamp = new Date(Date.parse(header[5].toString()));
+					tmpParsedData.timeStamp = new Date(Date.parse(header[6].toString()));
 				} catch (err) {
 					console.error(err);
+					this.isRefreshing = false;
 				}
+			} else {
+				this.debugLog('DataStore: Header length is wrong');
 			}
-			// ToDo: compare date age (to avoid older data being used)
-			// extract lines
-			if (rows.length > 0) {
-				for (let idx = 1; idx < rows.length; idx++) {
-					const tmpLineData = this.parseCSVLine(rows[idx]);
-					if (tmpLineData.length >= 5) {
-						const tmpObject: DonationItem = {
-							article: tmpLineData[0].toString(),
-							initiativeKey: tmpLineData[1].toString(),
-							neededOverall: Number.parseInt(tmpLineData[2].toString()),
-							alreadyDonated: Number.parseInt(tmpLineData[3].toString()),
-							remainingNeed: Number.parseInt(tmpLineData[4].toString())
-						}
-						tmpParsedData.data.push(tmpObject);
-					}
+			// compare date age (to avoid older data being used as Google load balancers sometimes behave strange)
+			let newDataAvailableOnline = false;
+			if (this.hasLocalData) {
+				this.localData!.requestTime = tmpParsedData.requestTime;
+				// make sure new check time is persisted:
+				localStorage.setItem('donationCache', JSON.stringify(this.localData));
+				this.debugLog('DataStore: Local data present, comparing timestamps');
+				if (this.localData!.timeStamp < tmpParsedData.timeStamp) {
+					this.debugLog('DataStore: Data online is newer');
+					newDataAvailableOnline = true;
 				}
+			} else {
+				newDataAvailableOnline = true;
 			}
-			localStorage.setItem('donationCache', JSON.stringify(tmpParsedData));
-			this.localData = tmpParsedData;
-			this.hasLocalData = true;
+			// if new data is available and there is content extract the lines
+			if (rows.length > 0 && newDataAvailableOnline) {
+				this.debugLog('DataStore: Data extracting data from online source');
+				tmpParsedData.data = this.extractDataLines(rows);
+				// save newer data in local storage & class internal store
+				this.debugLog('DataStore: Persisting new data');
+				localStorage.setItem('donationCache', JSON.stringify(tmpParsedData));
+				this.localData = tmpParsedData;
+				this.hasLocalData = true;
+			}
 		}
+		this.isRefreshing = false;
 	}
 
-	private isDataOutdated = (dataTimeStamp: Date, minutesAgo: number) => {
-    const time = 1000 * 60 * minutesAgo;
+	/**
+	 * Internal function to extract the data from the lines of the CSV file
+	 * @param dataRows The array containing the lines of the SV file, including header line
+	 * @returns An array with the DonationItems that were extracted
+	 */
+	private extractDataLines(dataRows: string[]): Array<DonationItem> {
+		this.debugLog('DataStore: Data extracting data from online source');
+		const tmpResult: Array<DonationItem> = [];
+		for (let idx = 1; idx < dataRows.length; idx++) {
+			const tmpLineData = this.parseCsvLine(dataRows[idx]);
+			if (tmpLineData.length >= 5) {
+				const tmpObject: DonationItem = {
+					article: tmpLineData[0].toString(),
+					initiativeKey: tmpLineData[1].toString(),
+					neededOverall: Number.parseInt(tmpLineData[2].toString()),
+					alreadyDonated: Number.parseInt(tmpLineData[3].toString()),
+					remainingNeed: Number.parseInt(tmpLineData[4].toString()),
+					unit: tmpLineData[5].toString()
+				}
+				tmpResult.push(tmpObject);
+			}
+		}
+		return tmpResult;
+	}
+
+	/**
+	 * Function to check if the local data is outdated (older then the configured amount of minutes).
+	 * @returns A boolean result with the answer to the question
+	 */
+	private isDataOutdated() {
+		this.debugLog('DataStore: Checking if data is outdated...');
+    const time = 1000 * 60 * this.maxDataAgeInMinutes;
     const elapsedTimeThreshold = Date.now() - time;
-    return new Date(dataTimeStamp).getTime() > elapsedTimeThreshold;
+		const checkResult = new Date(this.localData!.requestTime).getTime() < elapsedTimeThreshold
+		this.debugLog(checkResult);
+    return checkResult;
 	}
 
-	private parseCSVLine(lineContent: string) {
+	/**
+	 * Helper function to split a line of a CSV file into an array of the contained values
+	 * @param lineContent The raw single line of the CSV file
+	 * @returns An array with the extracted values
+	 */
+	private parseCsvLine(lineContent: string) {
 		return lineContent.match(/\s*(\".*?\"|'.*?'|[^,]+)\s*(,|$)/g)!.map(
 			function (line: string) {
 				let m;
@@ -91,5 +236,14 @@ export default class DataStore {
 		);
 	}
 
+	/**
+	 * Internal helper to print debug messages to teh console log (if activated in teh config)
+	 * @param message The message (or object) to log
+	 */
+	private debugLog(message: any) {
+		 if (PageConfiguration.LogToConsole) {
+			console.debug(message);
+		 }
+	}
 
 }
