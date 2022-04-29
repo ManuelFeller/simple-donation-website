@@ -1,7 +1,7 @@
 export type DonationItem = {
-	article: String,
-	initiativeKey: String,
-	neededOverall: Number,
-	alreadyDonated: Number,
-	remainingNeed: Number
+	article: string,
+	initiativeKey: string,
+	neededOverall: number,
+	alreadyDonated: number,
+	remainingNeed: number
 }
