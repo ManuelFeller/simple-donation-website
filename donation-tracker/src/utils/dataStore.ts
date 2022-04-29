@@ -58,7 +58,7 @@ export default class DataStore {
 	 * Get all items (unfiltered)
 	 * @returns The list of items
 	 */
-	public publicGetAllItems(): Array<DonationItem> {
+	public GetAllItems(): Array<DonationItem> {
 		if (this.hasLocalData) {
 			return this.localData!.data;
 		} else {
