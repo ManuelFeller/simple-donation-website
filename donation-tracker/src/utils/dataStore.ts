@@ -58,7 +58,7 @@ export default class DataStore {
 	 * Get all items (unfiltered)
 	 * @returns The list of items
 	 */
-	public GetAllItems(): Array<DonationItem> {
+	public getAllItems(): Array<DonationItem> {
 		if (this.hasLocalData) {
 			return this.localData!.data;
 		} else {
@@ -81,6 +81,22 @@ export default class DataStore {
 			});
 		}
 		return tempResult;
+	}
+
+	/**
+	 * Get the time when the data was last changed in the CSV source
+	 * @returns Date object
+	 */
+	public getLastDataUpdateTime() {
+		return this.localData?.timeStamp;
+	}
+
+	/**
+	 * Get the time when the data was checked on the server
+	 * @returns Date object
+	 */
+	public getLastDataLoadingTime() {
+		return this.localData?.requestTime;
 	}
 
 	/**
