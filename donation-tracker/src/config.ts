@@ -26,4 +26,16 @@ export default class PageConfiguration {
 		ContactEmail: 'website@domain.tld',
 		PrivacyEmail: 'privacy@domain.tld',
 	}
+
+	static CampaignDetails = [
+		{
+			Title: 'Civilian Help 1',
+			TitleImage: '',
+			DetailsFile: './src/campaigns/cvh1.txt',
+			Key: 'civilian',
+			UrlSlug: 'civilian-help-1',
+			Status: 'collecting / sammeln',
+			Photos: [],
+		}
+	];
 }
