@@ -1,11 +1,9 @@
-import { Link } from "gatsby"
-import * as React from "react"
-import { useEffect, useState } from "react"
-import LayoutModule from "../components/layout"
-import TestComponent from "../components/testComponent"
-import DataStore from "../utils/dataStore"
-
-
+import { Link } from 'gatsby';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import LayoutModule from '../components/layout';
+import TestComponent from '../components/testComponent';
+import DataStore from '../utils/dataStore';
 
 const IndexPage = () => {
 
