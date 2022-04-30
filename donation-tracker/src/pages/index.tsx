@@ -2,8 +2,8 @@ import { Link } from 'gatsby';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import LayoutModule from '../components/layout';
-import TestComponent from '../components/testComponent';
 import DataStore from '../utils/dataStore';
+import Initiative1Page from './initiatives/initiative1';
 
 const IndexPage = () => {
 
@@ -43,7 +43,7 @@ const IndexPage = () => {
   return (
 
     <LayoutModule>
-      <TestComponent></TestComponent>
+      <Initiative1Page tasks={[]}></Initiative1Page>
       <title>Home Page</title>
       
       <table>
@@ -69,4 +69,4 @@ const IndexPage = () => {
   )
 }
 
-export default IndexPage
+export default IndexPage;
