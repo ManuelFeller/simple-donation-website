@@ -24,6 +24,6 @@ export default class PageConfiguration {
 		City: ' Argon City',
 		PhoneNumber: '+123456789',
 		ContactEmail: 'website@domain.tld',
-		PrivacyEmail: 'website@domain.tld',
+		PrivacyEmail: 'privacy@domain.tld',
 	}
 }
