@@ -64,7 +64,6 @@ const ImprintModule = (props: any) => {
         </ul>
         Wir benötigen die übermittelten Daten in der Anfrage um den Datensatz eindeutig zu identifizieren - weil wir keine andere Möglichkeit haben einduetig herauszufinden wer was übermittelt hat.<br/>
         Bitte senden Sie die Anfrage an {PageConfiguration.ImprintContact.PrivacyEmail}.
-        
       </div>
 
     </LayoutModule>
