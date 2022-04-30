@@ -2,7 +2,7 @@ import type { GatsbyNode } from 'gatsby';
 import path from 'path';
 import PageConfiguration from './src/config';
 
-exports.createPages = async ({ actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
   // create imprint page
   createPage({
@@ -10,5 +10,5 @@ exports.createPages = async ({ actions }) => {
     component: path.resolve('./src/modules/imprint.tsx'),
     context: {imprintContact: PageConfiguration.ImprintContact}
   })
-  
+
 };
