@@ -14,7 +14,7 @@ export default class DataStore {
 	private hasLocalData: boolean;
 	private isRefreshing: boolean;
 	private localData: DonationList | null;
-	//private updateSubscribers: [];
+	private updateSubscribers: Array<Function>;
 
 	/**
 	 * DO NOT USE EXTERNALLY! Use DataStore.getInstance() instead!
@@ -40,7 +40,7 @@ export default class DataStore {
 			this.hasLocalData = false;
 			setTimeout(this.refreshData.bind(this), 100);
 		}
-		//this.updateSubscribers = [];
+		this.updateSubscribers = new Array<Function>();
 	}
 
 	/**
@@ -53,6 +53,31 @@ export default class DataStore {
 			DataStore.instance = new DataStore();
 		}
 		return DataStore.instance;
+	}
+
+	/**
+	 * Register for data change notification - please do not forget to unsubscribe if a component unmounts, so please do NOT use anonymous functions!
+	 * @param callback Callback function - needs to have have one Date parameter that get the timestamp of the last request
+	 */
+	public subscribeToDataUpdates(callback: Function) {
+		if (this.updateSubscribers.indexOf(callback) === -1) {
+			this.debugLog('DataStore: Adding callback to internal list');
+			this.updateSubscribers.push(callback);
+		} else {
+			this.debugLog('DataStore: Callback already registered, skipping adding');
+		}
+	}
+
+		/**
+	 * Unregister from data change notifications - please do not forget tu unsubscribe if a component unmounts
+	 * @param callback Callback function that was passed during subscribing
+	 */
+	public unsubscribeFromDataUpdates(callback: Function) {
+		const currentIndex = this.updateSubscribers.indexOf(callback);
+		if (currentIndex !== -1) {
+			this.debugLog('DataStore: Removing callback from list');
+			this.updateSubscribers.splice(currentIndex, 1);
+		}
 	}
 
 	/**
@@ -197,6 +222,10 @@ export default class DataStore {
 			}
 		}
 		this.isRefreshing = false;
+		// update components
+		this.updateSubscribers.forEach(subscriber =>
+			subscriber(this.localData!.requestTime)
+		);
 	}
 
 	/**
