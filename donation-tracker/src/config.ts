@@ -15,4 +15,14 @@ export default class PageConfiguration {
 	 * Decide if the data should be refreshed automatically or only on explicit user interaction
 	 */
 	static AutoRefresh: boolean = true;
+
+	static ImprintContact = {
+		NameOfResponsible: 'Firstname Lastname',
+		AddressLine1: 'Gateway 10',
+		AddressLine2: '',
+		ZipCode: '12345',
+		City: ' Argon City',
+		PhoneNumber: '+123456789',
+		ContactEmail: 'website@domain.tld'
+	}
 }
