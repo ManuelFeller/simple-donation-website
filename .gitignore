@@ -104,8 +104,4 @@ dist
 .tern-port
 
 .DS_Store
-
-/donation-tracker/node_modules/
-/donation-tracker/cache/
-/donation-tracker/public
-
+donation-tracker/public/**
