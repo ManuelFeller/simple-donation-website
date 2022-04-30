@@ -12,6 +12,7 @@ const ImprintModule = (props: any) => {
   return(
     <LayoutModule>
       <Container maxWidth="lg">
+        &nbsp;
         <Typography variant="h2" component="h1">Imprint / Impressum</Typography>
         <Card sx={{ minWidth: 275 }}>
           <CardHeader
