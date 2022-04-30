@@ -21,4 +21,10 @@ The donators can "register" their donations (when they ordered them to the colle
 - it is not helping you to track the incoming deliveries
 - it is not a fully integrated system that can be used without any coding knowledge
 
-more to be written...
+## How can I use this?
+
+[See the setup documentation](documentation/setup.md)
+
+## Can I see this in action?
+
+A demo page will hopefully come soonish...
