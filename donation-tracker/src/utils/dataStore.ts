@@ -32,7 +32,7 @@ export default class DataStore {
 				this.debugLog('DataStore: Local data outdated, querying online source scheduled');
 				setTimeout(this.refreshData.bind(this), 100);
 			} else {
-				// ToDo: auto-refresh (if configured)
+				this.registerDataUpdate();
 			}
 		} else {
 			this.debugLog('DataStore: No local data found, querying online source scheduled');
@@ -168,6 +168,18 @@ export default class DataStore {
 		}
 	}
 
+	// internal function to register the next data update
+	private registerDataUpdate() {
+		if (PageConfiguration.AutoRefresh) {
+			const secondsUntilRefresh = this.getSecondsUntilRefresh();
+			this.debugLog(`DataStore: Registering next data refresh to execute in ${secondsUntilRefresh} seconds`);
+			setTimeout(
+				this.refreshData.bind(this),
+				(secondsUntilRefresh * 1000)
+			);
+		}
+	}
+
 	/**
 	 * Internal function to load / refresh the local data
 	 */
@@ -226,6 +238,8 @@ export default class DataStore {
 		this.updateSubscribers.forEach(subscriber =>
 			subscriber(this.localData!.requestTime)
 		);
+		// register next execution of data update
+		this.registerDataUpdate();
 	}
 
 	/**
