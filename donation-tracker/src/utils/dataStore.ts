@@ -101,7 +101,7 @@ export default class DataStore {
 		const tempResult = new Array<DonationItem>();
 		if (this.hasLocalData) {
 			this.localData!.data.forEach(item => {
-				if (item.initiativeKey === campaignKey) {
+				if (item.campaignKey === campaignKey) {
 					tempResult.push(item);
 				}
 			});
@@ -255,7 +255,7 @@ export default class DataStore {
 			if (tmpLineData.length >= 5) {
 				const tmpObject: DonationItem = {
 					article: tmpLineData[0].toString(),
-					initiativeKey: tmpLineData[1].toString(),
+					campaignKey: tmpLineData[1].toString(),
 					neededOverall: Number.parseInt(tmpLineData[2].toString()),
 					alreadyDonated: Number.parseInt(tmpLineData[3].toString()),
 					remainingNeed: Number.parseInt(tmpLineData[4].toString()),
