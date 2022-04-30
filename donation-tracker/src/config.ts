@@ -36,6 +36,8 @@ export default class PageConfiguration {
 			UrlSlug: 'civilian-help-1',
 			Status: 'collecting / sammeln',
 			Photos: [],
+			StartDate: new Date(2022, 4, 1),
+			RegistrationFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSd1cvk-HVWsq4pZ9Aiu2wF8y3_AKMNosmwDZEGk1qcie-Ccmg/viewform'
 		}
 	];
 }

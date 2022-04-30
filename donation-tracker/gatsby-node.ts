@@ -8,7 +8,14 @@ exports.createPages = async ({ graphql, actions }) => {
   createPage({
     path: '/imprint',
     component: path.resolve('./src/modules/imprint.tsx'),
-    context: {imprintContact: PageConfiguration.ImprintContact}
+    context: {/* pass data into page here */}
   })
+  // create campaign overview page
+  createPage({
+    path: '/campaigns',
+    component: path.resolve('./src/modules/campaignOverview.tsx'),
+    context: {/* pass data into page here */}
+  })
+  /* ToDo: generate campaign detail pages here */
 
 };

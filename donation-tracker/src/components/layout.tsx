@@ -16,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 /* ToDo: import this from a central location */
 const mainLevelPages = [
   { name: 'Start', link: '/' },
+  { name: 'Campaigns / Sammlungen', link: '/campaigns/' },
   { name: 'Imprint / Impressum', link: '/imprint/' }
 ];
 const titleText = 'Help Ukraine';
