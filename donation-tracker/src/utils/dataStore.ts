@@ -14,6 +14,7 @@ export default class DataStore {
 	private hasLocalData: boolean;
 	private isRefreshing: boolean;
 	private localData: DonationList | null;
+	//private updateSubscribers: [];
 
 	/**
 	 * DO NOT USE EXTERNALLY! Use DataStore.getInstance() instead!
@@ -39,7 +40,7 @@ export default class DataStore {
 			this.hasLocalData = false;
 			setTimeout(this.refreshData.bind(this), 100);
 		}
-		
+		//this.updateSubscribers = [];
 	}
 
 	/**
@@ -88,7 +89,11 @@ export default class DataStore {
 	 * @returns Date object
 	 */
 	public getLastDataUpdateTime() {
-		return this.localData?.timeStamp;
+		if (this.localData === null) {
+			return new Date(1970, 1, 1);
+		} else {
+			return this.localData?.timeStamp;
+		}
 	}
 
 	/**
