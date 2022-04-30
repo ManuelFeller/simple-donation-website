@@ -82,11 +82,17 @@ const badgeStyle = {
   lineHeight: 1,
 }
 
-// markup
 const IndexPage = () => {
+
+  /* --- start of data connection code --- */
+
+  // get the data store object
   let data = DataStore.getInstance();
+
+  // set up a state to have a content re-render trigger
   const [dataUpdateTime, setDataUpdateTime] = useState(new Date(1970, 1, 1));
 
+  // page lifecycle registrations (in the functional component way)
   useEffect(() => {
     // Anything in here is fired on component mount.
     data.subscribeToDataUpdates(handleDataUpdate);
@@ -95,10 +101,13 @@ const IndexPage = () => {
         data.unsubscribeFromDataUpdates(handleDataUpdate);
     }
   }, [])
-
+  
+  // the update handler that is passed to the data store object
   const handleDataUpdate = (newUpdateTime: Date) => {
     setDataUpdateTime(newUpdateTime);
   }
+
+  /* --- end of data connection code --- */
 
   const convertDateToString = (date: Date) => {
     if (date !== null && date !== undefined) {
