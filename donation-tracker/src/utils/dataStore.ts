@@ -1,3 +1,4 @@
+import { isUndefined } from "util";
 import PageConfiguration from "../config";
 import { DonationItem } from "../types/donationItem";
 import { DonationList } from "../types/donationList";
@@ -15,6 +16,7 @@ export default class DataStore {
 	private isRefreshing: boolean;
 	private localData: DonationList | null;
 	private updateSubscribers: Array<Function>;
+	private isGatsbyBuild: boolean;
 
 	/**
 	 * DO NOT USE EXTERNALLY! Use DataStore.getInstance() instead!
@@ -22,7 +24,15 @@ export default class DataStore {
 	 */
 	private constructor() {
 		this.debugLog('DataStore: Creating instance, trying to read local storage data');
-		let tmpData = localStorage.getItem('donationCache');
+		let tmpData = null;
+		if (typeof localStorage === 'undefined') {
+			this.isGatsbyBuild = true;
+			tmpData = '{"timeStamp":"2025-01-01T01:23:45.678Z","requestTime":"2025-01-01T01:23:45.678Z","data":[{"article":"Article A","initiativeKey":"demo","neededOverall":10,"alreadyDonated":6,"remainingNeed":4,"unit":"pcs"}]}';
+		} else {
+			this.isGatsbyBuild = false;
+			tmpData = localStorage.getItem('donationCache');
+		}
+		
 		this.isRefreshing = false;
 		if (tmpData !== null) {
 			this.debugLog('DataStore: Local data found, loading into memory');
@@ -30,15 +40,15 @@ export default class DataStore {
 			this.hasLocalData = true;
 			if (this.isDataOutdated()) {
 				this.debugLog('DataStore: Local data outdated, querying online source scheduled');
-				setTimeout(this.refreshData.bind(this), 100);
+				if (!this.isGatsbyBuild) setTimeout(this.refreshData.bind(this), 100);
 			} else {
-				this.registerDataUpdate();
+				if (!this.isGatsbyBuild) this.registerDataUpdate();
 			}
 		} else {
 			this.debugLog('DataStore: No local data found, querying online source scheduled');
 			this.localData = null;
 			this.hasLocalData = false;
-			setTimeout(this.refreshData.bind(this), 100);
+			if (!this.isGatsbyBuild) setTimeout(this.refreshData.bind(this), 100);
 		}
 		this.updateSubscribers = new Array<Function>();
 	}
