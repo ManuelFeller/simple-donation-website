@@ -23,6 +23,7 @@ export default class PageConfiguration {
 		ZipCode: '12345',
 		City: ' Argon City',
 		PhoneNumber: '+123456789',
-		ContactEmail: 'website@domain.tld'
+		ContactEmail: 'website@domain.tld',
+		PrivacyEmail: 'website@domain.tld',
 	}
 }
