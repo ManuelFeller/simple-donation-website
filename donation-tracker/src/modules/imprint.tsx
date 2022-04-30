@@ -24,7 +24,7 @@ const ImprintModule = (props: any) => {
       </div>
       <div>
         🇩🇪 Diese Seite nutzt keine Cookies.<br/>
-        Wir speichern die Daten was an gespendet werden kann im so genannten Local Storage des Browsers zwischen (Variablenname 'donationCache') und übertragen diese Information niemals irgendwo hin. Um diesen Zwischenspeicher zu löschen müssen sie den Local Storage für diese Seite in Ihrem Browser zurücksetzten.
+        Wir speichern die Daten was gespendet werden kann im so genannten Local Storage des Browsers zwischen (Variablenname 'donationCache') und übertragen diese Information niemals irgendwo hin. Um diesen Zwischenspeicher zu löschen müssen sie den Local Storage für diese Seite in Ihrem Browser zurücksetzten.
       </div>
       <h2>Data Privacy / Datenschutz</h2>
       <div>
