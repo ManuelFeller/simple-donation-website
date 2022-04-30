@@ -13,9 +13,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
+/* ToDo: import this from a central location */
 const mainLevelPages = [
-  { name: 'Home / Start', link: '/', key: 'home' },
-  { name: 'Imprint / Impressum', link: '/imprint/', key: 'imprint'}
+  { name: 'Home / Start', link: '/' },
+  { name: 'Imprint / Impressum', link: '/imprint/' }
 ];
 
 const LayoutModule = (props: any) => {
@@ -75,8 +76,8 @@ const LayoutModule = (props: any) => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {mainLevelPages.map((page) => (
-                <MenuItem href={page.link} key={page.key} onClick={(event) => handleClickOnNavMenu(event, page.link)}>
+              {mainLevelPages.map((page, index) => (
+                <MenuItem href={page.link} key={'mMenuItem'.concat(index.toString())} onClick={(event) => handleClickOnNavMenu(event, page.link)}>
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
@@ -91,10 +92,10 @@ const LayoutModule = (props: any) => {
             Help Ukraine Mobile
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {mainLevelPages.map((page) => (
+            {mainLevelPages.map((page, index) => (
               <Button
                 href={page.link}
-                key={page.key}
+                key={'dMenuItem'.concat(index.toString())}
                 onClick={(event) => handleClickOnNavMenu(event, page.link)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
