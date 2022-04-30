@@ -11,3 +11,6 @@ This section helps you to set everything up if you want to reuse this
 - Survey Monkey limits you to 500 API requests per day and 120 per minute; https://www.surveymonkey.de/r/2PK6JLP
   - you have no "API" to pull teh results outside of the Survey Monkey results page (at least not if you use the free version)
 
+## Overview
+
+![Draw.io diagram with overview](overview.svg)
