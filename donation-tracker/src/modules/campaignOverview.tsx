@@ -41,8 +41,16 @@ const CampaignOverviewModule = (props: any) => {
   return (
     <LayoutModule>
       <Container maxWidth="lg">
+        &nbsp;
         <Typography variant="h2" component="h1">
           Campaigns / Sammlungen
+        </Typography>
+        <Typography component="div">
+          🇬🇧 Here you find details about the different campaigns that we have been running so far. You can inform yourself about the ongoing ones as well as the ones that have already finished.
+        </Typography>
+        &nbsp;
+        <Typography component="div">
+          🇩🇪 Hier finden Sie Details zu den verschiedenen Sammlungen die wir bisher durchgeführt haben. Sie können sich über laufende und bereits abgeschlossene Sammlungen informieren.
         </Typography>
         <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="center">
           {campains.sort(sortByStartDate).map(campaign => (

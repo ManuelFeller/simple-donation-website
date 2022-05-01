@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { navigate } from 'gatsby';
 
 import Card from '@mui/material/Card';
 import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
@@ -14,6 +15,13 @@ interface Props {
 }
 
 const CampaignCard = ({ campaign, donationItems }: Props) => {
+
+  const handleClickOnNavMenu = (event: React.MouseEvent<HTMLElement>, itemLink: string) => {
+    // this handles the navigation if JavaScript is active
+    event.preventDefault();
+    navigate(itemLink)
+  };
+
   return (
     <Card elevation={4} sx={{ flex: '0 1 500px' }}>
       <CardHeader title={campaign.Title} subheader={campaign.ShortCampainDescription}></CardHeader>
@@ -27,8 +35,8 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
         )}
       </CardContent>
       <CardActions>
-        <Button sx={{ width: '100%' }} href={campaign.RegistrationFormUrl} target="_blank">
-          MAKE A DONATION
+        <Button sx={{ width: '100%' }} href={'/campagings/'.concat(campaign.UrlSlug, '/')}>
+          Details
         </Button>
       </CardActions>
     </Card>
