@@ -17,7 +17,7 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
   return (
     <Card elevation={4} sx={{ flex: '0 1 500px' }}>
       <CardHeader title={campaign.Title} subheader={campaign.ShortCampainDescription}></CardHeader>
-      <CardMedia component="img" height="194" image={'../' + campaign.TitleImage} />
+      <CardMedia component="img" height="194" image={campaign.TitleImage} />
       <CardContent>
         {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}
         {campaign.Status === 'collecting' ? (
