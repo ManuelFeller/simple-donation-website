@@ -26,7 +26,7 @@ export default class DataStore {
 		let tmpData = null;
 		if (typeof localStorage === 'undefined') {
 			this.isGatsbyBuild = true;
-			tmpData = '{"timeStamp":"2025-01-01T01:23:45.678Z","requestTime":"2025-01-01T01:23:45.678Z","data":[{"article":"Article A","initiativeKey":"demo","neededOverall":10,"alreadyDonated":6,"remainingNeed":4,"unit":"pcs"}]}';
+			tmpData = '{"timeStamp":"2025-01-01T01:23:45.678Z","requestTime":"2025-01-01T01:23:45.678Z","data":[{"article":"Article A","campaignKey":"demo","neededOverall":10,"alreadyDonated":6,"remainingNeed":4,"unit":"pcs"}]}';
 		} else {
 			this.isGatsbyBuild = false;
 			tmpData = localStorage.getItem('donationCache');
