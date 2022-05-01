@@ -34,7 +34,7 @@ export default class PageConfiguration {
     {
       Key: 'civilian',
       Title: 'Civilian Help 1',
-			ShortCampainDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
+			ShortCampaignDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
       TitleImage: '/media/campaignCardMedia.svg',
 			ShortDonationDescription: 'Here you can find the list of items that are the most urgent for the refugees within Ukraine.',
       DetailsFile: './src/campaigns/cvh1.txt',
@@ -47,7 +47,7 @@ export default class PageConfiguration {
     {
       Key: 'medication',
       Title: 'Medical Help 1',
-			ShortCampainDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
+			ShortCampaignDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
       TitleImage: '/media/campaignCardMedia.svg',
       ShortDonationDescription: 'Here you can find the list of items that are the most urgent for the refugees within Ukraine.',
       DetailsFile: './src/campaigns/cvh1.txt',
@@ -60,7 +60,7 @@ export default class PageConfiguration {
 		{
       Key: 'medication',
       Title: 'Medical Help 2',
-			ShortCampainDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
+			ShortCampaignDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
       TitleImage: '/media/campaignCardMedia.svg',
       ShortDonationDescription: 'Here you can find the list of items that are the most urgent for the refugees within Ukraine.',
       DetailsFile: './src/campaigns/cvh1.txt',

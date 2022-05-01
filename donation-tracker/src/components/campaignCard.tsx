@@ -16,15 +16,17 @@ interface Props {
 
 const CampaignCard = ({ campaign, donationItems }: Props) => {
 
-  const handleClickOnNavMenu = (event: React.MouseEvent<HTMLElement>, itemLink: string) => {
+  const handleClickOnLink = (event: React.MouseEvent<HTMLElement>, itemLink: string) => {
     // this handles the navigation if JavaScript is active
     event.preventDefault();
     navigate(itemLink)
   };
 
+  const campaignDetailsUrl = '/initiatives/'.concat(campaign.UrlSlug, '/')
+
   return (
     <Card elevation={4} sx={{ flex: '0 1 500px' }}>
-      <CardHeader title={campaign.Title} subheader={campaign.ShortCampainDescription}></CardHeader>
+      <CardHeader title={campaign.Title} subheader={campaign.ShortCampaignDescription}></CardHeader>
       <CardMedia component="img" height="194" image={campaign.TitleImage} />
       <CardContent>
         {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}
@@ -35,7 +37,11 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
         )}
       </CardContent>
       <CardActions>
-        <Button sx={{ width: '100%' }} href={'/campagings/'.concat(campaign.UrlSlug, '/')}>
+        <Button
+          sx={{ width: '100%' }}
+          href={campaignDetailsUrl}
+          onClick={(event) => handleClickOnLink(event, campaignDetailsUrl)}
+        >
           Details
         </Button>
       </CardActions>
