@@ -1,7 +1,7 @@
 export interface Campaign {
   Key: string;
   Title: string;
-  ShortCampainDescription?: string,
+  ShortCampaignDescription?: string,
   TitleImage: string;
   ShortDonationDescription?: string,
   DetailsFile: string;
