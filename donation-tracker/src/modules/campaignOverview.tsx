@@ -54,7 +54,7 @@ const CampaignOverviewModule = (props: any) => {
         </Typography>
         <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="center">
           {campaigns.sort(sortByStartDate).map(campaign => (
-            <Box m={2} display="flex" flex="0 1 500px">
+            <Box m={2} display="flex" flex="0 1 500px" key={campaign.Key}>
               <CampaignCard
                 campaign={campaign}
                 donationItems={data.getAllItems().filter(({ campaignKey }) => campaignKey === campaign.Key)}
