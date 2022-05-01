@@ -31,7 +31,7 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
       <CardContent>
         {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}
         {campaign.Status === 'collecting' ? (
-          donationItems.map(donationItem => <DonationRow donationItem={donationItem}></DonationRow>)
+          donationItems.map((donationItem, index) => <DonationRow donationItem={donationItem} key={index}></DonationRow>)
         ) : (
           <div></div>
         )}
