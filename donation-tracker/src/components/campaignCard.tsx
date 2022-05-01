@@ -2,7 +2,7 @@ import * as React from 'react';
 import { navigate } from 'gatsby';
 
 import Card from '@mui/material/Card';
-import { Button, CardActions, CardContent, CardMedia, Typography, Avatar } from '@mui/material';
+import { Button, CardActions, CardContent, CardMedia, Typography, Avatar, Pagination, Box } from '@mui/material';
 import { green, blue, yellow, grey } from '@mui/material/colors';
 import CardHeader from '@mui/material/CardHeader';
 
@@ -16,52 +16,92 @@ interface Props {
 }
 
 const CampaignCard = ({ campaign, donationItems }: Props) => {
-
   const handleClickOnLink = (event: React.MouseEvent<HTMLElement>, itemLink: string) => {
     // this handles the navigation if JavaScript is active
     event.preventDefault();
-    navigate(itemLink)
+    navigate(itemLink);
   };
 
   const getAvatarForStatus = (status: 'collecting' | 'preparing' | 'transfer' | 'delivered' | 'closed') => {
     switch (status) {
       case 'collecting':
-        return (<Avatar sx={{ bgcolor: green[200] }} aria-label="collecting / Sammeln" title="collecting / Sammeln">🛒</Avatar>);
+        return (
+          <Avatar sx={{ bgcolor: green[200] }} aria-label="collecting / Sammeln" title="collecting / Sammeln">
+            🛒
+          </Avatar>
+        );
       case 'preparing':
-        return (<Avatar sx={{ bgcolor: blue[200] }} aria-label="preparation / Vorbereiten" title="preparation / Vorbereiten">📦</Avatar>);
+        return (
+          <Avatar sx={{ bgcolor: blue[200] }} aria-label="preparation / Vorbereiten" title="preparation / Vorbereiten">
+            📦
+          </Avatar>
+        );
       case 'transfer':
-        return (<Avatar sx={{ bgcolor: blue[200] }} aria-label="delivering / Unterwegs" title="delivering / Unterwegs">🚚</Avatar>);
+        return (
+          <Avatar sx={{ bgcolor: blue[200] }} aria-label="delivering / Unterwegs" title="delivering / Unterwegs">
+            🚚
+          </Avatar>
+        );
       case 'delivered':
-        return (<Avatar sx={{ bgcolor: yellow[200] }} aria-label="delivered / Geliefert" title="delivered / Geliefert">🏁</Avatar>);
+        return (
+          <Avatar sx={{ bgcolor: yellow[200] }} aria-label="delivered / Geliefert" title="delivered / Geliefert">
+            🏁
+          </Avatar>
+        );
       case 'closed':
-        return (<Avatar sx={{ bgcolor: grey[200] }} aria-label="finished / Abgeschlossen" title="finished / Abgeschlossen">🔒</Avatar>);
+        return (
+          <Avatar sx={{ bgcolor: grey[200] }} aria-label="finished / Abgeschlossen" title="finished / Abgeschlossen">
+            🔒
+          </Avatar>
+        );
     }
   };
 
-  const campaignDetailsUrl = '/initiatives/'.concat(campaign.UrlSlug, '/')
+  const campaignDetailsUrl = '/initiatives/'.concat(campaign.UrlSlug, '/');
+
+  // Pagination and layout logic
+  const itemsPerPage = 4;
+  const pageCount = Math.ceil(donationItems.length / itemsPerPage);
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => setPage(value);
+  const minRowHeight = 46.5;
 
   return (
-    <Card elevation={4} sx={{ flex: '0 1 500px' }}>
+    <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
       <CardHeader
         title={campaign.Title}
         subheader={campaign.ShortCampaignDescription}
         avatar={getAvatarForStatus(campaign.Status)}
       ></CardHeader>
       <CardMedia component="img" height="194" image={campaign.TitleImage} />
-      <CardContent>
+      <CardContent sx={{ flex: '1 0 auto' }}>
         {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}
         {campaign.Status === 'collecting' ? (
-          donationItems.map((donationItem, index) => <DonationRow donationItem={donationItem} key={index}></DonationRow>)
+          <Box display="flex" flexDirection="column">
+            <Box minHeight={minRowHeight * itemsPerPage}>
+              {donationItems
+                .map((donationItem, index) => ({ donationItem, index }))
+                .filter(({ index }) => (page - 1) * itemsPerPage <= index && index < page * itemsPerPage)
+                .map(props => (
+                  <DonationRow {...props}></DonationRow>
+                ))}
+            </Box>
+            {pageCount > 1 && (
+              <Pagination
+                count={pageCount}
+                page={page}
+                onChange={handleChange}
+                size="small"
+                sx={{ display: 'flex', flex: '1 0 auto', alignItems: 'flex-end', alignSelf: 'flex-end' }}
+              />
+            )}
+          </Box>
         ) : (
           <div></div>
         )}
       </CardContent>
       <CardActions>
-        <Button
-          sx={{ width: '100%' }}
-          href={campaignDetailsUrl}
-          onClick={(event) => handleClickOnLink(event, campaignDetailsUrl)}
-        >
+        <Button sx={{ width: '100%' }} href={campaignDetailsUrl} onClick={event => handleClickOnLink(event, campaignDetailsUrl)}>
           Details
         </Button>
       </CardActions>
