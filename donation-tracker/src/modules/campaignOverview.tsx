@@ -36,7 +36,7 @@ const CampaignOverviewModule = (props: any) => {
   };
   /* --- end of data connection code --- */
 
-  const campains = PageConfiguration.CampaignDetails;
+  const campaigns = PageConfiguration.CampaignDetails;
 
   return (
     <LayoutModule>
@@ -53,7 +53,7 @@ const CampaignOverviewModule = (props: any) => {
           🇩🇪 Hier finden Sie Details zu den verschiedenen Sammlungen die wir bisher durchgeführt haben. Sie können sich über laufende und bereits abgeschlossene Sammlungen informieren.
         </Typography>
         <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="center">
-          {campains.sort(sortByStartDate).map(campaign => (
+          {campaigns.sort(sortByStartDate).map(campaign => (
             <Box m={2} display="flex" flex="0 1 500px">
               <CampaignCard
                 campaign={campaign}
