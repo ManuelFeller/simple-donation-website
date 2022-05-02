@@ -17,9 +17,9 @@ const ImprintModule = (props: any) => {
         <Card sx={{ minWidth: 275 }}>
           <CardHeader
             title="Imprint / Impressum"
+            subheader="Contact as required by TMG § 5 / Kontakt gem. TMG § 5"
           />
           <CardContent>
-            <Typography component="div">Contact as required by TMG § 5 / Kontakt gem. TMG § 5<br/>&nbsp;</Typography>
             <Typography component="div">{PageConfiguration.ImprintContact.NameOfResponsible}</Typography>
             <Typography component="div">{PageConfiguration.ImprintContact.AddressLine1}</Typography>
             <Typography component="div">{PageConfiguration.ImprintContact.AddressLine2}</Typography>

@@ -23,7 +23,8 @@ const IndexPage = () => {
     <Container maxWidth="lg">
       <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
         <CardHeader
-          title="How can we help people in Ukraine? / Wie können wir Menschen in der Ukraine helfen?"
+          title="#StandWithUkraine"
+          subheader="What is this about? / Worum geht es hier?"
         ></CardHeader>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <StaticImage
