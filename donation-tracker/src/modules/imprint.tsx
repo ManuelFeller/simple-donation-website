@@ -13,11 +13,11 @@ const ImprintModule = (props: any) => {
     <LayoutModule>
       <Container maxWidth="lg">
         &nbsp;
-        <Typography variant="h2" component="h1">Imprint / Impressum</Typography>
+        <Typography variant="h2" component="h1"></Typography>
         <Card sx={{ minWidth: 275 }}>
           <CardHeader
-            title="Responsible &amp; Contact / Verantwortlicher &amp; Kontakt"
-            subheader="as required by TMG § 5 / gem. TMG § 5"
+            title="Imprint / Impressum"
+            subheader="Contact as required by TMG § 5 / Kontakt gem. TMG § 5"
           />
           <CardContent>
             <Typography component="div">{PageConfiguration.ImprintContact.NameOfResponsible}</Typography>
