@@ -94,11 +94,7 @@ export default class DataStore {
 	 * @returns The list of items
 	 */
 	public getAllItems(): Array<DonationItem> {
-		if (this.hasLocalData) {
-			return this.localData!.data;
-		} else {
-			return new Array<DonationItem>();
-		}
+		return this.hasLocalData ? this.localData!.data : [];
 	}
 
 	/**
@@ -107,15 +103,7 @@ export default class DataStore {
 	 * @returns The list of items that belong to the campaign
 	 */
 	public getItemsForCampaign(campaignKey: string): Array<DonationItem> {
-		const tempResult = new Array<DonationItem>();
-		if (this.hasLocalData) {
-			this.localData!.data.forEach(item => {
-				if (item.campaignKey === campaignKey) {
-					tempResult.push(item);
-				}
-			});
-		}
-		return tempResult;
+		return this.getAllItems().filter(item => item.campaignKey === campaignKey);
 	}
 
 	/**
