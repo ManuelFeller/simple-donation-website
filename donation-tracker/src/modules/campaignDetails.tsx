@@ -8,6 +8,7 @@ import { Campaign } from '../types/campaign';
 import DataStore from '../utils/dataStore';
 import { navigate } from 'gatsby';
 import { convertDateToString } from '../utils/convertDateToString';
+import LayoutModule from '../components/layout';
 
 const CampaignDetailsModule = (props: any) => {
   /* --- start of data connection code --- */
@@ -57,29 +58,31 @@ const CampaignDetailsModule = (props: any) => {
   });
 
   return (
-    <Container maxWidth="lg">
-      &nbsp;
+    <LayoutModule>
+      <Container maxWidth="lg">
+        &nbsp;
 
-      <Typography variant="h2" component="h1">
-        Campaign / Sammlung &quot;{campaignDetails.Title}&quot;
-      </Typography>
-      <Button
-        href={'/campaigns/'}
-        onClick={(event) => handleClickOnLink(event, '/campaigns/')}
-      >
-        &lt;- back to the overview / zurück zur Übersicht
-      </Button>
-      <Typography variant="h5" component="h5">
-        {campaignDetails.ShortCampaignDescription}
-      </Typography>
-      <Typography component="div">
-        {props.children}
-      </Typography>
+        <Typography variant="h2" component="h1">
+          Campaign / Sammlung &quot;{campaignDetails.Title}&quot;
+        </Typography>
+        <Button
+          href={'/campaigns/'}
+          onClick={(event) => handleClickOnLink(event, '/campaigns/')}
+        >
+          &lt;- back to the overview / zurück zur Übersicht
+        </Button>
+        <Typography variant="h5" component="h5">
+          {campaignDetails.ShortCampaignDescription}
+        </Typography>
+        <Typography component="div">
+          {props.children}
+        </Typography>
 
-      <p>
-        Data from {convertDateToString(data.getLastDataUpdateTime())}: (last refresh at {convertDateToString(dataUpdateTime)})
-      </p>
-    </Container>
+        <p>
+          Data from {convertDateToString(data.getLastDataUpdateTime())}: (last refresh at {convertDateToString(dataUpdateTime)})
+        </p>
+      </Container>
+    </LayoutModule>
   );
 }
 
