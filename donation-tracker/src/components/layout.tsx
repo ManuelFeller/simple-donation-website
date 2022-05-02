@@ -19,7 +19,7 @@ const mainLevelPages = [
   { name: 'Campaigns / Sammlungen', link: '/campaigns/' },
   { name: 'Imprint / Impressum', link: '/imprint/' }
 ];
-const titleText = 'Help Ukraine';
+const titleText = '#StandWithUkraine';
 
 const LayoutModule = (props: any) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
