@@ -64,26 +64,26 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
   const pageCount = Math.ceil(donationItems.length / itemsPerPage);
   const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => setPage(value);
-  const minRowHeight = 46.5;
+  const minRowHeight = 48;
 
   return (
-    <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
+    <Card elevation={4} sx={{ flex: '0 1 560px', display: 'flex', flexDirection: 'column' }}>
       <CardHeader
         title={campaign.Title}
         subheader={campaign.ShortCampaignDescription}
         avatar={getAvatarForStatus(campaign.Status)}
       ></CardHeader>
       <CardMedia component="img" height="194" image={campaign.TitleImage} />
-      <CardContent sx={{ flex: '1 0 auto' }}>
+      <CardContent sx={{ flex: '1 0 auto', paddingBottom: 0}}>
         {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}
         {campaign.Status === 'collecting' ? (
-          <Box display="flex" flexDirection="column">
+          <Box display="flex" flexDirection="column" mt={1}>
             <Box minHeight={minRowHeight * itemsPerPage}>
               {donationItems
                 .map((donationItem, index) => ({ donationItem, index }))
                 .filter(({ index }) => (page - 1) * itemsPerPage <= index && index < page * itemsPerPage)
                 .map(props => (
-                  <DonationRow {...props}></DonationRow>
+                  <DonationRow {...props} key={props.index % itemsPerPage}></DonationRow>
                 ))}
             </Box>
             {pageCount > 1 && (
@@ -108,30 +108,5 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
     </Card>
   );
 };
-/*
-ToDo:
-  - generate campaign cards here and link to generated detail pages in them
-  - make sure we order by date (newest first)
 
-<table>
-  <tr>
-    <th>Article / Artikel</th>
-    <th>ck</th>
-    <th>Needed / Benötigt</th>
-    <th>Donated / Gespendet</th>
-    <th>Remamining / Offen</th>
-    <th>Unit / Einheit</th>
-  </tr>
-  {data.getAllItems().map((item) => (
-    <tr>
-      <td>{item.article}</td>
-      <td>{item.campaignKey}</td>
-      <td>{item.neededOverall}</td>
-      <td>{item.alreadyDonated}</td>
-      <td>{item.remainingNeed}</td>
-      <td>{item.unit}</td>
-    </tr>
-  ))}
-</table>
-*/
 export default CampaignCard;

@@ -46,43 +46,46 @@ const CampaignOverviewModule = (props: any) => {
   return (
     <LayoutModule>
       <Container maxWidth="lg">
-        &nbsp;
-        <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
-          <CardHeader
-            title="Campaigns / Sammlungen"
-            subheader='How can we help people in Ukraine? / Wie können wir den Menschen in der Ukraine helfen?'
-          ></CardHeader>
-          <CardContent sx={{ flex: '1 0 auto' }}>
-            <StaticImage
-              src="../images/tim-mossholder-BQa--UCtFqg-unsplash_trimmed.jpg"
-              alt="Ukraine Flag Artwork by Tim Mossholder (unsplash)"
-              placeholder="blurred"
-              layout="fullWidth"
-              transformOptions={{trim: 20}}
-            />
-            &nbsp;
-            <Typography component="div">
-              🇬🇧 <strong>Here you find details about the different local donation campaigns.</strong> You can participate in the ongoing ones or inform yourself about the ones that have already finished.
-            </Typography>
-            &nbsp;
-            <Typography component="div">
-              🇩🇪 <strong>Hier finden Sie Details zu den verschiedenen lokalen Spenden-Sammlungen.</strong> Sie können sich an laufenden beteiligen und über bereits abgeschlossene informieren.
-            </Typography>
-          </CardContent>
-        </Card>
-        <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="center">
-          {campaigns.sort(sortByStartDate).map(campaign => (
-            <Box m={2} display="flex" flex="0 1 500px" key={campaign.Key}>
-              <CampaignCard
-                campaign={campaign}
-                donationItems={data.getAllItems().filter(({ campaignKey }) => campaignKey === campaign.Key)}
-              ></CampaignCard>
-            </Box>
-          ))}
+        <Box marginX={-2}>
+          <Box m={2}>
+            <Card elevation={4}>
+              <CardHeader
+                title="Campaigns / Sammlungen"
+                subheader='How can we help people in Ukraine? / Wie können wir den Menschen in der Ukraine helfen?'
+              ></CardHeader>
+              <CardContent sx={{ flex: '1 0 auto' }}>
+                <StaticImage
+                  src="../images/tim-mossholder-BQa--UCtFqg-unsplash_trimmed.jpg"
+                  alt="Ukraine Flag Artwork by Tim Mossholder (unsplash)"
+                  placeholder="blurred"
+                  layout="fullWidth"
+                  transformOptions={{trim: 20}}
+                />
+                &nbsp;
+                <Typography component="div">
+                  🇬🇧 <strong>Here you find details about the different local donation campaigns.</strong> You can participate in the ongoing ones or inform yourself about the ones that have already finished.
+                </Typography>
+                &nbsp;
+                <Typography component="div">
+                  🇩🇪 <strong>Hier finden Sie Details zu den verschiedenen lokalen Spenden-Sammlungen.</strong> Sie können sich an laufenden beteiligen und über bereits abgeschlossene informieren.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Box>
+          <Box display="flex" flexDirection="row" flexWrap="wrap" justifyContent="center">
+            {campaigns.sort(sortByStartDate).map(campaign => (
+              <Box m={2} display="flex" flex="0 1 560px" key={campaign.Key}>
+                <CampaignCard
+                  campaign={campaign}
+                  donationItems={data.getItemsForCampaign(campaign.Key)}
+                ></CampaignCard>
+              </Box>
+            ))}
+          </Box>
         </Box>
       </Container>
 
-      <p>
+      <p style={{color: 'gray'}}>
         Data from {convertDateToString(data.getLastDataUpdateTime())}: (last refresh at {convertDateToString(dataUpdateTime)})
       </p>
     </LayoutModule>
