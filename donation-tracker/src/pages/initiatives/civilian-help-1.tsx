@@ -5,7 +5,7 @@ import CampaignDetailsModule from '../../modules/campaignDetails';
 const CampaignDetailsPage = (props: any) => {
   return (
     <CampaignDetailsModule campaignKey='civilian'>
-      Civilian 1 Details!!!
+      Civilian 1 Details &amp; updates here...
     </CampaignDetailsModule>
   );
 }

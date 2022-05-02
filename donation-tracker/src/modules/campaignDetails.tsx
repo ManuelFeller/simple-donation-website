@@ -10,6 +10,13 @@ import { navigate } from 'gatsby';
 import { convertDateToString } from '../utils/convertDateToString';
 import LayoutModule from '../components/layout';
 
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import { StaticImage } from 'gatsby-plugin-image';
+
 const CampaignDetailsModule = (props: any) => {
   /* --- start of data connection code --- */
   // get the data store object
@@ -61,22 +68,43 @@ const CampaignDetailsModule = (props: any) => {
     <LayoutModule>
       <Container maxWidth="lg">
         &nbsp;
-
-        <Typography variant="h2" component="h1">
-          Campaign / Sammlung &quot;{campaignDetails.Title}&quot;
-        </Typography>
-        <Button
-          href={'/campaigns/'}
-          onClick={(event) => handleClickOnLink(event, '/campaigns/')}
-        >
-          &lt;- back to the overview / zurück zur Übersicht
-        </Button>
-        <Typography variant="h5" component="h5">
-          {campaignDetails.ShortCampaignDescription}
-        </Typography>
-        <Typography component="div">
-          {props.children}
-        </Typography>
+        <div>
+          <Button
+            href={'/campaigns/'}
+            onClick={(event) => handleClickOnLink(event, '/campaigns/')}
+          >
+            &lt;- back to the campaign list / zurück zur Liste aller Sammlungen
+          </Button>
+        </div>
+        &nbsp;
+        <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
+          <CardHeader
+            title={'Campaign / Sammlung "'.concat(campaignDetails.Title, '"')}
+            subheader={campaignDetails.ShortCampaignDescription}
+          ></CardHeader>
+          <CardMedia component="img" height="194" image={campaignDetails.TitleImage} />
+          <CardContent sx={{ flex: '1 0 auto' }}>
+            <Typography component="div">
+              {campaignDetails.ShortDonationDescription}  
+            </Typography>
+            &nbsp;
+            <Typography component="div">
+              LIST OF ITEMS HERE SOON
+            </Typography>
+            &nbsp;
+            <Typography component="div">
+              {props.children}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button
+              href={campaignDetails.RegistrationFormUrl}
+              target="_blank"
+            >
+              Register donation / Spende registrieren
+            </Button>
+          </CardActions>
+        </Card>
 
         <p>
           Data from {convertDateToString(data.getLastDataUpdateTime())}: (last refresh at {convertDateToString(dataUpdateTime)})

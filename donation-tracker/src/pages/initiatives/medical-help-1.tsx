@@ -5,7 +5,7 @@ import CampaignDetailsModule from '../../modules/campaignDetails';
 const CampaignDetailsPage = (props: any) => {
   return (
     <CampaignDetailsModule campaignKey='medication'>
-      Medical 1 Details!!!
+      Medical 1 Details &amp; updates here...
     </CampaignDetailsModule>
   );
 }
