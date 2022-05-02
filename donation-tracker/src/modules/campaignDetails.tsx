@@ -95,7 +95,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
                       <Typography px={2} mt={'4px'} flex="1 0 40%" textAlign="right">
                         {props.donationItem.remainingNeed
                           ? `${props.donationItem.remainingNeed} ${props.donationItem.unit} still needed / werden noch gebraucht`
-                          : 'Goal accomplished/ Ziel erreicht'}
+                          : 'Goal accomplished / Ziel erreicht'}
                       </Typography>
                     </Box>
                   ))}
