@@ -17,6 +17,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { ChevronLeft } from '@mui/icons-material';
 import DonationRow from '../components/donationRow';
+import DonationPill from '../components/donationPill';
 
 const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) => {
   /* --- start of data connection code --- */
@@ -96,11 +97,9 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
                           <DonationRow {...props}></DonationRow>
                         </td>
                         <td>
-                          <Typography px={2} mt={'4px'} flex="1 0 40%" textAlign="right" whiteSpace="nowrap">
-                            {props.donationItem.remainingNeed
-                              ? `${props.donationItem.remainingNeed} ${props.donationItem.unit} still needed / werden noch gebraucht`
-                              : 'Goal accomplished / Ziel erreicht'}
-                          </Typography>
+                          <Box display="flex" mx={2}>
+                            <DonationPill donationItem={props.donationItem}></DonationPill>
+                          </Box>
                         </td>
                       </tr>
                     ))}
