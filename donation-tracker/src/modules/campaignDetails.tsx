@@ -87,18 +87,24 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
                 <Typography variant="subtitle1" marginY={1}>
                   {campaignDetails.ShortDonationDescription}
                 </Typography>
-                {donationItems
-                  .map((donationItem, index) => ({ donationItem, index }))
-                  .map(props => (
-                    <Box key={props.index} display="flex" flexDirection="row">
-                      <DonationRow {...props}></DonationRow>
-                      <Typography px={2} mt={'4px'} flex="1 0 40%" textAlign="right">
-                        {props.donationItem.remainingNeed
-                          ? `${props.donationItem.remainingNeed} ${props.donationItem.unit} still needed / werden noch gebraucht`
-                          : 'Goal accomplished / Ziel erreicht'}
-                      </Typography>
-                    </Box>
-                  ))}
+                <table>
+                  {donationItems
+                    .map((donationItem, index) => ({ donationItem, index }))
+                    .map(props => (
+                      <tr key={props.index}>
+                        <td width={'100%'}>
+                          <DonationRow {...props}></DonationRow>
+                        </td>
+                        <td>
+                          <Typography px={2} mt={'4px'} flex="1 0 40%" textAlign="right" whiteSpace="nowrap">
+                            {props.donationItem.remainingNeed
+                              ? `${props.donationItem.remainingNeed} ${props.donationItem.unit} still needed / werden noch gebraucht`
+                              : 'Goal accomplished / Ziel erreicht'}
+                          </Typography>
+                        </td>
+                      </tr>
+                    ))}
+                </table>
               </>
             )}
           </CardContent>
