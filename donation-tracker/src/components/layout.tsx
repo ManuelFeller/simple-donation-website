@@ -56,7 +56,7 @@ const LayoutModule = (props: any) => {
     <ThemeProvider theme={theme}>
       <AppBar position="sticky">
         <Container maxWidth="xl">
-          <Toolbar disableGutters>
+          <Toolbar disableGutters sx={{ alignItems: { xs: 'center', md: 'baseline' } }}>
             <Typography variant="h6" noWrap component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
               {titleText}
             </Typography>
