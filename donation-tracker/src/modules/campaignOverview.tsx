@@ -22,9 +22,14 @@ const CampaignOverviewModule = (props: any) => {
   /* --- start of data connection code --- */
   // get the data store object
   let data = DataStore.getInstance();
+  
+  let initialUpdateTime = data.getLastDataLoadingTime();
+  if (initialUpdateTime === undefined) {
+    initialUpdateTime = new Date(1970, 1, 1);
+  }
 
   // set up a state to have a content re-render trigger
-  const [dataUpdateTime, setDataUpdateTime] = useState(new Date(1970, 1, 1));
+  const [dataUpdateTime, setDataUpdateTime] = useState(initialUpdateTime);
 
   // page lifecycle registrations (in the functional component way)
   useEffect(() => {

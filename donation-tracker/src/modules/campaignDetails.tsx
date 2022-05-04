@@ -27,8 +27,13 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
   // get the data store object
   let data = DataStore.getInstance();
 
+  let initialUpdateTime = data.getLastDataLoadingTime();
+  if (initialUpdateTime === undefined) {
+    initialUpdateTime = new Date(1970, 1, 1)
+  }
+
   // set up a state to have a content re-render trigger
-  const [dataUpdateTime, setDataUpdateTime] = useState(new Date(1970, 1, 1));
+  const [dataUpdateTime, setDataUpdateTime] = useState(initialUpdateTime);
 
   // page lifecycle registrations (in the functional component way)
   useEffect(() => {
@@ -93,16 +98,18 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
                   {campaignDetails.ShortDonationDescription}
                 </Typography>
                 <table>
-                  {donationItems.map((donationItem, index) => (
-                    <tr key={index}>
-                      <td width={'100%'}>
-                        <DonationRow donationItem={donationItem}></DonationRow>
-                      </td>
-                      <td style={{ paddingLeft: 16 }}>
-                        <DonationPill donationItem={donationItem}></DonationPill>
-                      </td>
-                    </tr>
-                  ))}
+                  <tbody>
+                    {donationItems.map((donationItem, index) => (
+                      <tr key={index}>
+                        <td width={'100%'}>
+                          <DonationRow donationItem={donationItem}></DonationRow>
+                        </td>
+                        <td style={{ paddingLeft: 16 }}>
+                          <DonationPill donationItem={donationItem}></DonationPill>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
               </>
             )}
