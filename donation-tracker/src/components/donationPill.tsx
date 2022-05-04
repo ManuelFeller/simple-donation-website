@@ -7,6 +7,7 @@ import { DonationItem } from '../types/donationItem';
 const DonationPill = ({ donationItem }: { donationItem: DonationItem }) => {
   return (
     <Typography
+      variant="overline"
       fontSize="12px"
       fontWeight="bold"
       px={1}
@@ -16,7 +17,6 @@ const DonationPill = ({ donationItem }: { donationItem: DonationItem }) => {
       color={donationItem.remainingNeed ? 'rgba(25,118,210,0.75)' : 'rgba(0,164,0,0.75)'}
       border={`2px solid ${donationItem.remainingNeed ? 'rgba(25,118,210,0.75)' : 'rgba(0,164,0,0.75)'}`}
       borderRadius={5}
-      textTransform="uppercase"
       component="div"
     >
       {donationItem.remainingNeed ? `Need + ${donationItem.remainingNeed}` : 'Complete'}
