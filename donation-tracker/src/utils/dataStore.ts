@@ -227,7 +227,7 @@ export default class DataStore {
 			}
 			// if new data is available and there is content extract the lines
 			if (rows.length > 0 && newDataAvailableOnline) {
-				this.debugLog('DataStore: Data extracting data from online source');
+				this.debugLog('DataStore: Data extracting required');
 				tmpParsedData.data = this.extractDataLines(rows);
 				// save newer data in local storage & class internal store
 				this.debugLog('DataStore: Persisting new data');
@@ -251,7 +251,7 @@ export default class DataStore {
 	 * @returns An array with the DonationItems that were extracted
 	 */
 	private extractDataLines(dataRows: string[]): Array<DonationItem> {
-		this.debugLog('DataStore: Data extracting data from online source');
+		this.debugLog('DataStore: Data extracting data lines from online source');
 		const tmpResult: Array<DonationItem> = [];
 		for (let idx = 1; idx < dataRows.length; idx++) {
 			const tmpLineData = this.parseCsvLine(dataRows[idx]);
