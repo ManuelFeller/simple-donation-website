@@ -19,7 +19,7 @@ const DonationPill = ({ donationItem }: { donationItem: DonationItem }) => {
       textTransform="uppercase"
       component="div"
     >
-      {donationItem.remainingNeed ? `+ ${donationItem.remainingNeed} ${donationItem.unit} needed` : 'Goal accomplished'}
+      {donationItem.remainingNeed ? `Need + ${donationItem.remainingNeed}` : 'Complete'}
     </Typography>
   );
 };
