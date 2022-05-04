@@ -18,14 +18,22 @@ import CardActions from '@mui/material/CardActions';
 import { ChevronLeft } from '@mui/icons-material';
 import DonationRow from '../components/donationRow';
 import DonationPill from '../components/donationPill';
+import PageMetadata from '../components/pageMetadata';
+
+import { isMobile } from "react-device-detect";
 
 const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) => {
   /* --- start of data connection code --- */
   // get the data store object
   let data = DataStore.getInstance();
 
+  let initialUpdateTime = data.getLastDataLoadingTime();
+  if (initialUpdateTime === undefined) {
+    initialUpdateTime = new Date(1970, 1, 1)
+  }
+
   // set up a state to have a content re-render trigger
-  const [dataUpdateTime, setDataUpdateTime] = useState(new Date(1970, 1, 1));
+  const [dataUpdateTime, setDataUpdateTime] = useState(initialUpdateTime);
 
   // page lifecycle registrations (in the functional component way)
   useEffect(() => {
@@ -64,10 +72,11 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
 
   return (
     <LayoutModule>
+      <PageMetadata title={campaignDetails.Title}></PageMetadata>
       <Container maxWidth="lg">
         <Box marginY={2}>
           <Button href={'/campaigns/'} onClick={event => handleClickOnLink(event, '/campaigns/')}>
-            <ChevronLeft /> back to campaigns / zurück zur den Sammlungen
+            <ChevronLeft /> back to campaigns / zurück zu den Sammlungen
           </Button>
         </Box>
         <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
@@ -89,19 +98,34 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
                   {campaignDetails.ShortDonationDescription}
                 </Typography>
                 <table>
-                  {donationItems.map((donationItem, index) => (
-                    <tr key={index}>
-                      <td width={'100%'}>
-                        <DonationRow donationItem={donationItem}></DonationRow>
-                      </td>
-                      <td style={{ paddingLeft: 16 }}>
-                        <DonationPill donationItem={donationItem}></DonationPill>
-                      </td>
-                    </tr>
-                  ))}
+                  <tbody>
+                    {donationItems.map((donationItem, index) => (
+                      <tr key={index}>
+                        <td width={'100%'}>
+                          <DonationRow donationItem={donationItem}></DonationRow>
+                        </td>
+                        <td style={{ paddingLeft: 16 }}>
+                          <DonationPill donationItem={donationItem}></DonationPill>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
               </>
             )}
+            {isMobile &&
+              <Typography component="div" sx={{ fontStyle: 'italic' }}>
+                Long-press a line if you want to see the full item description / Eine Zeile lange drücken um die ganze Beschreibung zu sehen
+              </Typography>
+            }
+            {(isMobile && PageConfiguration.AutoRefresh) && <>&nbsp;</>}
+            {PageConfiguration.AutoRefresh &&
+              <Typography component="div" sx={{ fontStyle: 'italic' }}>
+                🇬🇧 The data is refreshed in the background about every {PageConfiguration.MaxDataAgeInMinutes} minutes - so your registered donation may take a few minutes until it is shown here.
+                <br/>
+                🇩🇪 Die Daten werden ca. alle {PageConfiguration.MaxDataAgeInMinutes} Minuten im Hintergund aktualisiert - es kann also ein paar Minuten dauern bis Ihre Spendenregistrierung hier angezeiht wird.
+              </Typography>
+            }
           </CardContent>
           {campaignDetails.RegistrationFormUrl && (
             <CardActions sx={{ justifyContent: 'center' }}>
@@ -111,9 +135,11 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
             </CardActions>
           )}
         </Card>
-        <p>
-          Data from {convertDateToString(data.getLastDataUpdateTime())}: (last refresh at {convertDateToString(dataUpdateTime)})
-        </p>
+        &nbsp;
+        <Typography component="div" sx={{ fontStyle: 'italic', textAlign: 'center' }} style={{ color: 'gray' }}>
+          Data from {convertDateToString(data.getLastDataUpdateTime())}; last refresh at {convertDateToString(dataUpdateTime)}
+        </Typography>
+        &nbsp;
       </Container>
     </LayoutModule>
   );

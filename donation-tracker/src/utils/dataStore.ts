@@ -36,6 +36,12 @@ export default class DataStore {
 		if (tmpData !== null) {
 			this.debugLog('DataStore: Local data found, loading into memory');
 			this.localData = JSON.parse(tmpData);
+			// manually fix the date objects -> JSON.parse() does not do that as expected
+			const requestDateValueExtracted: string = (this.localData!.requestTime.toString());
+			this.localData!.requestTime = new Date(requestDateValueExtracted);
+			const updateDateValueExtracted: string = (this.localData!.timeStamp.toString());
+			this.localData!.timeStamp = new Date(updateDateValueExtracted);
+
 			this.hasLocalData = true;
 			if (this.isDataOutdated()) {
 				this.debugLog('DataStore: Local data outdated, querying online source scheduled');
@@ -221,7 +227,7 @@ export default class DataStore {
 			}
 			// if new data is available and there is content extract the lines
 			if (rows.length > 0 && newDataAvailableOnline) {
-				this.debugLog('DataStore: Data extracting data from online source');
+				this.debugLog('DataStore: Data extracting required');
 				tmpParsedData.data = this.extractDataLines(rows);
 				// save newer data in local storage & class internal store
 				this.debugLog('DataStore: Persisting new data');
@@ -245,7 +251,7 @@ export default class DataStore {
 	 * @returns An array with the DonationItems that were extracted
 	 */
 	private extractDataLines(dataRows: string[]): Array<DonationItem> {
-		this.debugLog('DataStore: Data extracting data from online source');
+		this.debugLog('DataStore: Data extracting data lines from online source');
 		const tmpResult: Array<DonationItem> = [];
 		for (let idx = 1; idx < dataRows.length; idx++) {
 			const tmpLineData = this.parseCsvLine(dataRows[idx]);

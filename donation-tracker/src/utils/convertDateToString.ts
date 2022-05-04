@@ -1,1 +1,1 @@
-export const convertDateToString = (date: Date) => date?.toString() || 'unknown';
+export const convertDateToString = (date: Date) => date?.toLocaleString() || 'unknown';

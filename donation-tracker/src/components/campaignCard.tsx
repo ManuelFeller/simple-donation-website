@@ -80,19 +80,21 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
         {campaign.Status === 'collecting' ? (
           <Box display="flex" flexDirection="column" mt={1}>
             <table style={{ minHeight: minRowHeight * itemsPerPage, borderSpacing: 0 }}>
-              {donationItems
-                .map((donationItem, index) => ({ donationItem, index }))
-                .filter(({ index }) => (page - 1) * itemsPerPage <= index && index < page * itemsPerPage)
-                .map(({ donationItem, index }) => (
-                  <tr key={index} style={{ verticalAlign: 'top' }}>
-                    <td width={'100%'}>
-                      <DonationRow donationItem={donationItem}></DonationRow>
-                    </td>
-                    <td style={{ paddingLeft: 12, paddingTop: 8 }}>
-                      <DonationPill donationItem={donationItem}></DonationPill>
-                    </td>
-                  </tr>
-                ))}
+              <tbody>
+                {donationItems
+                  .map((donationItem, index) => ({ donationItem, index }))
+                  .filter(({ index }) => (page - 1) * itemsPerPage <= index && index < page * itemsPerPage)
+                  .map(({ donationItem, index }) => (
+                    <tr key={index} style={{ verticalAlign: 'top' }}>
+                      <td width={'100%'}>
+                        <DonationRow donationItem={donationItem}></DonationRow>
+                      </td>
+                      <td style={{ paddingLeft: 12, paddingTop: 8 }}>
+                        <DonationPill donationItem={donationItem}></DonationPill>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
             </table>
             {pageCount > 1 && (
               <Pagination

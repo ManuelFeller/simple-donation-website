@@ -2,13 +2,17 @@ import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `donation-tracker`,
-    siteUrl: `https://www.yourdomain.tld`
+    title: "#StandWithUkraine",
+    titleTemplate: "%s · #StandWithUkraine",
+    description:
+      "Collecting needed things for the people in Ukraine.",
+    image: "/static/media/tim-mossholder-BQa--UCtFqg-unsplash_1200.jpg", // Path to the image placed in the 'static' folder, in the project's root directory.
+    siteUrl: "https://helpukraine.ingelheim.mobi" // No trailing slash allowed!
   },
   plugins: ["gatsby-plugin-sass", "gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", {
     resolve: 'gatsby-plugin-manifest',
     options: {
-      "icon": "src/images/icon.png"
+      "icon": "src/images/tim-mossholder-BQa--UCtFqg-unsplash.jpg"
     }
   }, "gatsby-plugin-mdx", "gatsby-plugin-sharp", "gatsby-transformer-sharp", {
     resolve: 'gatsby-source-filesystem',

@@ -16,14 +16,20 @@ import DataStore from '../utils/dataStore';
 import LayoutModule from '../components/layout';
 import PageConfiguration from '../config';
 import { StaticImage } from 'gatsby-plugin-image';
+import PageMetadata from '../components/pageMetadata';
 
 const CampaignOverviewModule = (props: any) => {
   /* --- start of data connection code --- */
   // get the data store object
   let data = DataStore.getInstance();
+  
+  let initialUpdateTime = data.getLastDataLoadingTime();
+  if (initialUpdateTime === undefined) {
+    initialUpdateTime = new Date(1970, 1, 1);
+  }
 
   // set up a state to have a content re-render trigger
-  const [dataUpdateTime, setDataUpdateTime] = useState(new Date(1970, 1, 1));
+  const [dataUpdateTime, setDataUpdateTime] = useState(initialUpdateTime);
 
   // page lifecycle registrations (in the functional component way)
   useEffect(() => {
@@ -45,6 +51,7 @@ const CampaignOverviewModule = (props: any) => {
 
   return (
     <LayoutModule>
+      <PageMetadata title="Campaigns / Sammlungen"></PageMetadata>
       <Container maxWidth="lg">
         <Box marginX={-2}>
           <Box m={2}>
@@ -64,10 +71,20 @@ const CampaignOverviewModule = (props: any) => {
                 &nbsp;
                 <Typography component="div">
                   🇬🇧 <strong>Here you find details about the different local donation campaigns.</strong> You can participate in the ongoing ones or inform yourself about the ones that have already finished.
+                  {PageConfiguration.AutoRefresh &&
+                    <>
+                      &nbsp;<i>The data is refreshed in the background about every {PageConfiguration.MaxDataAgeInMinutes} minutes.</i>
+                    </>
+                  }
                 </Typography>
                 &nbsp;
                 <Typography component="div">
                   🇩🇪 <strong>Hier finden Sie Details zu den verschiedenen lokalen Spenden-Sammlungen.</strong> Sie können sich an laufenden beteiligen und über bereits abgeschlossene informieren.
+                  {PageConfiguration.AutoRefresh &&
+                    <>
+                      &nbsp;<i>Die Daten werden ca. alle {PageConfiguration.MaxDataAgeInMinutes} Minuten im Hintergund aktualisiert.</i>
+                    </>
+                  }
                 </Typography>
               </CardContent>
             </Card>
@@ -83,11 +100,12 @@ const CampaignOverviewModule = (props: any) => {
             ))}
           </Box>
         </Box>
+        &nbsp;
+        <Typography component="div" sx={{ fontStyle: 'italic', textAlign: 'center' }} style={{ color: 'gray' }}>
+          Data from {convertDateToString(data.getLastDataUpdateTime())}; last refresh at {convertDateToString(dataUpdateTime)}
+        </Typography>
+        &nbsp;
       </Container>
-
-      <p style={{color: 'gray'}}>
-        Data from {convertDateToString(data.getLastDataUpdateTime())}: (last refresh at {convertDateToString(dataUpdateTime)})
-      </p>
     </LayoutModule>
   );
 };
