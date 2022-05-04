@@ -114,8 +114,16 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
               </>
             )}
             {isMobile &&
-              <Typography component="div">
-                <i>Long-press a line if you want to see the full item description / Eine Zeile gedrückt halten um die ganze Beschreibung zu sehen</i>
+              <Typography component="div" sx={{ fontStyle: 'italic' }}>
+                Long-press a line if you want to see the full item description / Eine Zeile lange drücken um die ganze Beschreibung zu sehen
+              </Typography>
+            }
+            {(isMobile && PageConfiguration.AutoRefresh) && <>&nbsp;</>}
+            {PageConfiguration.AutoRefresh &&
+              <Typography component="div" sx={{ fontStyle: 'italic' }}>
+                🇬🇧 The data is refreshed in the background about every {PageConfiguration.MaxDataAgeInMinutes} minutes - so your registered donation may take a few minutes until it is shown here.
+                <br/>
+                🇩🇪 Die Daten werden ca. alle {PageConfiguration.MaxDataAgeInMinutes} Minuten im Hintergund aktualisiert - es kann also ein paar Minuten dauern bis Ihre Spendenregistrierung hier angezeiht wird.
               </Typography>
             }
           </CardContent>
@@ -127,9 +135,11 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
             </CardActions>
           )}
         </Card>
-        <p>
-          Data from {convertDateToString(data.getLastDataUpdateTime())}: (last refresh at {convertDateToString(dataUpdateTime)})
-        </p>
+        &nbsp;
+        <Typography component="div" sx={{ fontStyle: 'italic', textAlign: 'center' }} style={{ color: 'gray' }}>
+          Data from {convertDateToString(data.getLastDataUpdateTime())}; last refresh at {convertDateToString(dataUpdateTime)}
+        </Typography>
+        &nbsp;
       </Container>
     </LayoutModule>
   );

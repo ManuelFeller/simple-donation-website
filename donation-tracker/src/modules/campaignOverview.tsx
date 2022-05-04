@@ -71,10 +71,20 @@ const CampaignOverviewModule = (props: any) => {
                 &nbsp;
                 <Typography component="div">
                   🇬🇧 <strong>Here you find details about the different local donation campaigns.</strong> You can participate in the ongoing ones or inform yourself about the ones that have already finished.
+                  {PageConfiguration.AutoRefresh &&
+                    <>
+                      &nbsp;<i>The data is refreshed in the background about every {PageConfiguration.MaxDataAgeInMinutes} minutes.</i>
+                    </>
+                  }
                 </Typography>
                 &nbsp;
                 <Typography component="div">
                   🇩🇪 <strong>Hier finden Sie Details zu den verschiedenen lokalen Spenden-Sammlungen.</strong> Sie können sich an laufenden beteiligen und über bereits abgeschlossene informieren.
+                  {PageConfiguration.AutoRefresh &&
+                    <>
+                      &nbsp;<i>Die Daten werden ca. alle {PageConfiguration.MaxDataAgeInMinutes} Minuten im Hintergund aktualisiert.</i>
+                    </>
+                  }
                 </Typography>
               </CardContent>
             </Card>
@@ -90,11 +100,12 @@ const CampaignOverviewModule = (props: any) => {
             ))}
           </Box>
         </Box>
+        &nbsp;
+        <Typography component="div" sx={{ fontStyle: 'italic', textAlign: 'center' }} style={{ color: 'gray' }}>
+          Data from {convertDateToString(data.getLastDataUpdateTime())}; last refresh at {convertDateToString(dataUpdateTime)}
+        </Typography>
+        &nbsp;
       </Container>
-
-      <p style={{color: 'gray'}}>
-        Data from {convertDateToString(data.getLastDataUpdateTime())}: (last refresh at {convertDateToString(dataUpdateTime)})
-      </p>
     </LayoutModule>
   );
 };
