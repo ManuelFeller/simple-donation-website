@@ -59,7 +59,10 @@ const IndexPage = () => {
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
                 {expanded !== 'panel1' && <>
-                  We are a group of employees at a company in Ingelheim that have friends and family from or in the Ukraine <i>... click / tap to read more</i>
+                  We are a group of employees at a company in Ingelheim that have friends and family from or in the Ukraine <i>... expand to read more</i>
+                </>}
+                {expanded === 'panel1' && <>
+                  What is this about?
                 </>}
               </Typography>
             </AccordionSummary>
@@ -84,7 +87,10 @@ const IndexPage = () => {
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
                 {expanded !== 'panel2' && <>
-                  Wir sind eine Gruppe von Mitarbeitern eines Unternehmen in Ingelheim die Freunde und Familie in oder aus der Ukraine haben <i>... anklicken / antippen für mehr</i>
+                  Wir sind eine Gruppe von Mitarbeitern eines Unternehmen in Ingelheim die Freunde und Familie in oder aus der Ukraine haben <i>... ausklappen für mehr</i>
+                </>}
+                {expanded === 'panel2' && <>
+                  Worum geht es hier?
                 </>}
               </Typography>
             </AccordionSummary>
