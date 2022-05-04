@@ -20,6 +20,8 @@ import DonationRow from '../components/donationRow';
 import DonationPill from '../components/donationPill';
 import PageMetadata from '../components/pageMetadata';
 
+import { isMobile } from "react-device-detect";
+
 const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) => {
   /* --- start of data connection code --- */
   // get the data store object
@@ -104,6 +106,11 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
                 </table>
               </>
             )}
+            {isMobile &&
+              <Typography component="div">
+                <i>Long-press a line if you want to see the full item description / Eine Zeile gedrückt halten um die ganze Beschreibung zu sehen</i>
+              </Typography>
+            }
           </CardContent>
           {campaignDetails.RegistrationFormUrl && (
             <CardActions sx={{ justifyContent: 'center' }}>
