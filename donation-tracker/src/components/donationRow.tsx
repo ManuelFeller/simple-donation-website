@@ -13,7 +13,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 const DonationRow = ({ donationItem }: { donationItem: DonationItem }) => {
   return (
-    <Box position="relative" height="48px" flex="1 0 60%">
+    <Box position="relative" height="46px">
       <Box position="absolute" top="4px" left="0" right="0" display="flex" flexDirection="column">
         <Box display="flex" flexDirection="row">
           <Typography sx={{ flex: '1 1 auto', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>

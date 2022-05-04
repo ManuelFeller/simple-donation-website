@@ -9,6 +9,7 @@ import CardHeader from '@mui/material/CardHeader';
 import { Campaign } from '../types/campaign';
 import { DonationItem } from '../types/donationItem';
 import DonationRow from './donationRow';
+import DonationPill from './donationPill';
 
 interface Props {
   campaign: Campaign;
@@ -64,7 +65,7 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
   const pageCount = Math.ceil(donationItems.length / itemsPerPage);
   const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => setPage(value);
-  const minRowHeight = 48;
+  const minRowHeight = 50;
 
   return (
     <Card elevation={4} sx={{ flex: '0 1 560px', display: 'flex', flexDirection: 'column' }}>
@@ -74,25 +75,32 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
         avatar={getAvatarForStatus(campaign.Status)}
       ></CardHeader>
       <CardMedia component="img" height="194" image={campaign.TitleImage} />
-      <CardContent sx={{ flex: '1 0 auto', paddingBottom: 0}}>
+      <CardContent sx={{ flex: '1 0 auto', paddingBottom: 0 }}>
         {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}
         {campaign.Status === 'collecting' ? (
           <Box display="flex" flexDirection="column" mt={1}>
-            <Box minHeight={minRowHeight * itemsPerPage}>
+            <table style={{ minHeight: minRowHeight * itemsPerPage, borderSpacing: 0 }}>
               {donationItems
                 .map((donationItem, index) => ({ donationItem, index }))
                 .filter(({ index }) => (page - 1) * itemsPerPage <= index && index < page * itemsPerPage)
-                .map(props => (
-                  <DonationRow {...props} key={props.index % itemsPerPage}></DonationRow>
+                .map(({ donationItem, index }) => (
+                  <tr key={index} style={{ verticalAlign: 'top' }}>
+                    <td width={'100%'}>
+                      <DonationRow donationItem={donationItem}></DonationRow>
+                    </td>
+                    <td style={{ paddingLeft: 12, paddingTop: 8 }}>
+                      <DonationPill donationItem={donationItem}></DonationPill>
+                    </td>
+                  </tr>
                 ))}
-            </Box>
+            </table>
             {pageCount > 1 && (
               <Pagination
                 count={pageCount}
                 page={page}
                 onChange={handleChange}
                 size="small"
-                sx={{ display: 'flex', flex: '1 0 auto', alignItems: 'flex-end', alignSelf: 'flex-end' }}
+                sx={{ display: 'flex', flex: '1 0 auto', alignSelf: 'flex-start' }}
               />
             )}
           </Box>
