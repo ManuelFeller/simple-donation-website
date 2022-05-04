@@ -91,20 +91,16 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
                   {campaignDetails.ShortDonationDescription}
                 </Typography>
                 <table>
-                  {donationItems
-                    .map((donationItem, index) => ({ donationItem, index }))
-                    .map(props => (
-                      <tr key={props.index}>
-                        <td width={'100%'}>
-                          <DonationRow {...props}></DonationRow>
-                        </td>
-                        <td>
-                          <Box display="flex" mx={2}>
-                            <DonationPill donationItem={props.donationItem}></DonationPill>
-                          </Box>
-                        </td>
-                      </tr>
-                    ))}
+                  {donationItems.map((donationItem, index) => (
+                    <tr key={index}>
+                      <td width={'100%'}>
+                        <DonationRow donationItem={donationItem}></DonationRow>
+                      </td>
+                      <td style={{ paddingLeft: 16 }}>
+                        <DonationPill donationItem={donationItem}></DonationPill>
+                      </td>
+                    </tr>
+                  ))}
                 </table>
               </>
             )}
