@@ -18,6 +18,7 @@ import CardActions from '@mui/material/CardActions';
 import { ChevronLeft } from '@mui/icons-material';
 import DonationRow from '../components/donationRow';
 import DonationPill from '../components/donationPill';
+import PageMetadata from '../components/pageMetadata';
 
 const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) => {
   /* --- start of data connection code --- */
@@ -64,10 +65,11 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
 
   return (
     <LayoutModule>
+      <PageMetadata title={campaignDetails.Title}></PageMetadata>
       <Container maxWidth="lg">
         <Box marginY={2}>
           <Button href={'/campaigns/'} onClick={event => handleClickOnLink(event, '/campaigns/')}>
-            <ChevronLeft /> back to campaigns / zurück zur den Sammlungen
+            <ChevronLeft /> back to campaigns / zurück zu den Sammlungen
           </Button>
         </Box>
         <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>

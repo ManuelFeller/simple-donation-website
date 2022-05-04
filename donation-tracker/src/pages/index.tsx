@@ -13,6 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { navigate } from 'gatsby';
 import { StaticImage } from 'gatsby-plugin-image';
+import PageMetadata from '../components/pageMetadata';
 
 const IndexPage = () => {
 
@@ -30,6 +31,7 @@ const IndexPage = () => {
   };
 
   return <LayoutModule>
+    <PageMetadata title="Welcome / Willkommen"></PageMetadata>
     &nbsp;
     <Container maxWidth="lg">
       <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
@@ -107,6 +109,7 @@ const IndexPage = () => {
           </Button>
         </CardActions>
       </Card>
+      &nbsp;
     </Container>
   </LayoutModule>;
 };

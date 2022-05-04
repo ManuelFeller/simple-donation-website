@@ -6,15 +6,17 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import LayoutModule from '../components/layout';
 import PageConfiguration from '../config';
+import PageMetadata from '../components/pageMetadata';
 
 const ImprintModule = (props: any) => {
   // props.pageContext contains the context data from the gatsby-node page generation process
   return(
     <LayoutModule>
+      <PageMetadata title="Imprint / Impressum"></PageMetadata>
+      &nbsp;
       <Container maxWidth="lg">
-        &nbsp;
         <Typography variant="h2" component="h1"></Typography>
-        <Card sx={{ minWidth: 275 }}>
+        <Card elevation={4} sx={{ minWidth: 275 }}>
           <CardHeader
             title="Imprint / Impressum"
             subheader="Contact as required by TMG § 5 / Kontakt gem. TMG § 5"
@@ -30,7 +32,7 @@ const ImprintModule = (props: any) => {
           </CardContent>
         </Card>
         &nbsp;
-        <Card sx={{ minWidth: 275 }}>
+        <Card elevation={4} sx={{ minWidth: 275 }}>
           <CardHeader title="Cookie Policy" />
           <CardContent>
             <Typography component="div">
@@ -45,7 +47,7 @@ const ImprintModule = (props: any) => {
           </CardContent>
         </Card>
         &nbsp;
-        <Card sx={{ minWidth: 275 }}>
+        <Card elevation={4} sx={{ minWidth: 275 }}>
           <CardHeader title="Data Privacy / Datenschutz" />
           <CardContent>
             <Typography component="div">
@@ -89,6 +91,7 @@ const ImprintModule = (props: any) => {
             </Typography>
           </CardContent>
         </Card>
+        &nbsp;
       </Container>
     </LayoutModule>
   );

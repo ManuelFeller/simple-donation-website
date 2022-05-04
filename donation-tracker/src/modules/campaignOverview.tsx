@@ -16,6 +16,7 @@ import DataStore from '../utils/dataStore';
 import LayoutModule from '../components/layout';
 import PageConfiguration from '../config';
 import { StaticImage } from 'gatsby-plugin-image';
+import PageMetadata from '../components/pageMetadata';
 
 const CampaignOverviewModule = (props: any) => {
   /* --- start of data connection code --- */
@@ -45,6 +46,7 @@ const CampaignOverviewModule = (props: any) => {
 
   return (
     <LayoutModule>
+      <PageMetadata title="Campaigns / Sammlungen"></PageMetadata>
       <Container maxWidth="lg">
         <Box marginX={-2}>
           <Box m={2}>
