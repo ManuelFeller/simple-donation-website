@@ -36,6 +36,12 @@ export default class DataStore {
 		if (tmpData !== null) {
 			this.debugLog('DataStore: Local data found, loading into memory');
 			this.localData = JSON.parse(tmpData);
+			// manually fix the date objects -> JSON.parse() does not do that as expected
+			const requestDateValueExtracted: string = (this.localData!.requestTime.toString());
+			this.localData!.requestTime = new Date(requestDateValueExtracted);
+			const updateDateValueExtracted: string = (this.localData!.timeStamp.toString());
+			this.localData!.timeStamp = new Date(updateDateValueExtracted);
+
 			this.hasLocalData = true;
 			if (this.isDataOutdated()) {
 				this.debugLog('DataStore: Local data outdated, querying online source scheduled');
