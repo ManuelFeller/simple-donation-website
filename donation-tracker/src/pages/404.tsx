@@ -1,23 +1,27 @@
 import * as React from 'react';
-import { Link } from 'gatsby';
-import TestComponent from '../components/testComponent';
+import LayoutModule from '../components/layout';
+import PageMetadata from '../components/pageMetadata';
+import { Card, CardContent, CardHeader, Container, Typography } from '@mui/material';
 
 // markup
 const NotFoundPage = () => {
   return (
-    <main>
-      <title>Not found</title>
-      <h1>Page not found</h1>
-      <p>
-        Sorry{" "}
-        <span role="img" aria-label="Pensive emoji">
-          😔
-        </span>{" "}
-        we couldn’t find what you were looking for.
-        <br />
-        <Link to="/">Go home</Link>.
-      </p>
-    </main>
+    <LayoutModule>
+      <PageMetadata title="Page not found / Seite nicht gefunden"></PageMetadata>
+      &nbsp;
+      <Container maxWidth="lg">
+        <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
+        <CardHeader title="Error 404" subheader="Page not found / Seite nicht gefunden"></CardHeader>
+        <CardContent sx={{ flex: '1 0 auto' }}>
+          <Typography>            
+            We're sorry, but the page you requested is not available.<br/>
+            Es tut uns leid, aber die angeforderte Seite ist nicht vorhanden.
+          </Typography>
+        </CardContent>
+        </Card>
+      </Container>
+      &nbsp;
+    </LayoutModule>
   )
 }
 
