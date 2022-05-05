@@ -29,7 +29,7 @@ const titleText = '#StandWithUkraine';
 const shareLinks = [
   {
     name: 'Mail',
-    link: () => `mailto:?subject=${titleText}&body=Please join us in ${window.location.href} with helping people in Ukraine`,
+    link: () => `mailto:?subject=${titleText}&body=Please join us at ${window.location.href} with helping people in Ukraine`,
   },
 ];
 
