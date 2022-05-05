@@ -13,4 +13,4 @@ Also, right now we're still busy to get the version one into shape. So documenta
 If you want to contribute already:
 
 - be sure you know GatsbyJS decently (the SSR is not too complicated but needs to be considered)
-- you should be able to understand english and german (for now) - to make sure that the content is always up tp date in both languages
+- you should be able to understand English and German (for now) - to make sure that the content is always up to date in both languages
