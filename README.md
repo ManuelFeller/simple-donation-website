@@ -1,3 +1,5 @@
+[![Node.js CI](https://github.com/ManuelFeller/simple-donation-website/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/ManuelFeller/simple-donation-website/actions/workflows/node.js.yml)
+
 # Simple Donation Website
 
 A GatsbyJS based project to generate a website that can be used to ask for donations and also allow people to give feedback - using Google Forms &amp; Google Spreadsheets as "backend".
