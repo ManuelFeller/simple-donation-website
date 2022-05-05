@@ -19,6 +19,11 @@ export default class PageConfiguration {
    */
   static AutoRefresh: boolean = true;
 
+  /**
+   * The URL for the page - NO trailing / allowed
+   */
+  static PageUrl: string = 'https://helpukraine.ingelheim.mobi';
+
   static ImprintContact = {
     NameOfResponsible: 'Firstname Lastname',
     AddressLine1: 'Gateway 10',

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { navigate } from 'gatsby';
+import { useLocation } from '@reach/router';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -18,6 +19,7 @@ import '@fontsource/roboto-slab';
 
 import '../styles.scss';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import PageConfiguration from '../config';
 
 /* ToDo: import this from a central location */
 const mainLevelPages = [
@@ -26,15 +28,30 @@ const mainLevelPages = [
   { name: 'Imprint / Impressum', link: '/imprint/' },
 ];
 const titleText = '#StandWithUkraine';
-const shareLinks = [
-  {
-    name: 'Mail',
-    link: () => `mailto:?subject=${titleText}&body=Please join us at ${window.location.href} with helping people in Ukraine`,
-  },
-];
 
 const LayoutModule = (props: any) => {
+
+  const generateShareLinks = () => {
+    // default to configured Page URL (for SSR in node)
+    let shareUrl = PageConfiguration.PageUrl;
+    // if runtime (window is defined) override with actual page URL
+    if (typeof window !== 'undefined') {
+      shareUrl = window.location.href;
+    }
+    return [
+      {
+        name: 'Mail',
+        link: () => `mailto:?subject=${titleText}&body=Please join us at ${shareUrl} with helping people in Ukraine`,
+      },
+    ];
+  }
+  const location = useLocation();
+  React.useEffect(() => {
+    // make sure we update the share links on navigation changes (without this they stay with the link at load time)
+    setShareLinks(generateShareLinks());
+  }, [location]);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [shareLinks, setShareLinks] = React.useState<any>(generateShareLinks());
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -159,7 +176,7 @@ const LayoutModule = (props: any) => {
                 open={Boolean(anchorElShare)}
                 onClose={handleCloseShareMenu}
               >
-                {shareLinks.map((share, index) => (
+                {shareLinks.map((share: any, index: number) => (
                   <MenuItem
                     href={share.link()}
                     key={`shareMenuItem${index.toString()}`}
