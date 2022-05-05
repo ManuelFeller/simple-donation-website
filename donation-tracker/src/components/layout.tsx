@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { navigate } from 'gatsby';
+import { useLocation } from '@reach/router';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -29,7 +30,7 @@ const mainLevelPages = [
 const titleText = '#StandWithUkraine';
 
 const LayoutModule = (props: any) => {
-  
+
   const generateShareLinks = () => {
     // default to configured Page URL (for SSR in node)
     let shareUrl = PageConfiguration.PageUrl;
@@ -44,6 +45,11 @@ const LayoutModule = (props: any) => {
       },
     ];
   }
+  const location = useLocation();
+  React.useEffect(() => {
+    // make sure we update the share links on navigation changes (without this they stay with the link at load time)
+    setShareLinks(generateShareLinks());
+  }, [location]);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [shareLinks, setShareLinks] = React.useState<any>(generateShareLinks());
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -57,8 +63,6 @@ const LayoutModule = (props: any) => {
     event.preventDefault();
     navigate(itemLink);
     setAnchorElNav(null);
-    // make sure we update the share links (without this they stay with the link at load time)
-    setShareLinks(generateShareLinks());
   };
 
   const [anchorElShare, setAnchorElShare] = React.useState<null | HTMLElement>(null);
