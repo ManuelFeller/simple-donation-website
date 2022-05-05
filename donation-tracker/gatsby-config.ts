@@ -1,4 +1,6 @@
 import type { GatsbyConfig } from "gatsby";
+import PageConfiguration from "./src/config";
+
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -7,7 +9,7 @@ const config: GatsbyConfig = {
     description:
       "Collecting needed things for the people in Ukraine.",
     image: "/static/media/tim-mossholder-BQa--UCtFqg-unsplash_1200.jpg", // Path to the image placed in the 'static' folder, in the project's root directory.
-    siteUrl: "https://helpukraine.ingelheim.mobi" // No trailing slash allowed!
+    siteUrl: PageConfiguration.PageUrl
   },
   plugins: ["gatsby-plugin-sass", "gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", {
     resolve: 'gatsby-plugin-manifest',
