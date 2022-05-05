@@ -15,15 +15,39 @@ export default class PageConfiguration {
    */
   static LogToConsole: boolean = true;
   /**
-   * Decide if the data should be refreshed automatically or only on explicit user interaction
+   * Decide if the data should be refreshed automatically or only on explicit user interaction (keep on true for now, manual refresh needs to be implemented)
    */
   static AutoRefresh: boolean = true;
-
   /**
    * The URL for the page - NO trailing / allowed
    */
   static PageUrl: string = 'https://helpukraine.ingelheim.mobi';
-
+  /**
+   * Image used as default one for social cards when sharing.
+   * Use path from server root (e.g. '/yourFileInTheStaticFolder.jpg') - place it in the 'donation-website/static/' folder of this project.
+   * Sub-folders are possible, remember to add them to the path in that case
+   */
+  static defaultPageSocialCardImage: string = '/media/tim-mossholder-BQa--UCtFqg-unsplash_1200.jpg';
+  /**
+   * The default description used in the page metadata on pages that do not override it (e.g. the Imprint)
+   */
+  static defaultDescription: string = 'Collecting needed things for the people in Ukraine.';
+  /**
+   * File to generate the icons for the page from - for best results use a square image and make sure it has 1024 x 1024 pixels or more.
+   * Image should be located in 'src/images/' (e.g. 'src/images/yourIconTemplate.jpg'), and that part of the path needs to be part of the configuration
+   */
+  static pageIconFile: string = 'src/images/tim-mossholder-BQa--UCtFqg-unsplash.jpg';
+  /**
+   * The title for a page - default fallback if a page does not provide it's own title
+   */
+  static pageTitle: string = '#StandWithUkraine';
+  /**
+   * The template for the page titles in the browser - will change the %s to the title of the currently loaded page
+   */
+  static titleTemplate: string = '%s · #StandWithUkraine'
+  /**
+   * The contact details that are used in the imprint
+   */
   static ImprintContact = {
     NameOfResponsible: 'Firstname Lastname',
     AddressLine1: 'Gateway 10',
@@ -34,7 +58,9 @@ export default class PageConfiguration {
     ContactEmail: 'website@domain.tld',
     PrivacyEmail: 'privacy@domain.tld',
   };
-
+  /**
+   * The configuration for the campaign(s) that are shown on the generated website
+   */
   static CampaignDetails: Campaign[] = [
     {
       Key: 'civilian',

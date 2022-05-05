@@ -1,20 +1,18 @@
 import type { GatsbyConfig } from "gatsby";
 import PageConfiguration from "./src/config";
 
-
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: "#StandWithUkraine",
-    titleTemplate: "%s · #StandWithUkraine",
-    description:
-      "Collecting needed things for the people in Ukraine.",
-    image: "/static/media/tim-mossholder-BQa--UCtFqg-unsplash_1200.jpg", // Path to the image placed in the 'static' folder, in the project's root directory.
+    title: PageConfiguration.pageTitle,
+    titleTemplate: PageConfiguration.titleTemplate,
+    description: PageConfiguration.defaultDescription,
+    image: PageConfiguration.defaultPageSocialCardImage,
     siteUrl: PageConfiguration.PageUrl
   },
   plugins: ["gatsby-plugin-sass", "gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", {
     resolve: 'gatsby-plugin-manifest',
     options: {
-      "icon": "src/images/tim-mossholder-BQa--UCtFqg-unsplash.jpg"
+      "icon": PageConfiguration.pageIconFile
     }
   }, "gatsby-plugin-mdx", "gatsby-plugin-sharp", "gatsby-transformer-sharp", {
     resolve: 'gatsby-source-filesystem',
