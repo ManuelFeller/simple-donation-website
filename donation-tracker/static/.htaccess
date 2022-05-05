@@ -1,0 +1,4 @@
+# Apache Site Configuration for best use with GatsbyJS pages
+
+# set error page if documents are not found
+ErrorDocument 404 /404.html
