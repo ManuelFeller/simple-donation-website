@@ -1,3 +1,12 @@
 {
-	"easteregg": "🇬🇧🗿🥚"
+	"easteregg": "🇬🇧🗿🥚",
+	"menu.start": "Start",
+	"menu.about": "About us",
+	"menu.imprint": "Imprint",
+	"imprint.pageTitle": "Imprint",
+	"imprint.legalContact": "Contact as required by TMG § 5",
+	"imprint.cookiePolicy.title": "Cookie Policy",
+	"imprint.cookiePolicy.content": "",
+	"imprint.dataPrivacy.title": "Data Privacy / Datenschutz",
+	"imprint.dataPrivacy.content": ""
 }
