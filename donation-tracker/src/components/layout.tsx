@@ -14,23 +14,23 @@ import ShareIcon from '@mui/icons-material/Share';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import '@fontsource/roboto-slab';
+import '@fontsource/roboto-slab/800.css';
 
 import '../styles.scss';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PageConfiguration from '../config';
 
 /* ToDo: import this from a central location */
 const mainLevelPages = [
   { name: 'Start', link: '/' },
-  { name: 'Campaigns / Sammlungen', link: '/campaigns/' },
+  { name: 'About us / Über uns', link: '/about/' },
   { name: 'Imprint / Impressum', link: '/imprint/' },
 ];
 const titleText = '#StandWithUkraine';
 
 const LayoutModule = (props: any) => {
-
   const generateShareLinks = () => {
     // default to configured Page URL (for SSR in node)
     let shareUrl = PageConfiguration.PageUrl;
@@ -44,7 +44,7 @@ const LayoutModule = (props: any) => {
         link: () => `mailto:?subject=${titleText}&body=Please join us at ${shareUrl} with helping people in Ukraine`,
       },
     ];
-  }
+  };
   const location = useLocation();
   React.useEffect(() => {
     // make sure we update the share links on navigation changes (without this they stay with the link at load time)
@@ -88,6 +88,13 @@ const LayoutModule = (props: any) => {
       },
       button: {
         fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
+      },
+    },
+    components: {
+      MuiCard: {
+        defaultProps: {
+          elevation: 4,
+        },
       },
     },
   });

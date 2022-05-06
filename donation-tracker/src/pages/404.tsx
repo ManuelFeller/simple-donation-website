@@ -10,7 +10,7 @@ const NotFoundPage = () => {
       <PageMetadata title="Page not found / Seite nicht gefunden"></PageMetadata>
       &nbsp;
       <Container maxWidth="lg">
-        <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
+        <Card sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
         <CardHeader title="Error 404" subheader="Page not found / Seite nicht gefunden"></CardHeader>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography>            
