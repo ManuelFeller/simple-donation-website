@@ -20,7 +20,7 @@ import DonationRow from '../components/donationRow';
 import DonationPill from '../components/donationPill';
 import PageMetadata from '../components/pageMetadata';
 
-import { isMobile } from "react-device-detect";
+import { isMobile } from 'react-device-detect';
 
 const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) => {
   /* --- start of data connection code --- */
@@ -29,7 +29,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
 
   let initialUpdateTime = data.getLastDataLoadingTime();
   if (initialUpdateTime === undefined) {
-    initialUpdateTime = new Date(1970, 1, 1)
+    initialUpdateTime = new Date(1970, 1, 1);
   }
 
   // set up a state to have a content re-render trigger
@@ -75,11 +75,11 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
       <PageMetadata title={campaignDetails.Title}></PageMetadata>
       <Container maxWidth="lg">
         <Box marginY={2}>
-          <Button href={'/campaigns/'} onClick={event => handleClickOnLink(event, '/campaigns/')}>
-            <ChevronLeft /> back to campaigns / zurück zu den Sammlungen
+          <Button href={'/'} onClick={event => handleClickOnLink(event, '/')}>
+            <ChevronLeft /> Back
           </Button>
         </Box>
-        <Card elevation={4} sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
+        <Card sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
           <CardHeader
             title={'Campaign / Sammlung "'.concat(campaignDetails.Title, '"')}
             subheader={campaignDetails.ShortCampaignDescription}
@@ -105,7 +105,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
                           <DonationRow donationItem={donationItem}></DonationRow>
                         </td>
                         <td style={{ paddingLeft: 16 }}>
-                          <DonationPill donationItem={donationItem}></DonationPill>
+                          <DonationPill campaign={campaignDetails} donationItem={donationItem}></DonationPill>
                         </td>
                       </tr>
                     ))}
@@ -113,19 +113,11 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
                 </table>
               </>
             )}
-            {isMobile &&
+            {isMobile && (
               <Typography component="div" sx={{ fontStyle: 'italic' }}>
                 Long-press a line if you want to see the full item description / Eine Zeile lange drücken um die ganze Beschreibung zu sehen
               </Typography>
-            }
-            {(isMobile && PageConfiguration.AutoRefresh) && <>&nbsp;</>}
-            {PageConfiguration.AutoRefresh &&
-              <Typography component="div" sx={{ fontStyle: 'italic' }}>
-                🇬🇧 The data is refreshed in the background about every {PageConfiguration.MaxDataAgeInMinutes} minutes - so your registered donation may take a few minutes until it is shown here.
-                <br/>
-                🇩🇪 Die Daten werden ca. alle {PageConfiguration.MaxDataAgeInMinutes} Minuten im Hintergund aktualisiert - es kann also ein paar Minuten dauern bis Ihre Spendenregistrierung hier angezeiht wird.
-              </Typography>
-            }
+            )}
           </CardContent>
           {campaignDetails.RegistrationFormUrl && (
             <CardActions sx={{ justifyContent: 'center' }}>
@@ -135,6 +127,17 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) 
             </CardActions>
           )}
         </Card>
+        &nbsp;
+        {isMobile && PageConfiguration.AutoRefresh && <>&nbsp;</>}
+        {PageConfiguration.AutoRefresh && (
+          <Typography component="div" sx={{ fontStyle: 'italic' }}>
+            🇬🇧 The data is refreshed in the background about every {PageConfiguration.MaxDataAgeInMinutes} minutes - so your registered
+            donation may take a few minutes until it is shown here.
+            <br />
+            🇩🇪 Die Daten werden ca. alle {PageConfiguration.MaxDataAgeInMinutes} Minuten im Hintergund aktualisiert - es kann also ein paar
+            Minuten dauern bis Ihre Spendenregistrierung hier angezeiht wird.
+          </Typography>
+        )}
         &nbsp;
         <Typography component="div" sx={{ fontStyle: 'italic', textAlign: 'center' }} style={{ color: 'gray' }}>
           Data from {convertDateToString(data.getLastDataUpdateTime())}; last refresh at {convertDateToString(dataUpdateTime)}

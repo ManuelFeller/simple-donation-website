@@ -16,7 +16,7 @@ const ImprintModule = (props: any) => {
       &nbsp;
       <Container maxWidth="lg">
         <Typography variant="h2" component="h1"></Typography>
-        <Card elevation={4} sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 275 }}>
           <CardHeader
             title="Imprint / Impressum"
             subheader="Contact as required by TMG § 5 / Kontakt gem. TMG § 5"
@@ -32,7 +32,7 @@ const ImprintModule = (props: any) => {
           </CardContent>
         </Card>
         &nbsp;
-        <Card elevation={4} sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 275 }}>
           <CardHeader title="Cookie Policy" />
           <CardContent>
             <Typography component="div">
@@ -47,7 +47,7 @@ const ImprintModule = (props: any) => {
           </CardContent>
         </Card>
         &nbsp;
-        <Card elevation={4} sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 275 }}>
           <CardHeader title="Data Privacy / Datenschutz" />
           <CardContent>
             <Typography component="div">

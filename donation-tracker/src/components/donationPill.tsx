@@ -1,26 +1,33 @@
 import * as React from 'react';
 
-import { Typography } from '@mui/material';
+import { Button } from '@mui/material';
 
 import { DonationItem } from '../types/donationItem';
+import { Campaign } from '../types/campaign';
 
-const DonationPill = ({ donationItem }: { donationItem: DonationItem }) => {
+const DonationPill = ({ campaign, donationItem }: { donationItem: DonationItem; campaign: Campaign }) => {
   return (
-    <Typography
-      variant="overline"
-      fontSize="12px"
-      fontWeight="bold"
-      px={1}
-      py={0.5}
-      whiteSpace="nowrap"
-      sx={{ backgroundColor: donationItem.remainingNeed ? 'rgba(25,118,210,0.1)' : 'rgba(0,255,0,0.25)' }}
-      color={donationItem.remainingNeed ? 'rgba(25,118,210,0.75)' : 'rgba(0,164,0,0.75)'}
-      border={`2px solid ${donationItem.remainingNeed ? 'rgba(25,118,210,0.75)' : 'rgba(0,164,0,0.75)'}`}
-      borderRadius={5}
-      component="div"
+    <Button
+      href={campaign.RegistrationFormUrl}
+      target="_blank"
+      variant="outlined"
+      sx={{
+        borderRadius: 5,
+        backgroundColor: donationItem.remainingNeed ? 'rgba(25,118,210,0.1)' : 'rgba(0,255,0,0.25)',
+        border: `2px solid ${donationItem.remainingNeed ? 'rgba(25,118,210,0.75)' : 'rgba(0,164,0,0.75)'}`,
+        color: donationItem.remainingNeed ? 'rgba(25,118,210,0.75)' : 'rgba(0,164,0,0.75)',
+        fontWeight: 'bold',
+        justifyContent: 'flex-start',
+        lineHeight: 1.2,
+        width: '100%',
+        whiteSpace: 'nowrap',
+        ':hover': {
+          border: `2px solid ${donationItem.remainingNeed ? 'rgba(25,118,210,0.75)' : 'rgba(0,164,0,0.75)'}`,
+        },
+      }}
     >
       {donationItem.remainingNeed ? `Need + ${donationItem.remainingNeed}` : 'Complete'}
-    </Typography>
+    </Button>
   );
 };
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { navigate } from 'gatsby';
 
 import Card from '@mui/material/Card';
-import { Button, CardActions, CardContent, CardMedia, Typography, Avatar, Pagination, Box } from '@mui/material';
+import { Avatar, Box, Button, CardActions, CardContent, CardMedia, Pagination, Typography } from '@mui/material';
 import { green, blue, yellow, grey } from '@mui/material/colors';
 import CardHeader from '@mui/material/CardHeader';
 
@@ -68,7 +68,7 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
   const minRowHeight = 50;
 
   return (
-    <Card elevation={4} sx={{ flex: '0 1 560px', display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ flex: '0 1 560px', display: 'flex', flexDirection: 'column' }}>
       <CardHeader
         title={campaign.Title}
         subheader={campaign.ShortCampaignDescription}
@@ -90,11 +90,11 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
                         <DonationRow donationItem={donationItem}></DonationRow>
                       </td>
                       <td style={{ paddingLeft: 12, paddingTop: 8 }}>
-                        <DonationPill donationItem={donationItem}></DonationPill>
+                        <DonationPill campaign={campaign} donationItem={donationItem}></DonationPill>
                       </td>
                     </tr>
                   ))}
-                </tbody>
+              </tbody>
             </table>
             {pageCount > 1 && (
               <Pagination
