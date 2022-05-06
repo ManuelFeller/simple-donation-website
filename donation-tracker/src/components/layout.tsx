@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { navigate } from 'gatsby';
+import { navigate, graphql } from 'gatsby';
+import { Trans, useTranslation } from 'gatsby-plugin-react-i18next';
 import { useLocation } from '@reach/router';
 
 import AppBar from '@mui/material/AppBar';
@@ -22,15 +23,18 @@ import '@fontsource/roboto-slab/800.css';
 import '../styles.scss';
 import PageConfiguration from '../config';
 
-/* ToDo: import this from a central location */
-const mainLevelPages = [
-  { name: 'Start', link: '/' },
-  { name: 'About us / Über uns', link: '/about/' },
-  { name: 'Imprint / Impressum', link: '/imprint/' },
-];
-const titleText = '#StandWithUkraine';
+const titleText = PageConfiguration.pageTitle;
 
 const LayoutModule = (props: any) => {
+  const {t} = useTranslation();
+
+  /* ToDo: import this from a central location */
+  const mainLevelPages = [
+    { name: t('menu.start'), link: '/' },
+    { name: t('menu.about'), link: '/about/' },
+    { name: t('menu.imprint'), link: '/imprint/' },
+  ];
+
   const generateShareLinks = () => {
     // default to configured Page URL (for SSR in node)
     let shareUrl = PageConfiguration.PageUrl;
@@ -203,3 +207,17 @@ const LayoutModule = (props: any) => {
 };
 
 export default LayoutModule;
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`;

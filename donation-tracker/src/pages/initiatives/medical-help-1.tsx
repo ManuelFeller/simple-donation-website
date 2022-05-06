@@ -1,3 +1,4 @@
+import { graphql } from 'gatsby';
 import * as React from 'react';
 
 import CampaignDetailsModule from '../../modules/campaignDetails';
@@ -11,3 +12,17 @@ const CampaignDetailsPage = (props: any) => {
 }
 
 export default CampaignDetailsPage;
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`;
