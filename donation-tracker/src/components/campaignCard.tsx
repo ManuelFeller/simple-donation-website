@@ -58,7 +58,7 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
     }
   };
 
-  const campaignDetailsUrl = '/initiatives/'.concat(campaign.UrlSlug, '/');
+  const campaignDetailsUrl = '/campaigns/'.concat(campaign.UrlSlug, '/');
 
   // Pagination and layout logic
   const itemsPerPage = 4;
