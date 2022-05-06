@@ -3,9 +3,10 @@ import { Campaign } from './types/campaign';
 export default class PageConfiguration {
   /**
    * The URL to the published CSV export of the data (e.g. a Google Spreadsheet)
+   *
+   * Example Google Spreadsheet: https://docs.google.com/spreadsheets/d/e/[YOUR_PUBLISHED_FORM_URL]/pub?gid=[YOUR_GID]&single=true&output=csv
    */
-  static DataSource: string =
-    'https://docs.google.com/spreadsheets/d/e/2PACX-1vQM_VX8StPqet3KBtHzyLVSzqgC8jP2VgcK97Fs_UTI1thN2-za-MHSAc9bizcVMebIEhDf-0Di8arH/pub?gid=919395952&single=true&output=csv';
+  static DataSource: string = 'YOUR_LINK_HERE';
   /**
    * The maximum age of the locally cached data before it gets refreshed
    */
@@ -21,7 +22,7 @@ export default class PageConfiguration {
   /**
    * The URL for the page - NO trailing / allowed
    */
-  static PageUrl: string = 'https://helpukraine.ingelheim.mobi';
+  static PageUrl: string = 'https://YOUR-WEBSITE.TLD';
   /**
    * Image used as default one for social cards when sharing.
    * Use path from server root (e.g. '/yourFileInTheStaticFolder.jpg') - place it in the 'donation-website/static/' folder of this project.
@@ -40,11 +41,11 @@ export default class PageConfiguration {
   /**
    * The title for a page - default fallback if a page does not provide it's own title
    */
-  static pageTitle: string = '#StandWithUkraine';
+  static pageTitle: string = 'YOUR-PAGE-TITLE';
   /**
    * The template for the page titles in the browser - will change the %s to the title of the currently loaded page
    */
-  static titleTemplate: string = '%s · #StandWithUkraine'
+  static titleTemplate: string = '%s · YOUR-PAGE-TITLE';
   /**
    * The contact details that are used in the imprint
    */
@@ -63,43 +64,30 @@ export default class PageConfiguration {
    */
   static CampaignDetails: Campaign[] = [
     {
-      Key: 'civilian',
-      Title: 'Civilian Help 1',
-			ShortCampaignDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
+      Key: 'ongoing',
+      Title: '??? for ???',
+      ShortCampaignDescription: 'People at ??? need ??? help for ???!',
       TitleImage: '/media/campaignCardMedia.svg',
-			ShortDonationDescription: 'Here you can find the list of items that are the most urgent for the refugees within Ukraine.',
-      DetailsFile: './src/campaigns/cvh1.txt',
-      UrlSlug: 'civilian-help-1',
-      Status: 'collecting',
+      ShortDonationDescription: 'To help ??? with ??? we need this',
+      DetailsFile: './data/campaigns/ongoing.txt',
+      UrlSlug: 'ongoing-campaign', // this will be used as URL to the campaigns detail page, so 'page-name' will become https://yoursite.tld/campaigns/page-name/
+      Status: 'collecting', // 'collecting' or 'preparing' or 'transfer' or 'delivered' or 'closed'
       Photos: [],
-      StartDate: new Date(2022, 4, 3),
-      RegistrationFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSd1cvk-HVWsq4pZ9Aiu2wF8y3_AKMNosmwDZEGk1qcie-Ccmg/viewform',
+      StartDate: new Date(2022, 3, 3), // please remember that JavaScript starts months from 0, so 0 = January and 11 = December!
+      RegistrationFormUrl: 'https://YOUR-FORM-WEBSITE.TLD/FORMID',
     },
     {
-      Key: 'medication',
-      Title: 'Medical Help 1',
-			ShortCampaignDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
+      Key: 'finished',
+      Title: '??? for ???',
+      ShortCampaignDescription: 'People at ??? need ??? help for ???!',
       TitleImage: '/media/campaignCardMedia.svg',
-      ShortDonationDescription: 'Here you can find the list of items that are the most urgent for the refugees within Ukraine.',
-      DetailsFile: './src/campaigns/cvh1.txt',
-      UrlSlug: 'medical-help-1',
-      Status: 'collecting',
+      ShortDonationDescription: 'To help ??? with ??? we need this',
+      DetailsFile: './data/campaigns/finished.txt',
+      UrlSlug: 'finished-campaign', // this will be used as URL to the campaigns detail page, so 'page-name' will become https://yoursite.tld/campaigns/page-name/
+      Status: 'delivered', // 'collecting' or 'preparing' or 'transfer' or 'delivered' or 'closed'
       Photos: [],
-      StartDate: new Date(2022, 4, 2),
-      RegistrationFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSd1cvk-HVWsq4pZ9Aiu2wF8y3_AKMNosmwDZEGk1qcie-Ccmg/viewform',
-    },
-		{
-      Key: 'army',
-      Title: 'Medical Help 2',
-			ShortCampaignDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
-      TitleImage: '/media/campaignCardMedia.svg',
-      ShortDonationDescription: 'Here you can find the list of items that are the most urgent for the refugees within Ukraine.',
-      DetailsFile: './src/campaigns/cvh1.txt',
-      UrlSlug: 'medical-help-2',
-      Status: 'collecting',
-      Photos: [],
-      StartDate: new Date(2022, 4, 1),
-      RegistrationFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSd1cvk-HVWsq4pZ9Aiu2wF8y3_AKMNosmwDZEGk1qcie-Ccmg/viewform',
+      StartDate: new Date(2022, 4, 1), // please remember that JavaScript starts months from 0, so 0 = January and 11 = December!
+      RegistrationFormUrl: 'https://YOUR-FORM-WEBSITE.TLD/FORMID',
     },
   ];
 }
