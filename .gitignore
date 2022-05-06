@@ -107,3 +107,7 @@ dist
 donation-tracker/public/**
 
 .npmrc
+
+donation-tracker/src/config.ts
+
+donation-tracker/src/pages/campaigns/**
