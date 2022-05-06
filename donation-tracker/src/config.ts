@@ -36,7 +36,7 @@ export default class PageConfiguration {
    * File to generate the icons for the page from - for best results use a square image and make sure it has 1024 x 1024 pixels or more.
    * Image should be located in 'src/images/' (e.g. 'src/images/yourIconTemplate.jpg'), and that part of the path needs to be part of the configuration
    */
-  static pageIconFile: string = 'src/images/tim-mossholder-BQa--UCtFqg-unsplash.jpg';
+  static pageIconFile: string = 'src/images/swu.svg';
   /**
    * The title for a page - default fallback if a page does not provide it's own title
    */
