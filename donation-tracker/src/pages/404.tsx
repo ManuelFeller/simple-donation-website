@@ -2,6 +2,7 @@ import * as React from 'react';
 import LayoutModule from '../components/layout';
 import PageMetadata from '../components/pageMetadata';
 import { Card, CardContent, CardHeader, Container, Typography } from '@mui/material';
+import { graphql } from 'gatsby';
 
 // markup
 const NotFoundPage = () => {
@@ -26,3 +27,17 @@ const NotFoundPage = () => {
 }
 
 export default NotFoundPage
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`;

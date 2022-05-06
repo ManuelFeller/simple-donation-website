@@ -89,7 +89,7 @@ export default class PageConfiguration {
       RegistrationFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSd1cvk-HVWsq4pZ9Aiu2wF8y3_AKMNosmwDZEGk1qcie-Ccmg/viewform',
     },
 		{
-      Key: 'army',
+      Key: 'protection',
       Title: 'Medical Help 2',
 			ShortCampaignDescription: 'Many people had to run away from the war in Ukraine and move to another city where is safe, and need help.',
       TitleImage: '/media/campaignCardMedia.svg',
