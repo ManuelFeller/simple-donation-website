@@ -32,7 +32,7 @@ const config: GatsbyConfig = {
     resolve: 'gatsby-source-filesystem',
     options: {
       "name": "locale",
-      "path": "./src/locales/"
+      "path": "./locales/"
     },
     __key: "locale"
   },
