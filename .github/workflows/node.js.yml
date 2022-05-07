@@ -29,6 +29,8 @@ jobs:
     - name: Install packages via npm ci
       run: npm ci
       working-directory: donation-tracker
-    - name: Run build
+    - name: Copy config template as dummy config
+      run: cp donation-tracker/src/config.template.ts donation-tracker/src/config.ts
+    - name: Run GatsbyJS build
       run: npm run build --if-present
       working-directory: donation-tracker
