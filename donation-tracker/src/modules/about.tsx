@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 
 import LayoutModule from '../components/layout';
 import PageMetadata from '../components/pageMetadata';
+import { graphql } from 'gatsby';
 
 const AboutModule = () => {
   return (
@@ -50,3 +51,17 @@ const AboutModule = () => {
 };
 
 export default AboutModule;
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`;

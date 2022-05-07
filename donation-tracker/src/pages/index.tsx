@@ -12,6 +12,7 @@ import PageMetadata from '../components/pageMetadata';
 import CampaignListing from '../components/campaignListing';
 
 import PageConfiguration from '../config';
+import { graphql } from 'gatsby';
 
 const IndexPage = () => {
   return (
@@ -62,3 +63,17 @@ const IndexPage = () => {
 };
 
 export default IndexPage;
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`;
