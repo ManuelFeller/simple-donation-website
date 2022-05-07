@@ -10,6 +10,7 @@ import { Campaign } from '../types/campaign';
 import { DonationItem } from '../types/donationItem';
 import DonationRow from './donationRow';
 import DonationPill from './donationPill';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   campaign: Campaign;
@@ -17,6 +18,8 @@ interface Props {
 }
 
 const CampaignCard = ({ campaign, donationItems }: Props) => {
+  const { t } = useTranslation();
+
   const handleClickOnLink = (event: React.MouseEvent<HTMLElement>, itemLink: string) => {
     // this handles the navigation if JavaScript is active
     event.preventDefault();
@@ -112,7 +115,7 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
       </CardContent>
       <CardActions>
         <Button sx={{ width: '100%' }} href={campaignDetailsUrl} onClick={event => handleClickOnLink(event, campaignDetailsUrl)}>
-          Details
+          {t('campaign.showDetails')}
         </Button>
       </CardActions>
     </Card>

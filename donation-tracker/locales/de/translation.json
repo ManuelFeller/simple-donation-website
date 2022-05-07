@@ -1,12 +1,14 @@
 {
-	"easteregg": "🇩🇪🗿🥚",
-	"menu.start": "Start",
-	"menu.about": "Über uns",
-	"menu.imprint": "Impressum",
-	"imprint.pageTitle": "Impressum",
-	"imprint.legalContact": "Kontakt gem. TMG § 5",
-	"imprint.cookiePolicy.title": "Cookie Informationen",
-	"imprint.cookiePolicy.content": "<1>Diese Seite nutzt keine Cookies.</1><br/>Wir speichern temporär die Daten was gespendet werden kann und die Sprachauswahl im so genannten Local Storage des Browsers (Variablenname <3>donationCache</3> und <3>gatsby-i18next-language</3>) und übertragen diese Information niemals irgendwo hin. Um diesen Zwischenspeicher zu löschen müssen sie den Local Storage für diese Seite in Ihrem Browser zurücksetzten.",
-	"imprint.dataPrivacy.title": "Datenschutz",
-	"imprint.dataPrivacy.content": "Wir nutzen Google Dienste (Google Forms &amp; Google Spreadsheets) um die Informationen was benötigt wird und was schon gespendet wurde zu verwalten.<br/>Das bedeutet das Google Ihre IP Adresse erhält und auch alle Eingaben in die verlinkten Formulare verarbeitet.<br/>Wir erfordern keinen Login um die Formulare auszufüllen, daher können sie die anonym bleiben indem Sie ein privates Browserfenster zum Ausfüllen benutzen.<br/>Um Ihre eingegebenen Daten zu löschen nachdem Sie diese übermittelt haben benötigen wir folgendes:<1><1>die URL des ausgefüllten Formular</1><1>Datum und Zeit der Übermittlung</1><1>die Daten die Sie übermittelt haben</1></1>Wir benötigen die übermittelten Daten in der Anfrage um den Datensatz eindeutig zu identifizieren - weil wir keine andere Möglichkeit haben einduetig herauszufinden wer was übermittelt hat.<br/>Bitte senden Sie die Anfrage an {{email}}"
+  "campaign.showDetails": "Kampagniendetails",
+  "campaign.donate": "Spenden",
+  "easteregg": "🇩🇪🗿🥚",
+  "menu.start": "Start",
+  "menu.about": "Über uns",
+  "menu.imprint": "Impressum",
+  "imprint.pageTitle": "Impressum",
+  "imprint.legalContact": "Kontakt gem. TMG § 5",
+  "imprint.cookiePolicy.title": "Cookie Informationen",
+  "imprint.cookiePolicy.content": "<1>Diese Seite nutzt keine Cookies.</1><br/>Wir speichern temporär die Daten was gespendet werden kann und die Sprachauswahl im so genannten Local Storage des Browsers (Variablenname <3>donationCache</3> und <3>gatsby-i18next-language</3>) und übertragen diese Information niemals irgendwo hin. Um diesen Zwischenspeicher zu löschen müssen sie den Local Storage für diese Seite in Ihrem Browser zurücksetzten.",
+  "imprint.dataPrivacy.title": "Datenschutz",
+  "imprint.dataPrivacy.content": "Wir nutzen Google Dienste (Google Forms &amp; Google Spreadsheets) um die Informationen was benötigt wird und was schon gespendet wurde zu verwalten.<br/>Das bedeutet das Google Ihre IP Adresse erhält und auch alle Eingaben in die verlinkten Formulare verarbeitet.<br/>Wir erfordern keinen Login um die Formulare auszufüllen, daher können sie die anonym bleiben indem Sie ein privates Browserfenster zum Ausfüllen benutzen.<br/>Um Ihre eingegebenen Daten zu löschen nachdem Sie diese übermittelt haben benötigen wir folgendes:<1><1>die URL des ausgefüllten Formular</1><1>Datum und Zeit der Übermittlung</1><1>die Daten die Sie übermittelt haben</1></1>Wir benötigen die übermittelten Daten in der Anfrage um den Datensatz eindeutig zu identifizieren - weil wir keine andere Möglichkeit haben einduetig herauszufinden wer was übermittelt hat.<br/>Bitte senden Sie die Anfrage an {{email}}"
 }

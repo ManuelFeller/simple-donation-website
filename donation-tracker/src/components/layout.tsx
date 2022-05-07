@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { navigate, graphql } from 'gatsby';
-import { Trans, useTranslation } from 'gatsby-plugin-react-i18next';
+import { navigate } from 'gatsby';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 import { useLocation } from '@reach/router';
 
 import AppBar from '@mui/material/AppBar';
@@ -22,11 +22,12 @@ import '@fontsource/roboto-slab/800.css';
 
 import '../styles.scss';
 import PageConfiguration from '../config';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const titleText = PageConfiguration.pageTitle;
 
 const LayoutModule = (props: any) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   /* ToDo: import this from a central location */
   const mainLevelPages = [
@@ -84,6 +85,11 @@ const LayoutModule = (props: any) => {
   };
 
   const theme = createTheme({
+    palette: {
+      background: {
+        default: '#fafafa',
+      },
+    },
     typography: {
       fontFamily: '"Roboto Slab","Roboto","Helvetica","Arial",sans-serif',
       overline: {
@@ -93,20 +99,27 @@ const LayoutModule = (props: any) => {
       button: {
         fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
       },
+      h4: {
+        marginBlock: '.5em',
+      },
+      h5: {
+        marginBlock: '.5em',
+      },
     },
     components: {
       MuiCard: {
         defaultProps: {
-          elevation: 4,
+          elevation: 1,
         },
       },
     },
   });
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="sticky">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{ alignItems: { xs: 'center', md: 'baseline' } }}>
+      <CssBaseline />
+      <AppBar color="default" position="sticky">
+        <Container maxWidth="lg">
+          <Toolbar color="default" disableGutters sx={{ alignItems: { xs: 'center', md: 'baseline' } }}>
             <Typography variant="h6" noWrap component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
               {titleText}
             </Typography>
@@ -140,7 +153,12 @@ const LayoutModule = (props: any) => {
                 }}
               >
                 {mainLevelPages.map((page, index) => (
-                  <MenuItem href={page.link} key={`mMenuItem${index.toString()}`} onClick={event => handleClickOnNavMenu(event, page.link)}>
+                  <MenuItem
+                    color="default"
+                    href={page.link}
+                    key={`mMenuItem${index.toString()}`}
+                    onClick={event => handleClickOnNavMenu(event, page.link)}
+                  >
                     <Typography textAlign="center">{page.name}</Typography>
                   </MenuItem>
                 ))}
@@ -155,7 +173,7 @@ const LayoutModule = (props: any) => {
                   href={page.link}
                   key={`dMenuItem${index.toString()}`}
                   onClick={event => handleClickOnNavMenu(event, page.link)}
-                  sx={{ my: 2, color: 'white', display: 'block', fontFamily: theme.typography.fontFamily }}
+                  sx={{ my: 2, color: 'black', display: 'block', fontFamily: theme.typography.fontFamily }}
                 >
                   {page.name}
                 </Button>
