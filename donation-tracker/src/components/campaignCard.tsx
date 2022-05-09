@@ -3,7 +3,6 @@ import { navigate } from 'gatsby';
 
 import Card from '@mui/material/Card';
 import { Avatar, Box, Button, CardActions, CardContent, CardMedia, Pagination, Typography } from '@mui/material';
-import { green, blue, yellow, grey } from '@mui/material/colors';
 import CardHeader from '@mui/material/CardHeader';
 
 import { Campaign } from '../types/campaign';
@@ -11,7 +10,6 @@ import { DonationItem } from '../types/donationItem';
 import DonationRow from './donationRow';
 import DonationPill from './donationPill';
 import { useTranslation } from 'react-i18next';
-import PageConfiguration from '../config.template';
 
 interface Props {
   campaign: Campaign;
@@ -45,7 +43,7 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
       ? `Raising: transport on ${campaign.CollectionEndDate.toISOString().substring(0, 10)}`
       : campaign.ShortCampaignDescription;
 
-  const campaignDetailsUrl = '/campaigns/'.concat(campaign.UrlSlug, '/');
+  const campaignDetailsUrl = campaign.UrlSlug ? `/campaigns/${campaign.UrlSlug}/` : '';
 
   // Pagination and layout logic
   const itemsPerPage = 4;
@@ -57,10 +55,10 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
   return (
     <Card sx={{ flex: '0 1 560px', display: 'flex', flexDirection: 'column' }}>
       <CardHeader title={campaign.Title} subheader={getSubHeader(campaign)} avatar={getAvatarForCampaign(campaign)}></CardHeader>
-      <CardMedia component="img" height="194" image={campaign.TitleImage} />
+      {campaign.TitleImage && <CardMedia component="img" height="194" image={campaign.TitleImage} />}
       <CardContent sx={{ flex: '1 0 auto', paddingBottom: 0 }}>
         {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}
-        {campaign.Status === 'collecting' ? (
+        {campaign.Status === 'collecting' && donationItems.length ? (
           <Box display="flex" flexDirection="column" mt={1}>
             <table style={{ minHeight: minRowHeight * itemsPerPage, borderSpacing: 0 }}>
               <tbody>
@@ -93,11 +91,13 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
           <div></div>
         )}
       </CardContent>
-      <CardActions>
-        <Button sx={{ width: '100%' }} href={campaignDetailsUrl} onClick={event => handleClickOnLink(event, campaignDetailsUrl)}>
-          {t('campaign.showDetails')}
-        </Button>
-      </CardActions>
+      {campaignDetailsUrl && (
+        <CardActions>
+          <Button sx={{ width: '100%' }} href={campaignDetailsUrl} onClick={event => handleClickOnLink(event, campaignDetailsUrl)}>
+            {t('campaign.showDetails')}
+          </Button>
+        </CardActions>
+      )}
     </Card>
   );
 };

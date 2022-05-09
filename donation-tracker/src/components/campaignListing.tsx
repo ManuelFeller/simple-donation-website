@@ -10,7 +10,7 @@ import { Campaign } from '../types/campaign';
 import DataStore from '../utils/dataStore';
 import PageConfiguration from '../config';
 
-const CampaignListing = () => {
+const CampaignListing = ({ campaignTypes }: { campaignTypes: Campaign['CampaignType'][] }) => {
   /* --- start of data connection code --- */
   // get the data store object
   let data = DataStore.getInstance();
@@ -39,7 +39,7 @@ const CampaignListing = () => {
   };
   /* --- end of data connection code --- */
 
-  const campaigns = PageConfiguration.CampaignDetails;
+  const campaigns = PageConfiguration.CampaignDetails.filter(({CampaignType: campaignType}) => campaignTypes.includes(campaignType));
 
   return (
     <>
