@@ -1,28 +1,30 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'react-i18next';
+
+import { navigate } from 'gatsby';
 
 import { Box, Button, Container, Typography } from '@mui/material';
-
-import PageConfiguration from '../config';
-import { Campaign } from '../types/campaign';
-import DataStore from '../utils/dataStore';
-import { navigate } from 'gatsby';
-import { convertDateToString } from '../utils/convertDateToString';
-import LayoutModule from '../components/layout';
-
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { ChevronLeft } from '@mui/icons-material';
+
+import PageConfiguration from '../config';
+import { Campaign } from '../types/campaign';
+import DataStore from '../utils/dataStore';
+import { convertDateToString } from '../utils/convertDateToString';
+import LayoutModule from '../components/layout';
 import DonationRow from '../components/donationRow';
 import DonationPill from '../components/donationPill';
 import PageMetadata from '../components/pageMetadata';
 
-import { isMobile } from 'react-device-detect';
+const CampaignDetailsModule = (props: { campaignKey: string; children: any }) => {
+  const { t } = useTranslation();
 
-const CampaignDetailsModule = (props: { campaignKey: string; children: any[] }) => {
   /* --- start of data connection code --- */
   // get the data store object
   let data = DataStore.getInstance();

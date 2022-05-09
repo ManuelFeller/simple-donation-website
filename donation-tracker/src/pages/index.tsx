@@ -1,20 +1,21 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { CardMedia, Container, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
+import ShareIcon from '@mui/icons-material/Share';
 
 import { StaticImage } from 'gatsby-plugin-image';
-
-import LayoutModule from '../components/layout';
-import PageMetadata from '../components/pageMetadata';
-import CampaignListing from '../components/campaignListing';
-
-import PageConfiguration from '../config';
 import { graphql } from 'gatsby';
 
+import LayoutModule, { emailShareLink } from '../components/layout';
+import PageMetadata from '../components/pageMetadata';
+import CampaignListing from '../components/campaignListing';
+import PageConfiguration from '../config';
+
 const IndexPage = () => {
+  const {t} = useTranslation();
   return (
     <LayoutModule>
       <PageMetadata title="Welcome / Willkommen"></PageMetadata>
@@ -34,31 +35,56 @@ const IndexPage = () => {
           </CardMedia>
         </Card>
 
-        <Typography sx={{ marginBlock: '1em' }}>
-          As each day of the war passes, more people in Ukraine are forced to leave their homes and continue to struggle with finding food,
-          water, medical supplies, shelter, and covering their basic needs.
-        </Typography>
-        <Typography sx={{ marginBlock: '1em' }}>
-          We are a group of employees who work in Ingelheim, Germany. We have joined our forces since April 2022 to volunteer and actively
-          support people in Ukraine affected by the russian invasion. We have friends and family members in Ukraine so we know very well
-          what is needed. We collaborate and support volunteers who deliver aid directly to people in need.
+        <Typography paragraph={true} sx={{ marginBlockStart: '1em' }}>
+          As each day of the russian attack passes, more people in Ukraine are forced to leave their homes and continue to struggle with
+          finding food, water, medical assistance, shelter, and covering their basic needs.
         </Typography>
 
-        <Typography variant="h5">You can help people in Ukraine with each donation</Typography>
-        <Typography>💙💛</Typography>
-        <Typography sx={{ marginBlockEnd: '1em' }}>
-          We are asking you to donate to the campaigns we organise, and help the citizens in Ukraine stand against russian attack to protect
-          the country they were born and raised in.
+        <Typography variant="body0" paragraph={true} sx={{ marginBlockEnd: 0 }}>
+          With every donation you help people in Ukraine directly
+        </Typography>
+        <Typography variant="body0" paragraph={true} sx={{ marginBlockEnd: 0 }}>
+          💙💛
+        </Typography>
+        <Typography variant="body0" paragraph={true}>
+          We are asking you to donate to the campaigns we organise. Every donation counts and helps the people in Ukraine fighting for their
+          lifes to protect the country they were born and raised in.
+        </Typography>
+        <Typography paragraph={true}>
+          All the information about the needs and whom we could help and support, we get from our friends in Ukraine who are also
+          volunteering and trying to help there. We mainly engage in collecting humanitarian aid and bringing it where it is needed most.
         </Typography>
 
-        <Typography variant="h4">Donations in-kind</Typography>
-
-        <Typography sx={{ marginBlock: '1em' }}>
+        <Typography variant="h4" id="donation-in-kind">
+          Donations in-kind
+        </Typography>
+        <Typography paragraph={true}>
           We regularly update our lists of needs based on information we receive from helpers in Ukraine and the progress of the campaigns.
         </Typography>
-        <Typography sx={{ marginBlock: '1em' }}>Currently the most urgent needs for the people within Ukraine:</Typography>
-
+        <Typography paragraph={true}>Currently the most urgent needs for people within Ukraine:</Typography>
         <CampaignListing />
+
+        <Typography variant="h4" id="about-us">
+          {t('menu.about')}
+        </Typography>
+        <Typography>🚜💙💛</Typography>
+        <Typography paragraph={true}>
+          We are a group of employees who work in Ingelheim, Germany. We joined our forces in April 2022 to actively support people in
+          Ukraine affected by the russian invasion.
+        </Typography>
+        <Typography paragraph={true}>
+          We have friends and family members in Ukraine so we know very well what is needed. We collaborate privately to raise donations and
+          send them to volunteers in Ukraine who deliver aid directly to people in need.
+        </Typography>
+        <Typography paragraph={true}>
+          Get in touch: <a href={PageConfiguration.ImprintContact.ContactEmail}>{PageConfiguration.ImprintContact.ContactEmail}</a>
+        </Typography>
+        <Typography paragraph={true} sx={{display:'flex'}}>
+          <a href={emailShareLink()}>Spread the word</a>
+          <ShareIcon />
+        </Typography>
+        <Typography sx={{marginBottom: 10}}><a href="imprint">{t('imprint.pageTitle')}</a></Typography>
+
       </Container>
     </LayoutModule>
   );

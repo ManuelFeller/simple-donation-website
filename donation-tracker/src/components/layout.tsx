@@ -24,6 +24,16 @@ import '../styles.scss';
 import PageConfiguration from '../config';
 import CssBaseline from '@mui/material/CssBaseline';
 
+export const emailShareLink = () => {
+  // default to configured Page URL (for SSR in node)
+  let shareUrl = PageConfiguration.PageUrl;
+  // if runtime (window is defined) override with actual page URL
+  if (typeof window !== 'undefined') {
+    shareUrl = window.location.href;
+  }
+  return `mailto:?subject=${titleText}&body=Please join us at ${shareUrl} with helping people in Ukraine`;
+};
+
 const titleText = PageConfiguration.pageTitle;
 
 const LayoutModule = (props: any) => {
@@ -32,24 +42,17 @@ const LayoutModule = (props: any) => {
   /* ToDo: import this from a central location */
   const mainLevelPages = [
     { name: t('menu.start'), link: '/' },
-    { name: t('menu.about'), link: '/about/' },
+    { name: t('menu.about'), link: '/#about-us' },
     { name: t('menu.imprint'), link: '/imprint/' },
   ];
 
-  const generateShareLinks = () => {
-    // default to configured Page URL (for SSR in node)
-    let shareUrl = PageConfiguration.PageUrl;
-    // if runtime (window is defined) override with actual page URL
-    if (typeof window !== 'undefined') {
-      shareUrl = window.location.href;
-    }
-    return [
-      {
-        name: 'Mail',
-        link: () => `mailto:?subject=${titleText}&body=Please join us at ${shareUrl} with helping people in Ukraine`,
-      },
-    ];
-  };
+  const generateShareLinks = () => [
+    {
+      name: 'Mail',
+      link: () => emailShareLink(),
+    },
+  ];
+
   const location = useLocation();
   React.useEffect(() => {
     // make sure we update the share links on navigation changes (without this they stay with the link at load time)
@@ -86,6 +89,12 @@ const LayoutModule = (props: any) => {
 
   const theme = createTheme({
     palette: {
+      primary: {
+        main: '#3F51B5',
+      },
+      success: {
+        main: '#7BC67E',
+      },
       background: {
         default: '#fafafa',
       },
@@ -105,6 +114,9 @@ const LayoutModule = (props: any) => {
       h5: {
         marginBlock: '.5em',
       },
+      body0: {
+        fontSize: '20px',
+      },
     },
     components: {
       MuiCard: {
@@ -114,15 +126,24 @@ const LayoutModule = (props: any) => {
       },
     },
   });
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar color="default" position="sticky">
         <Container maxWidth="lg">
           <Toolbar color="default" disableGutters sx={{ alignItems: { xs: 'center', md: 'baseline' } }}>
-            <Typography variant="h6" noWrap component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-              {titleText}
-            </Typography>
+            <Button
+              key="top"
+              href="/"
+              color="inherit"
+              sx={{ textTransform: 'none', display: { xs: 'none', md: 'flex', mr: 2 } }}
+              onClick={event => handleClickOnNavMenu(event, '/')}
+            >
+              <Typography variant="h6" noWrap component="div">
+                {titleText}
+              </Typography>
+            </Button>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
@@ -167,17 +188,20 @@ const LayoutModule = (props: any) => {
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               {titleText}
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {mainLevelPages.map((page, index) => (
-                <Button
-                  href={page.link}
-                  key={`dMenuItem${index.toString()}`}
-                  onClick={event => handleClickOnNavMenu(event, page.link)}
-                  sx={{ my: 2, color: 'black', display: 'block', fontFamily: theme.typography.fontFamily }}
-                >
-                  {page.name}
-                </Button>
-              ))}
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
+              {mainLevelPages
+                .filter((page, index) => index > 0)
+                .map((page, index) => (
+                  <Button
+                    href={page.link}
+                    key={`dMenuItem${index.toString()}`}
+                    color="inherit"
+                    sx={{ my: 2, display: 'block', fontFamily: theme.typography.fontFamily }}
+                    onClick={event => handleClickOnNavMenu(event, page.link)}
+                  >
+                    {page.name}
+                  </Button>
+                ))}
             </Box>
             <Box>
               <IconButton
@@ -185,8 +209,8 @@ const LayoutModule = (props: any) => {
                 aria-label="share menu"
                 aria-controls="menu-share"
                 aria-haspopup="true"
-                onClick={handleOpenShareMenu}
                 color="inherit"
+                onClick={handleOpenShareMenu}
               >
                 <ShareIcon />
               </IconButton>
@@ -225,3 +249,21 @@ const LayoutModule = (props: any) => {
 };
 
 export default LayoutModule;
+
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    body0: React.CSSProperties;
+  }
+
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    body0?: React.CSSProperties;
+  }
+}
+
+// Update the Typography's variant prop options
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    body0: true;
+  }
+}
