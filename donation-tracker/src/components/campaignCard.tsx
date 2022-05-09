@@ -10,20 +10,12 @@ import { DonationItem } from '../types/donationItem';
 import DonationRow from './donationRow';
 import DonationPill from './donationPill';
 import { useTranslation } from 'react-i18next';
+import CampaignAvatar from './campaignAvatar';
 
 interface Props {
   campaign: Campaign;
   donationItems: DonationItem[];
 }
-
-const campaignCardMap: { [campaignType in Campaign['CampaignType']]: string } = {
-  civilianSupport: 'media/campaign-types/9203968_ukraine_of_spikelet_wheat.svg',
-  medicalSupport: 'media/campaign-types/9203976_field_care_medical_hospital_military.svg',
-  civilianProtection: 'media/campaign-types/9203979_war_mobilization_soldier_father_child_mother_family.svg',
-  financialSupport: 'media/campaign-types/9153349_free_icons_design_ukraine_nation_country_love_heart.svg',
-  generalSupport: 'media/campaign-types/9153349_free_icons_design_ukraine_nation_country_love_heart.svg',
-  volunteering: 'media/campaign-types/9153349_free_icons_design_ukraine_nation_country_love_heart.svg',
-};
 
 const CampaignCard = ({ campaign, donationItems }: Props) => {
   const { t } = useTranslation();
@@ -33,10 +25,6 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
     event.preventDefault();
     navigate(itemLink);
   };
-
-  const getAvatarForCampaign = ({ CampaignType: campaignType, Title: title }: Campaign) => (
-    <Avatar variant="square" aria-label={title} title={title} src={campaignCardMap[campaignType]}></Avatar>
-  );
 
   const getSubHeader = (campaign: Campaign) =>
     campaign.Status === 'collecting' && campaign.CollectionEndDate
@@ -54,11 +42,15 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
 
   return (
     <Card sx={{ flex: '0 1 560px', display: 'flex', flexDirection: 'column' }}>
-      <CardHeader title={campaign.Title} subheader={getSubHeader(campaign)} avatar={getAvatarForCampaign(campaign)}></CardHeader>
+      <CardHeader
+        title={campaign.Title}
+        subheader={getSubHeader(campaign)}
+        avatar={<CampaignAvatar campaignType={campaign.CampaignType} title={campaign.Title} />}
+      />
       {campaign.TitleImage && <CardMedia component="img" height="194" image={campaign.TitleImage} />}
       <CardContent sx={{ flex: '1 0 auto', paddingBottom: 0 }}>
         {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}
-        {campaign.Status === 'collecting' && donationItems.length ? (
+        {campaign.Status === 'collecting' && donationItems.length > 0 ? (
           <Box display="flex" flexDirection="column" mt={1}>
             <table style={{ minHeight: minRowHeight * itemsPerPage, borderSpacing: 0 }}>
               <tbody>

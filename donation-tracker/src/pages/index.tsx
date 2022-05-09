@@ -13,7 +13,7 @@ import LayoutModule, { emailShareLink } from '../components/layout';
 import PageMetadata from '../components/pageMetadata';
 import CampaignListing from '../components/campaignListing';
 import PageConfiguration from '../config';
-import { Campaign } from '../types/campaign';
+import UpdateNote from '../components/updateNote';
 
 const GetInContactLink = () => <a href={PageConfiguration.ImprintContact.ContactEmail}>{PageConfiguration.ImprintContact.ContactEmail}</a>;
 
@@ -68,6 +68,14 @@ const IndexPage = () => {
         <CampaignListing campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection']} />
 
         <Typography variant="h4" id="volunteer">
+          Donations
+        </Typography>
+        <Typography paragraph={true}>
+          Another way to help is by donating money for targeted needs of the people we know and trust.
+        </Typography>
+        <CampaignListing campaignTypes={['financialSupport']} />
+
+        <Typography variant="h4" id="volunteer">
           Volunteer
         </Typography>
         <Typography paragraph={true}>
@@ -97,6 +105,8 @@ const IndexPage = () => {
         <Typography sx={{ marginBottom: 10 }}>
           <a href="imprint">{t('imprint.pageTitle')}</a>
         </Typography>
+
+        <UpdateNote />
       </Container>
     </LayoutModule>
   );
