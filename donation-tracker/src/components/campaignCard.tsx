@@ -11,11 +11,21 @@ import { DonationItem } from '../types/donationItem';
 import DonationRow from './donationRow';
 import DonationPill from './donationPill';
 import { useTranslation } from 'react-i18next';
+import PageConfiguration from '../config.template';
 
 interface Props {
   campaign: Campaign;
   donationItems: DonationItem[];
 }
+
+const campaignCardMap: { [campaignType in Campaign['CampaignType']]: string } = {
+  civilianSupport: 'media/campaign-types/9203968_ukraine_of_spikelet_wheat.svg',
+  medicalSupport: 'media/campaign-types/9203976_field_care_medical_hospital_military.svg',
+  civilianProtection: 'media/campaign-types/9203979_war_mobilization_soldier_father_child_mother_family.svg',
+  financialSupport: 'media/campaign-types/9153349_free_icons_design_ukraine_nation_country_love_heart.svg',
+  generalSupport: 'media/campaign-types/9153349_free_icons_design_ukraine_nation_country_love_heart.svg',
+  volunteering: 'media/campaign-types/9153349_free_icons_design_ukraine_nation_country_love_heart.svg',
+};
 
 const CampaignCard = ({ campaign, donationItems }: Props) => {
   const { t } = useTranslation();
@@ -26,40 +36,14 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
     navigate(itemLink);
   };
 
-  const getAvatarForStatus = (status: 'collecting' | 'preparing' | 'transfer' | 'delivered' | 'closed') => {
-    switch (status) {
-      case 'collecting':
-        return (
-          <Avatar sx={{ bgcolor: green[200] }} aria-label="collecting / Sammeln" title="collecting / Sammeln">
-            🛒
-          </Avatar>
-        );
-      case 'preparing':
-        return (
-          <Avatar sx={{ bgcolor: blue[200] }} aria-label="preparation / Vorbereiten" title="preparation / Vorbereiten">
-            📦
-          </Avatar>
-        );
-      case 'transfer':
-        return (
-          <Avatar sx={{ bgcolor: blue[200] }} aria-label="delivering / Unterwegs" title="delivering / Unterwegs">
-            🚚
-          </Avatar>
-        );
-      case 'delivered':
-        return (
-          <Avatar sx={{ bgcolor: yellow[200] }} aria-label="delivered / Geliefert" title="delivered / Geliefert">
-            🏁
-          </Avatar>
-        );
-      case 'closed':
-        return (
-          <Avatar sx={{ bgcolor: grey[200] }} aria-label="finished / Abgeschlossen" title="finished / Abgeschlossen">
-            🔒
-          </Avatar>
-        );
-    }
-  };
+  const getAvatarForCampaign = ({ CampaignType: campaignType, Title: title }: Campaign) => (
+    <Avatar variant="square" aria-label={title} title={title} src={campaignCardMap[campaignType]}></Avatar>
+  );
+
+  const getSubHeader = (campaign: Campaign) =>
+    campaign.Status === 'collecting' && campaign.CollectionEndDate
+      ? `Raising: transport on ${campaign.CollectionEndDate.toISOString().substring(0, 10)}`
+      : campaign.ShortCampaignDescription;
 
   const campaignDetailsUrl = '/campaigns/'.concat(campaign.UrlSlug, '/');
 
@@ -72,11 +56,7 @@ const CampaignCard = ({ campaign, donationItems }: Props) => {
 
   return (
     <Card sx={{ flex: '0 1 560px', display: 'flex', flexDirection: 'column' }}>
-      <CardHeader
-        title={campaign.Title}
-        subheader={campaign.ShortCampaignDescription}
-        avatar={getAvatarForStatus(campaign.Status)}
-      ></CardHeader>
+      <CardHeader title={campaign.Title} subheader={getSubHeader(campaign)} avatar={getAvatarForCampaign(campaign)}></CardHeader>
       <CardMedia component="img" height="194" image={campaign.TitleImage} />
       <CardContent sx={{ flex: '1 0 auto', paddingBottom: 0 }}>
         {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}

@@ -133,6 +133,12 @@ const LayoutModule = (props: any) => {
       <AppBar color="default" position="sticky">
         <Container maxWidth="lg">
           <Toolbar color="default" disableGutters sx={{ alignItems: { xs: 'center', md: 'baseline' } }}>
+            <img
+              width="32"
+              height="32"
+              src={PageConfiguration.pageIconFile}
+              style={{ alignSelf: 'center', marginRight: '12px' }}
+            />
             <Button
               key="top"
               href="/"

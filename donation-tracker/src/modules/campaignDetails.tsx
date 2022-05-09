@@ -61,6 +61,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
 
   const campaignDetails: Campaign = PageConfiguration.CampaignDetails.find(campaign => campaign.Key === props.campaignKey) ?? {
     Key: '',
+    CampaignType: 'generalSupport',
     Title: 'unknown campaign / unbekannte Sammlung',
     TitleImage: '',
     DetailsFile: '',
