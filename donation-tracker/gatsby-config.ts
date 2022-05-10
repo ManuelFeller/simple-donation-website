@@ -52,7 +52,16 @@ const config: GatsbyConfig = {
         keySeparator: false,
         nsSeparator: false
       },
-      pages: []
+      pages: [
+        {
+          matchPath: '/',
+          excludeLanguages: ['en']
+        },
+        {
+          matchPath: '/en/',
+          excludeLanguages: ['de']
+        }
+      ]
     }
   }]
 };
