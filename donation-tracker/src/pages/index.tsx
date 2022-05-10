@@ -13,9 +13,12 @@ import LayoutModule, { emailShareLink } from '../components/layout';
 import PageMetadata from '../components/pageMetadata';
 import CampaignListing from '../components/campaignListing';
 import PageConfiguration from '../config';
+import UpdateNote from '../components/updateNote';
+
+const GetInContactLink = () => <a href={PageConfiguration.ImprintContact.ContactEmail}>{PageConfiguration.ImprintContact.ContactEmail}</a>;
 
 const IndexPage = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <LayoutModule>
       <PageMetadata title="Welcome / Willkommen"></PageMetadata>
@@ -62,7 +65,23 @@ const IndexPage = () => {
           We regularly update our lists of needs based on information we receive from helpers in Ukraine and the progress of the campaigns.
         </Typography>
         <Typography paragraph={true}>Currently the most urgent needs for people within Ukraine:</Typography>
-        <CampaignListing />
+        <CampaignListing campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection']} />
+
+        <Typography variant="h4" id="volunteer">
+          Donations
+        </Typography>
+        <Typography paragraph={true}>
+          Another way to help is by donating money for targeted needs of the people we know and trust.
+        </Typography>
+        <CampaignListing campaignTypes={['financialSupport']} />
+
+        <Typography variant="h4" id="volunteer">
+          Volunteer
+        </Typography>
+        <Typography paragraph={true}>
+          If you want to help us, please get in touch per e-mail: <GetInContactLink />
+        </Typography>
+        <CampaignListing campaignTypes={['volunteering']} />
 
         <Typography variant="h4" id="about-us">
           {t('menu.about')}
@@ -77,14 +96,17 @@ const IndexPage = () => {
           send them to volunteers in Ukraine who deliver aid directly to people in need.
         </Typography>
         <Typography paragraph={true}>
-          Get in touch: <a href={PageConfiguration.ImprintContact.ContactEmail}>{PageConfiguration.ImprintContact.ContactEmail}</a>
+          Get in touch: <GetInContactLink />
         </Typography>
-        <Typography paragraph={true} sx={{display:'flex'}}>
+        <Typography paragraph={true} sx={{ display: 'flex' }}>
           <a href={emailShareLink()}>Spread the word</a>
           <ShareIcon />
         </Typography>
-        <Typography sx={{marginBottom: 10}}><a href="imprint">{t('imprint.pageTitle')}</a></Typography>
+        <Typography sx={{ marginBottom: 10 }}>
+          <a href="imprint">{t('imprint.pageTitle')}</a>
+        </Typography>
 
+        <UpdateNote />
       </Container>
     </LayoutModule>
   );

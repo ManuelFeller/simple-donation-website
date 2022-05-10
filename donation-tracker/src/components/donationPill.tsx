@@ -10,7 +10,7 @@ const DonationPill = ({ campaign, donationItem }: { donationItem: DonationItem; 
   const { t } = useTranslation();
   return donationItem.remainingNeed ? (
     <Button
-      href={campaign.RegistrationFormUrl}
+      href={campaign.RegistrationFormUrl!}
       target="_blank"
       variant="contained"
       sx={{
@@ -24,7 +24,7 @@ const DonationPill = ({ campaign, donationItem }: { donationItem: DonationItem; 
     </Button>
   ) : (
     <Button
-      href={campaign.RegistrationFormUrl}
+      href={campaign.RegistrationFormUrl!}
       target="_blank"
       variant="outlined"
       color="success"

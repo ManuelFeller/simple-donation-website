@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 
@@ -16,42 +15,18 @@ import { ChevronLeft } from '@mui/icons-material';
 import PageConfiguration from '../config';
 import { Campaign } from '../types/campaign';
 import DataStore from '../utils/dataStore';
-import { convertDateToString } from '../utils/convertDateToString';
 import LayoutModule from '../components/layout';
 import DonationRow from '../components/donationRow';
 import DonationPill from '../components/donationPill';
 import PageMetadata from '../components/pageMetadata';
+import CampaignAvatar from '../components/campaignAvatar';
+import UpdateNote from '../components/updateNote';
 
 const CampaignDetailsModule = (props: { campaignKey: string; children: any }) => {
   const { t } = useTranslation();
 
-  /* --- start of data connection code --- */
   // get the data store object
   let data = DataStore.getInstance();
-
-  let initialUpdateTime = data.getLastDataLoadingTime();
-  if (initialUpdateTime === undefined) {
-    initialUpdateTime = new Date(1970, 1, 1);
-  }
-
-  // set up a state to have a content re-render trigger
-  const [dataUpdateTime, setDataUpdateTime] = useState(initialUpdateTime);
-
-  // page lifecycle registrations (in the functional component way)
-  useEffect(() => {
-    // Anything in here is fired on component mount.
-    data.subscribeToDataUpdates(handleDataUpdate);
-    return () => {
-      // Anything in here is fired on component unmount.
-      data.unsubscribeFromDataUpdates(handleDataUpdate);
-    };
-  }, []);
-
-  // the update handler that is passed to the data store object
-  const handleDataUpdate = (newUpdateTime: Date) => {
-    setDataUpdateTime(newUpdateTime);
-  };
-  /* --- end of data connection code --- */
 
   const handleClickOnLink = (event: React.MouseEvent<HTMLElement>, itemLink: string) => {
     // this handles the navigation if JavaScript is active
@@ -84,15 +59,16 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
         </Box>
         <Card sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
           <CardHeader
-            title={'Campaign / Sammlung "'.concat(campaignDetails.Title, '"')}
+            title={campaignDetails.Title}
             subheader={campaignDetails.ShortCampaignDescription}
-          ></CardHeader>
-          <CardMedia component="img" height="194" image={campaignDetails.TitleImage} />
+            avatar={<CampaignAvatar campaignType={campaignDetails.CampaignType} title={campaignDetails.Title} />}
+          />
+          {campaignDetails.TitleImage && <CardMedia component="img" height="194" image={campaignDetails.TitleImage} />}
           <CardContent sx={{ flex: '1 0 auto' }}>
             <Typography component="div" marginY={2}>
               {props.children}
             </Typography>
-            {donationItems.length && (
+            {donationItems.length > 0 && (
               <>
                 <Typography variant="h6" mt={2}>
                   Donations / Spenden
@@ -132,20 +108,19 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
         </Card>
         &nbsp;
         {isMobile && PageConfiguration.AutoRefresh && <>&nbsp;</>}
-        {PageConfiguration.AutoRefresh && (
-          <Typography component="div" sx={{ fontStyle: 'italic' }}>
-            🇬🇧 The data is refreshed in the background about every {PageConfiguration.MaxDataAgeInMinutes} minutes - so your registered
-            donation may take a few minutes until it is shown here.
-            <br />
-            🇩🇪 Die Daten werden ca. alle {PageConfiguration.MaxDataAgeInMinutes} Minuten im Hintergund aktualisiert - es kann also ein paar
-            Minuten dauern bis Ihre Spendenregistrierung hier angezeiht wird.
-          </Typography>
+        {donationItems.length > 0 && PageConfiguration.AutoRefresh && (
+          <>
+            <Typography component="div" sx={{ fontStyle: 'italic' }}>
+              🇬🇧 The data is refreshed in the background about every {PageConfiguration.MaxDataAgeInMinutes} minutes - so your registered
+              donation may take a few minutes until it is shown here.
+              <br />
+              🇩🇪 Die Daten werden ca. alle {PageConfiguration.MaxDataAgeInMinutes} Minuten im Hintergund aktualisiert - es kann also ein
+              paar Minuten dauern bis Ihre Spendenregistrierung hier angezeiht wird.
+            </Typography>
+            &nbsp;
+            <UpdateNote />
+          </>
         )}
-        &nbsp;
-        <Typography component="div" sx={{ fontStyle: 'italic', textAlign: 'center' }} style={{ color: 'gray' }}>
-          Data from {convertDateToString(data.getLastDataUpdateTime())}; last refresh at {convertDateToString(dataUpdateTime)}
-        </Typography>
-        &nbsp;
       </Container>
     </LayoutModule>
   );
