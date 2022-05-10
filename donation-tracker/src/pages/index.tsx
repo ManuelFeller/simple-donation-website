@@ -21,7 +21,7 @@ const IndexPage = () => {
   const { t } = useTranslation();
   return (
     <LayoutModule>
-      <PageMetadata title="Welcome / Willkommen"></PageMetadata>
+      <PageMetadata title="Willkommen"></PageMetadata>
       &nbsp;
       <Container maxWidth="lg">
         <Card>
