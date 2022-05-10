@@ -29,7 +29,7 @@ const IndexPage = () => {
           <CardMedia>
             <StaticImage
               src="../images/ehimetalor-akhere-unuabona-6hzWwYioEo4-unsplash.jpg"
-              alt="'We Love Ukraine' Artwork by Ehimetalor Akhere Unuabona (unsplash)"
+              alt="'We Love Ukraine' Artwork von Ehimetalor Akhere Unuabona (unsplash)"
               placeholder="blurred"
               layout="fullWidth"
               //transformOptions={{ trim: 10 }}
@@ -39,52 +39,53 @@ const IndexPage = () => {
         </Card>
 
         <Typography paragraph={true} sx={{ marginBlockStart: '1em' }}>
-          As each day of the russian attack passes, more people in Ukraine are forced to leave their homes and continue to struggle with
-          finding food, water, medical assistance, shelter, and covering their basic needs.
+          Mit jedem vergehenden Tag, an dem Russland angreift, sind mehr Menschen in der Ukraine gezwungen ihr Zuhause zu verlassen.
+          Sie haben mehr und mehr Probleme Essen, Wasser, medizinische Hilfe und Schutz zu finden, ihre gundsätzlichen Bedürfnisse zu erfüllen.
         </Typography>
 
         <Typography variant="body0" paragraph={true} sx={{ marginBlockEnd: 0 }}>
-          With every donation you help people in Ukraine directly
+          Mit jeder Spende helfen Sie direkt den Menschen in in der Ukraine
         </Typography>
         <Typography variant="body0" paragraph={true} sx={{ marginBlockEnd: 0 }}>
           💙💛
         </Typography>
         <Typography variant="body0" paragraph={true}>
-          We are asking you to donate to the campaigns we organise. Every donation counts and helps the people in Ukraine fighting for their
-          lifes to protect the country they were born and raised in.
+          Wir bitten Sie bei den Kampagnen die wir organisieren zu spenden. Jede Spende zählt und hilft den Menschen in der Ukraine die dort
+          um ihr Leben kämpfen um das Land zu beschützen in dem sie geboren und aufgewachsen sind.
         </Typography>
         <Typography paragraph={true}>
-          All the information about the needs and whom we could help and support, we get from our friends in Ukraine who are also
-          volunteering and trying to help there. We mainly engage in collecting humanitarian aid and bringing it where it is needed most.
+          Wir bekommen unsere Informationen darüber was und wem wir wie helfen können von unseren Freunden in der Ukraine die genau wie wir
+          freiwillig arbeiten und vor Ort versuchen zu helfen. Wir engagieren uns primär in der Sammlung von humanitärer Hilfe und bringen
+          die Spenden dorthin woe sie am dringensten benötigt werden.
         </Typography>
 
         <Typography variant="h4" id="donation-in-kind">
-          Donations in-kind
+          Sachspenden
         </Typography>
         <Typography paragraph={true}>
-          We regularly update our lists of needs based on information we receive from helpers in Ukraine and the progress of the campaigns.
+          Wir aktualisieren unsere Listen regelmäßig auf Basis der Informationen die wir von den Helfern in der Ukraine erhalten ebenso wie des Forschritt der Kampagnen.
         </Typography>
         <Typography paragraph={true}>Currently the most urgent needs for people within Ukraine:</Typography>
         <CampaignListing campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection']} statusType="running" />
 
         <Typography variant="h4" id="volunteer">
-          Donations
+          Geldspenden
         </Typography>
         <Typography paragraph={true}>
-          Another way to help is by donating money for targeted needs of the people we know and trust.
+          Ein anderer Weg zu helfen ist das Spenden von von Geld für festgelegte Bedarfe von menschen denen wir vertrauen.
         </Typography>
         <CampaignListing campaignTypes={['financialSupport']} statusType="running" />
 
         <Typography variant="h4" id="volunteer">
-          Volunteer
+          Freiwillige
         </Typography>
         <Typography paragraph={true}>
-          If you want to help us, please get in touch per e-mail: <GetInContactLink />
+          Wenn Sie uns bei unserer Arbeit helfen möchten kontaktieren Sie und bitte via Email: <GetInContactLink />
         </Typography>
         <CampaignListing campaignTypes={['volunteering']} statusType="running" />
 
         <Typography variant="h4" id="volunteer">
-          Successful campaigns
+          Erfolgreiche Kampagnen
         </Typography>
         <CampaignListing
           campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection', 'financialSupport']}
@@ -96,18 +97,18 @@ const IndexPage = () => {
         </Typography>
         <Typography>🚜💙💛</Typography>
         <Typography paragraph={true}>
-          We are a group of employees who work in Ingelheim, Germany. We joined our forces in April 2022 to actively support people in
-          Ukraine affected by the russian invasion.
+          Wir sind eine Gruppe Kollegen die in einem Unternehmen in Ingelheim (Deutschland) arbeiten. Im April 2022 haben wir uns zusammengeschlossen
+          um aktiv den Menschen in der Ukraine zu helfen die von der russischen Invasion betroffen sind.
         </Typography>
         <Typography paragraph={true}>
-          We have friends and family members in Ukraine so we know very well what is needed. We collaborate privately to raise donations and
-          send them to volunteers in Ukraine who deliver aid directly to people in need.
+          Wir haben Frunde und Familie in der Ukraine und wissen daher gut was gebraucht wird. Wir kooperieren in unserer Freizeit um Spenden zu sammeln und 
+          diese an freiwillige Helfer in der Ukraine zu liefern, die diese Hilfe dann direkt an Menschen in Not weiterreichen.
         </Typography>
         <Typography paragraph={true}>
-          Get in touch: <GetInContactLink />
+          Kontaktieren Sie uns: <GetInContactLink />
         </Typography>
         <Typography paragraph={true} sx={{ display: 'flex' }}>
-          <a href={emailShareLink()}>Spread the word</a>
+          <a href={emailShareLink()}>Teilen Sie diese Seite mit anderen</a>
           <ShareIcon />
         </Typography>
         <Typography sx={{ marginBottom: 10 }}>
