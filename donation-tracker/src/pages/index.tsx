@@ -65,7 +65,7 @@ const IndexPage = () => {
           We regularly update our lists of needs based on information we receive from helpers in Ukraine and the progress of the campaigns.
         </Typography>
         <Typography paragraph={true}>Currently the most urgent needs for people within Ukraine:</Typography>
-        <CampaignListing campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection']} />
+        <CampaignListing campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection']} statusType="running" />
 
         <Typography variant="h4" id="volunteer">
           Donations
@@ -73,7 +73,7 @@ const IndexPage = () => {
         <Typography paragraph={true}>
           Another way to help is by donating money for targeted needs of the people we know and trust.
         </Typography>
-        <CampaignListing campaignTypes={['financialSupport']} />
+        <CampaignListing campaignTypes={['financialSupport']} statusType="running" />
 
         <Typography variant="h4" id="volunteer">
           Volunteer
@@ -81,7 +81,15 @@ const IndexPage = () => {
         <Typography paragraph={true}>
           If you want to help us, please get in touch per e-mail: <GetInContactLink />
         </Typography>
-        <CampaignListing campaignTypes={['volunteering']} />
+        <CampaignListing campaignTypes={['volunteering']} statusType="running" />
+
+        <Typography variant="h4" id="volunteer">
+          Successful campaigns
+        </Typography>
+        <CampaignListing
+          campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection', 'financialSupport']}
+          statusType="closed"
+        />
 
         <Typography variant="h4" id="about-us">
           {t('menu.about')}

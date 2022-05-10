@@ -109,7 +109,7 @@ const LayoutModule = (props: any) => {
         fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
       },
       h4: {
-        marginBlock: '.5em',
+        marginBlock: '1em .5em',
       },
       h5: {
         marginBlock: '.5em',
