@@ -54,12 +54,8 @@ const config: GatsbyConfig = {
       },
       pages: [
         {
-          matchPath: '/',
-          excludeLanguages: ['en']
-        },
-        {
-          matchPath: '/en/',
-          excludeLanguages: ['de']
+          matchPath: '/:lang?/',
+          getLanguageFromPath: true,
         }
       ]
     }
