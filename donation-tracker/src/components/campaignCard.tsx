@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
-
-import { navigate } from 'gatsby';
+import { useTranslation, useI18next } from 'react-i18next';
 
 import { Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Pagination, Typography } from '@mui/material';
 
@@ -18,6 +16,7 @@ interface Props {
 }
 
 const CampaignCard = ({ campaign, donationItems, big }: Props) => {
+  const { navigate } = useI18next();
   const { t } = useTranslation();
 
   const handleClickOnLink = (event: React.MouseEvent<HTMLElement>, itemLink: string) => {

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'react-i18next';
-
-import { navigate } from 'gatsby';
+import { useTranslation, useI18next } from 'react-i18next';
 
 import { Box, Button, Container, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -23,6 +21,7 @@ import CampaignAvatar from '../components/campaignAvatar';
 import UpdateNote from '../components/updateNote';
 
 const CampaignDetailsModule = (props: { campaignKey: string; children: any }) => {
+  const { navigate } = useI18next();
   const { t } = useTranslation();
 
   // get the data store object
