@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 
 import { CardMedia, Container, Typography } from '@mui/material';
 import Card from '@mui/material/Card';

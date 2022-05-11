@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { isMobile } from 'react-device-detect';
-import { useTranslation, useI18next } from 'react-i18next';
+import { useTranslation, useI18next } from 'gatsby-plugin-react-i18next';
 
 import { Box, Button, Container, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
