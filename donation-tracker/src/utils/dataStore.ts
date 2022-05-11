@@ -7,6 +7,8 @@ import { DonationList } from "../types/donationList";
  */
 export default class DataStore {
 
+	private dataVersion = 1;
+
 	private static instance: DataStore;
 
 	private dataSourceUrl = PageConfiguration.DataSource;
@@ -22,40 +24,21 @@ export default class DataStore {
 	 * Creates an instance and also try to load / update the local data if needed
 	 */
 	private constructor() {
-		this.debugLog('DataStore: Creating instance, trying to read local storage data');
+		this.debugLog('DataStore: Creating instance, initializing internal variables');
+		this.updateSubscribers = new Array<Function>();
+		this.isRefreshing = false;
+		this.localData = null;
+		this.hasLocalData = false;
+		this.debugLog('DataStore: trying to read local storage data');
 		let tmpData = null;
 		if (typeof localStorage === 'undefined') {
 			this.isGatsbyBuild = true;
-			tmpData = '{"timeStamp":"2025-01-01T01:23:45.678Z","requestTime":"2025-01-01T01:23:45.678Z","data":[{"article":"Article A","campaignKey":"demo","neededOverall":10,"alreadyDonated":6,"remainingNeed":4,"unit":"pcs"}]}';
+			tmpData = `{"version":"${this.dataVersion}","timeStamp":"2025-01-01T01:23:45.678Z","requestTime":"2025-01-01T01:23:45.678Z","data":[{"article":"Article A","campaignKey":"demo","neededOverall":10,"alreadyDonated":6,"remainingNeed":4,"unit":"pcs"}]}`;
 		} else {
 			this.isGatsbyBuild = false;
 			tmpData = localStorage.getItem('donationCache');
 		}
-		
-		this.isRefreshing = false;
-		if (tmpData !== null) {
-			this.debugLog('DataStore: Local data found, loading into memory');
-			this.localData = JSON.parse(tmpData);
-			// manually fix the date objects -> JSON.parse() does not do that as expected
-			const requestDateValueExtracted: string = (this.localData!.requestTime.toString());
-			this.localData!.requestTime = new Date(requestDateValueExtracted);
-			const updateDateValueExtracted: string = (this.localData!.timeStamp.toString());
-			this.localData!.timeStamp = new Date(updateDateValueExtracted);
-
-			this.hasLocalData = true;
-			if (this.isDataOutdated()) {
-				this.debugLog('DataStore: Local data outdated, querying online source scheduled');
-				if (!this.isGatsbyBuild) setTimeout(this.refreshData.bind(this), 100);
-			} else {
-				if (!this.isGatsbyBuild) this.registerDataUpdate();
-			}
-		} else {
-			this.debugLog('DataStore: No local data found, querying online source scheduled');
-			this.localData = null;
-			this.hasLocalData = false;
-			if (!this.isGatsbyBuild) setTimeout(this.refreshData.bind(this), 100);
-		}
-		this.updateSubscribers = new Array<Function>();
+		this.processInitialLocalData(tmpData);
 	}
 
 	/**
@@ -171,7 +154,70 @@ export default class DataStore {
 		}
 	}
 
-	// internal function to register the next data update
+	/**
+	 * Internal function to process data that was found in the local storage
+	 * @param tmpData the temporary data string from the local storage
+	 */
+	private processInitialLocalData(tmpData: string) {
+		if (tmpData !== null) {
+			this.debugLog('DataStore: Local data found, loading into memory');
+			this.localData = JSON.parse(tmpData);
+				
+			if (!this.isLocalDataVersionOk()) {
+				this.initWithEmptyLocalData('DataStore: Local data version outdated, querying online source scheduled');
+				return;
+			}
+			// manually fix the date objects -> JSON.parse() does not do that as expected
+			const requestDateValueExtracted: string = (this.localData!.requestTime.toString());
+			this.localData!.requestTime = new Date(requestDateValueExtracted);
+			const updateDateValueExtracted: string = (this.localData!.timeStamp.toString());
+			this.localData!.timeStamp = new Date(updateDateValueExtracted);
+
+			this.hasLocalData = true;
+			if (this.isDataOutdated()) {
+				this.debugLog('DataStore: Local data outdated, querying online source scheduled');
+				if (!this.isGatsbyBuild) setTimeout(this.refreshData.bind(this), 100);
+			} else {
+				if (!this.isGatsbyBuild) this.registerDataUpdate();
+			}
+		} else {
+			this.initWithEmptyLocalData('DataStore: No local data found, querying online source scheduled');
+		}
+	}
+
+	/**
+	 * Internal function to check if the expected data version of the code matches the data version found locally
+	 * @returns true if version matches with code, false if not
+	 */
+	private isLocalDataVersionOk() {
+		this.debugLog('DataStore: Data Version Check');
+		if (typeof this.localData!.version === "undefined") {
+			// missing version field = outdated
+			return false;
+		}
+		else {
+			if (this.localData!.version !== this.dataVersion) {
+				// version mismatch = outdated
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Internal function to end class init with no local data
+	 * @param logMessage Message that should be logged as reason
+	 */
+	private initWithEmptyLocalData(logMessage: string) {
+		this.debugLog(logMessage);
+		this.localData = null;
+		this.hasLocalData = false;
+		if (!this.isGatsbyBuild) setTimeout(this.refreshData.bind(this), 100);
+	}
+
+	/**
+	 * Internal function to register the next data update
+	 */
 	private registerDataUpdate() {
 		if (PageConfiguration.AutoRefresh) {
 			const secondsUntilRefresh = this.getSecondsUntilRefresh();
@@ -193,6 +239,7 @@ export default class DataStore {
 		const content = await data.text();
 		const rows = content.split(`\n`);
 		const tmpParsedData: DonationList =  {
+			version: this.dataVersion,
 			timeStamp: new Date(1970, 0, 1),
 			requestTime: new Date(),
 			data: [],
