@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useTranslation, useI18next } from 'gatsby-plugin-react-i18next';
+import { useTranslation, useI18next, I18nextContext } from 'gatsby-plugin-react-i18next';
 
 import { Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Pagination, Typography } from '@mui/material';
 
@@ -8,6 +8,7 @@ import { DonationItem } from '../types/donationItem';
 import DonationRow from './donationRow';
 import DonationPill from './donationPill';
 import CampaignAvatar from './campaignAvatar';
+import { getCampaignShortCampaignDescription, getCampaignShortDonationDescription, getCampaignTitle } from '../utils/campaign';
 
 interface Props {
   campaign: Campaign;
@@ -18,6 +19,11 @@ interface Props {
 const CampaignCard = ({ campaign, donationItems, big }: Props) => {
   const { navigate } = useI18next();
   const { t } = useTranslation();
+  const langContext = React.useContext(I18nextContext);
+
+  const title = getCampaignTitle(campaign, langContext.language);
+  const shortCampaignDescription = getCampaignShortCampaignDescription(campaign, langContext.language);
+  const shortDonationDescription = getCampaignShortDonationDescription(campaign, langContext.language);
 
   const handleClickOnLink = (event: React.MouseEvent<HTMLElement>, itemLink: string) => {
     // this handles the navigation if JavaScript is active
@@ -30,7 +36,7 @@ const CampaignCard = ({ campaign, donationItems, big }: Props) => {
       ? `Raising: transport on ${campaign.CollectionEndDate.toISOString().substring(0, 10)}`
       : campaign.Status === 'closed'
       ? '🎉   Successfully delivered'
-      : campaign.ShortCampaignDescription;
+      : shortCampaignDescription;
 
   const campaignDetailsUrl = campaign.UrlSlug ? `/campaigns/${campaign.UrlSlug}/` : '';
 
@@ -44,9 +50,9 @@ const CampaignCard = ({ campaign, donationItems, big }: Props) => {
   return (
     <Card sx={{ flex: big ? '0 1 1152px' : '0 1 560px', display: 'flex', flexDirection: 'column' }}>
       <CardHeader
-        title={campaign.Title}
+        title={title}
         subheader={getSubHeader(campaign)}
-        avatar={<CampaignAvatar campaignType={campaign.CampaignType} title={campaign.Title} />}
+        avatar={<CampaignAvatar campaignType={campaign.CampaignType} title={title} />}
       />
       {campaign.TitleImage && <CardMedia component="img" height="194" image={campaign.TitleImage} />}
       {campaign.Photos?.length > 0 && (
@@ -61,9 +67,9 @@ const CampaignCard = ({ campaign, donationItems, big }: Props) => {
           ))}
         </Box>
       )}
-      {(campaign.ShortDonationDescription || (campaign.Status === 'collecting' && donationItems.length > 0)) && (
+      {(shortDonationDescription || (campaign.Status === 'collecting' && donationItems.length > 0)) && (
         <CardContent sx={{ flex: '1 0 auto', paddingBottom: 0 }}>
-          {campaign.ShortDonationDescription && <Typography variant="body2">{campaign.ShortDonationDescription}</Typography>}
+          {shortDonationDescription && <Typography variant="body2">{shortDonationDescription}</Typography>}
           {campaign.Status === 'collecting' && donationItems.length > 0 && (
             <Box display="flex" flexDirection="column" mt={1}>
               <table style={{ minHeight: minRowHeight * itemsPerPage, borderSpacing: 0 }}>

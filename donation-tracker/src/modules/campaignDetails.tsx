@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { isMobile } from 'react-device-detect';
-import { useTranslation, useI18next } from 'gatsby-plugin-react-i18next';
+import { useTranslation, useI18next, I18nextContext } from 'gatsby-plugin-react-i18next';
 
 import { Box, Button, Container, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -19,10 +19,12 @@ import DonationPill from '../components/donationPill';
 import PageMetadata from '../components/pageMetadata';
 import CampaignAvatar from '../components/campaignAvatar';
 import UpdateNote from '../components/updateNote';
+import { getCampaignTitle, getCampaignShortCampaignDescription, getCampaignShortDonationDescription } from '../utils/campaign';
 
 const CampaignDetailsModule = (props: { campaignKey: string; children: any }) => {
   const { navigate } = useI18next();
   const { t } = useTranslation();
+  const langContext = React.useContext(I18nextContext);
 
   // get the data store object
   let data = DataStore.getInstance();
@@ -33,7 +35,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
     navigate(itemLink);
   };
 
-  const campaignDetails: Campaign = PageConfiguration.CampaignDetails.find(campaign => campaign.Key === props.campaignKey) ?? {
+  const campaign: Campaign = PageConfiguration.CampaignDetails.find(campaignDetail => campaignDetail.Key === props.campaignKey) ?? {
     Key: '',
     CampaignType: 'generalSupport',
     Title: 'unknown campaign / unbekannte Sammlung',
@@ -45,11 +47,15 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
     StartDate: new Date(1970, 1, 1),
     RegistrationFormUrl: '',
   };
-  const donationItems = data.getItemsForCampaign(campaignDetails.Key);
+  const title = getCampaignTitle(campaign, langContext.language);
+  const shortCampaignDescription = getCampaignShortCampaignDescription(campaign, langContext.language);
+  const shortDonationDescription = getCampaignShortDonationDescription(campaign, langContext.language);
+
+  const donationItems = data.getItemsForCampaign(campaign.Key);
 
   return (
     <LayoutModule>
-      <PageMetadata title={campaignDetails.Title}></PageMetadata>
+      <PageMetadata title={title}></PageMetadata>
       <Container maxWidth="lg">
         <Box marginY={2}>
           <Button href={'/'} onClick={event => handleClickOnLink(event, '/')}>
@@ -58,11 +64,11 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
         </Box>
         <Card sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
           <CardHeader
-            title={campaignDetails.Title}
-            subheader={campaignDetails.ShortCampaignDescription}
-            avatar={<CampaignAvatar campaignType={campaignDetails.CampaignType} title={campaignDetails.Title} />}
+            title={title}
+            subheader={shortCampaignDescription}
+            avatar={<CampaignAvatar campaignType={campaign.CampaignType} title={title} />}
           />
-          {campaignDetails.TitleImage && <CardMedia component="img" height="194" image={campaignDetails.TitleImage} />}
+          {campaign.TitleImage && <CardMedia component="img" height="194" image={campaign.TitleImage} />}
           <CardContent sx={{ flex: '1 0 auto' }}>
             <Typography component="div" marginY={2}>
               {props.children}
@@ -73,7 +79,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
                   Donations / Spenden
                 </Typography>
                 <Typography variant="subtitle1" marginY={1}>
-                  {campaignDetails.ShortDonationDescription}
+                  {shortDonationDescription}
                 </Typography>
                 <table>
                   <tbody>
@@ -83,7 +89,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
                           <DonationRow donationItem={donationItem}></DonationRow>
                         </td>
                         <td style={{ paddingLeft: 16 }}>
-                          <DonationPill campaign={campaignDetails} donationItem={donationItem}></DonationPill>
+                          <DonationPill campaign={campaign} donationItem={donationItem}></DonationPill>
                         </td>
                       </tr>
                     ))}
@@ -97,9 +103,9 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
               </Typography>
             )}
           </CardContent>
-          {campaignDetails.RegistrationFormUrl && (
+          {campaign.RegistrationFormUrl && (
             <CardActions sx={{ justifyContent: 'center' }}>
-              <Button variant="contained" href={campaignDetails.RegistrationFormUrl} target="_blank">
+              <Button variant="contained" href={campaign.RegistrationFormUrl} target="_blank">
                 Register donation / Spende registrieren
               </Button>
             </CardActions>
