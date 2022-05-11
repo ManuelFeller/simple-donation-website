@@ -32,7 +32,6 @@ const IndexPage = () => {
               alt="'We Love Ukraine' Artwork von Ehimetalor Akhere Unuabona (unsplash)"
               placeholder="blurred"
               layout="fullWidth"
-              //transformOptions={{ trim: 10 }}
               style={{ height: '430px' }}
             />
           </CardMedia>
