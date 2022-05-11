@@ -16,7 +16,7 @@ const DonationRow = ({ donationItem }: { donationItem: DonationItem }) => {
   const langContext = React.useContext(I18nextContext);
   return (
     <Box position="relative" height="46px">
-      <Tooltip disableHoverListener={!isMobile} arrow title={donationItem.article} placement="top">
+      <Tooltip disableHoverListener={!isMobile} arrow title={donationItem.article[langContext.language]} placement="top">
         <Box position="absolute" top="4px" left="0" right="0" display="flex" flexDirection="column">
           <Box display="flex" flexDirection="row">
             <Typography sx={{ flex: '1 1 auto', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
