@@ -1,5 +1,3 @@
-import { LocalizedString } from "./localizedString";
-
 /**
  * Interface to describe a donateable item in its details
  */
@@ -7,7 +5,7 @@ export interface DonationItem {
 	/**
 	 * The name or short description of the item
 	 */
-	article: LocalizedString[],
+	article: {[languageKey: string]: string},
 	/**
 	 * The key to assign this item to any of the ongoing initiatives / campaigns
 	 */
@@ -27,9 +25,9 @@ export interface DonationItem {
 	/**
 	 * The unit for the item (e.g. kg, l, pcs, ...)
 	 */
-	unit: LocalizedString[],
+	unit: {[languageKey: string]: string},
 	/**
 	 * The link to the donation registration form 
 	 */
-	formLink: LocalizedString[]
+	formLink: {[languageKey: string]: string}
 }
