@@ -28,7 +28,7 @@ const IndexPage = () => {
           <CardHeader title={PageConfiguration.pageTitle} subheader="How can we help people in Ukraine affected by war?"></CardHeader>
           <CardMedia>
             <StaticImage
-              src="../images/ehimetalor-akhere-unuabona-6hzWwYioEo4-unsplash.jpg"
+              src="../../images/ehimetalor-akhere-unuabona-6hzWwYioEo4-unsplash.jpg"
               alt="'We Love Ukraine' Artwork by Ehimetalor Akhere Unuabona (unsplash)"
               placeholder="blurred"
               layout="fullWidth"
