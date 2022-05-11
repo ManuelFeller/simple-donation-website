@@ -1,4 +1,5 @@
 import PageConfiguration from "../config";
+import { ColumnMapping } from "../types/columnMapping";
 import { DonationItem } from "../types/donationItem";
 import { DonationList } from "../types/donationList";
 
@@ -158,7 +159,7 @@ export default class DataStore {
 	 * Internal function to process data that was found in the local storage
 	 * @param tmpData the temporary data string from the local storage
 	 */
-	private processInitialLocalData(tmpData: string) {
+	private processInitialLocalData(tmpData: string | null) {
 		if (tmpData !== null) {
 			this.debugLog('DataStore: Local data found, loading into memory');
 			this.localData = JSON.parse(tmpData);
@@ -230,6 +231,67 @@ export default class DataStore {
 	}
 
 	/**
+	 * Internal function to map the columns to the data
+	 * @param csvConfigRow The first row of the CVS file / export
+	 * @returns A ColumnMapping object
+	 */
+	private createColumnMapping(csvConfigRow: string): ColumnMapping {
+		this.debugLog('DataStore: Creating column mapping');
+		const headers = this.parseCsvLine(csvConfigRow.toLowerCase());
+		const result: ColumnMapping = {
+			languages: new Array<string>(),
+			item: new Array<number>(),
+			unit: new Array<number>(),
+			form: new Array<number>(),
+			campaignId: -1,
+			need: -1,
+			donated: -1,
+			lastChange: -1
+		}
+		headers.forEach((columnContent, index) => {
+			if (columnContent.toString().indexOf(':') > -1) {
+				// we have a localized value here
+				const pair = columnContent.toString().split(':');
+				const langCode = pair[1].toString().trim();
+				let langIndex = result.languages.indexOf(langCode);
+				if (langIndex == -1) {
+					result.languages.push(langCode)	
+				}
+				switch (pair[0].trim()) {
+					case 'item':
+						result.item[langCode as any] = index;
+					case 'unit':
+						result.unit[langCode as any] = index;
+					case 'form':
+						result.form[langCode as any] = index;
+				}
+			} else {
+				// we have a non localized value
+				switch (columnContent.toString().trim()) {
+					case 'campaign':
+						result.campaignId = index;
+					case 'need':
+						result.need = index;
+					case 'donated':
+						result.donated = index;
+					case 'lastchange':
+						result.lastChange = index;
+				}
+			}
+		});
+		return result;
+	}
+
+	private validateColumnMapping(mapping: ColumnMapping): boolean {
+		if (mapping.campaignId === -1 || mapping.donated === -1 || mapping.need === -1 || mapping.lastChange === -1 ) {
+			return false;
+		}
+		// ToDo: validate that all columns were found and that languages "make sense"
+		return true;
+	}
+
+
+	/**
 	 * Internal function to load / refresh the local data
 	 */
 	private async refreshData() {
@@ -245,6 +307,9 @@ export default class DataStore {
 			data: [],
 		};
 		if (rows.length > 0) {
+			const mapping = this.createColumnMapping(rows[0]);
+			this.validateColumnMapping(mapping);
+			/*
 			this.debugLog('DataStore: Data received');
 			// extract header line
 			let header = this.parseCsvLine(rows[0]);
@@ -282,15 +347,21 @@ export default class DataStore {
 				this.localData = tmpParsedData;
 				this.hasLocalData = true;
 			}
+			*/
 		}
 		this.isRefreshing = false;
 		// update components
-		this.updateSubscribers.forEach(subscriber =>
-			subscriber(this.localData!.requestTime)
-		);
-		// register next execution of data update
-		this.registerDataUpdate();
+		// this.updateSubscribers.forEach(subscriber =>
+		// 	subscriber(this.localData!.requestTime)
+		// );
+		// // register next execution of data update
+		// this.registerDataUpdate();
 	}
+
+
+
+
+
 
 	/**
 	 * Internal function to extract the data from the lines of the CSV file
