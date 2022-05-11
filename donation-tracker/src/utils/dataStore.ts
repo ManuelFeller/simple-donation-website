@@ -422,7 +422,7 @@ export default class DataStore {
 			if (tmpLineData.length >= minColumns) {
 				const tmpObject: DonationItem = {
 					article: {},
-					campaignKey: tmpLineData[1].toString(),
+					campaignKey: tmpLineData[mapping.campaignId].toString(),
 					neededOverall: Number.parseInt(tmpLineData[mapping.need].toString()),
 					alreadyDonated: Number.parseInt(tmpLineData[mapping.donated].toString()),
 					remainingNeed: (Number.parseInt(tmpLineData[mapping.need].toString()) - Number.parseInt(tmpLineData[mapping.donated].toString())),
