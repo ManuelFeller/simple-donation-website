@@ -1,8 +1,8 @@
 export interface ColumnMapping {
 	languages: string[],
-	item: number[],
-	unit: number[],
-	form: number[],
+	item: {[languageKey: string]: number},
+	unit: {[languageKey: string]: number},
+	form: {[languageKey: string]: number},
 	campaignId: number,
 	need: number,
 	donated: number,
