@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { navigate } from 'gatsby';
-import { useTranslation } from 'gatsby-plugin-react-i18next';
+import { useTranslation, useI18next } from 'gatsby-plugin-react-i18next';
 import { useLocation } from '@reach/router';
 
 import AppBar from '@mui/material/AppBar';
@@ -37,6 +36,7 @@ export const emailShareLink = () => {
 const titleText = PageConfiguration.pageTitle;
 
 const LayoutModule = (props: any) => {
+  const { navigate } = useI18next();
   const { t } = useTranslation();
 
   /* ToDo: import this from a central location */

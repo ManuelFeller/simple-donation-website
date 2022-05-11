@@ -201,9 +201,9 @@ export default class DataStore {
 			this.debugLog('DataStore: Data received');
 			// extract header line
 			let header = this.parseCsvLine(rows[0]);
-			if (header.length >= 7) {
+			if (header.length >= 8) {
 				try {
-					tmpParsedData.timeStamp = new Date(Date.parse(header[6].toString()));
+					tmpParsedData.timeStamp = new Date(Date.parse(header[7].toString()));
 				} catch (err) {
 					console.error(err);
 					this.isRefreshing = false;
