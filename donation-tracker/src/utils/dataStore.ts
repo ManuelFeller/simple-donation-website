@@ -34,7 +34,7 @@ export default class DataStore {
 		let tmpData = null;
 		if (typeof localStorage === 'undefined') {
 			this.isGatsbyBuild = true;
-			tmpData = `{"version":"${this.dataVersion}","timeStamp":"2025-01-01T01:23:45.678Z","requestTime":"2025-01-01T01:23:45.678Z","data":[{"article":"Article A","campaignKey":"demo","neededOverall":10,"alreadyDonated":6,"remainingNeed":4,"unit":"pcs"}]}`;
+			tmpData = `{"version":"${this.dataVersion}","timeStamp":"2025-01-01T01:23:45.678Z","requestTime":"2025-01-01T01:23:45.678Z","data":[{"article":{"en":"Backpack 50-70 lt","de":"Rucksack 50-70 l"},"campaignKey":"demo","neededOverall":10,"alreadyDonated":6,"remainingNeed":4,"unit":{"en":"pcs","de":"Stk"},"formLink":{"en":"https://google.com","de":"https://google.de"}}]}`;
 		} else {
 			this.isGatsbyBuild = false;
 			tmpData = localStorage.getItem('donationCache');
@@ -135,14 +135,14 @@ export default class DataStore {
 
 	/**
 	 * Function to check in how many seconds the next data refresh can / will be performed
-	 * @returns The number of seconds until the next data refresh
+	 * @returns The number of seconds until the next data refresh - or undefined if it can not be calculated
 	 */
-	public getSecondsUntilRefresh(): number {
+	public getSecondsUntilRefresh(): number | undefined {
 		if (this.isRefreshing) {
 			return 0;
 		} else {
 			if (this.localData === null) {
-				return 0;
+				return undefined;
 			} else {
 				const time = 1000 * 60 * this.maxDataAgeInMinutes;
 				const newUpdateTime = new Date(this.localData.requestTime).getTime() + time;
@@ -221,7 +221,11 @@ export default class DataStore {
 	 */
 	private registerDataUpdate() {
 		if (PageConfiguration.AutoRefresh) {
-			const secondsUntilRefresh = this.getSecondsUntilRefresh();
+			let secondsUntilRefresh = this.getSecondsUntilRefresh();
+			if (secondsUntilRefresh == undefined) {
+				// use default refresh time if it can not be calculated
+				secondsUntilRefresh = 1000 * 60 * this.maxDataAgeInMinutes;
+			}
 			this.debugLog(`DataStore: Registering next data refresh to execute in ${secondsUntilRefresh} seconds`);
 			setTimeout(
 				this.refreshData.bind(this),
@@ -240,9 +244,9 @@ export default class DataStore {
 		const headers = this.parseCsvLine(csvConfigRow.toLowerCase());
 		const result: ColumnMapping = {
 			languages: new Array<string>(),
-			item: new Array<number>(),
-			unit: new Array<number>(),
-			form: new Array<number>(),
+			item: {},
+			unit: {},
+			form: {},
 			campaignId: -1,
 			need: -1,
 			donated: -1,
@@ -259,11 +263,11 @@ export default class DataStore {
 				}
 				switch (pair[0].trim()) {
 					case 'item':
-						result.item[langCode as any] = index;
+						result.item[langCode] = index;
 					case 'unit':
-						result.unit[langCode as any] = index;
+						result.unit[langCode] = index;
 					case 'form':
-						result.form[langCode as any] = index;
+						result.form[langCode] = index;
 				}
 			} else {
 				// we have a non localized value
@@ -282,14 +286,48 @@ export default class DataStore {
 		return result;
 	}
 
+	/**
+	 * Internal function to validate the column mapping (were all expected columns found)
+	 * @param mapping The mapping that was generated from the createColumnMapping function
+	 * @returns true if everything is looking good, false if a column is not found (or not available for all languages)
+	 */
 	private validateColumnMapping(mapping: ColumnMapping): boolean {
-		if (mapping.campaignId === -1 || mapping.donated === -1 || mapping.need === -1 || mapping.lastChange === -1 ) {
-			return false;
+		this.debugLog('DataStore: Validating column mapping');
+		let result = true;
+		// simple value columns
+		if (mapping.campaignId === -1) {
+			this.errorLog('DataStore: Column Mapping Validation failed -> campaign ID column not found');
+			result = false;
 		}
-		// ToDo: validate that all columns were found and that languages "make sense"
-		return true;
+		if (mapping.donated === -1) {
+			this.errorLog('DataStore: Column Mapping Validation failed -> donated amount column not found');
+			result = false;
+		}
+		if (mapping.need === -1) {
+			this.errorLog('DataStore: Column Mapping Validation failed -> needed amount column not found');
+			result = false;
+		}
+		if (mapping.lastChange === -1 ) {
+			this.errorLog('DataStore: Column Mapping Validation failed -> last data update column not found');
+			result = false;
+		}
+		// localized value columns
+		mapping.languages.forEach((value) => {
+			if (mapping.item[value] === -1 || mapping.item[value] === undefined) {
+				this.errorLog(`DataStore: Column Mapping Validation failed -> item name column for language '${value}' not found`);
+				result = false;
+			}
+			if (mapping.unit[value] === -1 || mapping.item[value] === undefined) {
+				this.errorLog(`DataStore: Column Mapping Validation failed -> unit column for language '${value}' not found`);
+				result = false;
+			}
+			if (mapping.form[value] === -1 || mapping.item[value] === undefined) {
+				this.errorLog(`DataStore: Column Mapping Validation failed -> form URL column for language '${value}' not found`);
+				result = false;
+			}
+		});
+		return result;
 	}
-
 
 	/**
 	 * Internal function to load / refresh the local data
@@ -307,22 +345,32 @@ export default class DataStore {
 			data: [],
 		};
 		if (rows.length > 0) {
-			const mapping = this.createColumnMapping(rows[0]);
-			this.validateColumnMapping(mapping);
-			/*
+			const mapping = this.createColumnMapping(rows[0].trim());
+			if (!this.validateColumnMapping(mapping)) {
+				this.isRefreshing = false;
+				this.registerDataUpdate();
+				return;
+			}
+			
 			this.debugLog('DataStore: Data received');
-			// extract header line
-			let header = this.parseCsvLine(rows[0]);
-			if (header.length >= 8) {
+			// extract line with change timestamp
+			let timestampRow = this.parseCsvLine(rows[1].trim());
+			if (timestampRow.length >= (mapping.lastChange + 1)) {
 				try {
-					tmpParsedData.timeStamp = new Date(Date.parse(header[7].toString()));
+					tmpParsedData.timeStamp = new Date(Date.parse(timestampRow[mapping.lastChange].toString()));
 				} catch (err) {
-					console.error(err);
+					this.errorLog(err);
 					this.isRefreshing = false;
+					this.registerDataUpdate();
+					return;
 				}
 			} else {
-				this.debugLog('DataStore: Header length is wrong');
+				this.errorLog('DataStore: Length of line with the update timestamp is wrong');
+				this.isRefreshing = false;
+				this.registerDataUpdate();
+				return;
 			}
+			
 			// compare date age (to avoid older data being used as Google load balancers sometimes behave strange)
 			let newDataAvailableOnline = false;
 			if (this.hasLocalData) {
@@ -335,52 +383,56 @@ export default class DataStore {
 					newDataAvailableOnline = true;
 				}
 			} else {
+				this.debugLog('DataStore: No local data available until now');
 				newDataAvailableOnline = true;
 			}
 			// if new data is available and there is content extract the lines
 			if (rows.length > 0 && newDataAvailableOnline) {
 				this.debugLog('DataStore: Data extracting required');
-				tmpParsedData.data = this.extractDataLines(rows);
+				tmpParsedData.data = this.extractDataLines(rows, mapping);
 				// save newer data in local storage & class internal store
 				this.debugLog('DataStore: Persisting new data');
 				localStorage.setItem('donationCache', JSON.stringify(tmpParsedData));
 				this.localData = tmpParsedData;
 				this.hasLocalData = true;
 			}
-			*/
 		}
 		this.isRefreshing = false;
 		// update components
-		// this.updateSubscribers.forEach(subscriber =>
-		// 	subscriber(this.localData!.requestTime)
-		// );
-		// // register next execution of data update
-		// this.registerDataUpdate();
+		this.updateSubscribers.forEach(subscriber =>
+			subscriber(this.localData!.requestTime)
+		);
+		// register next execution of data update
+		this.registerDataUpdate();
 	}
-
-
-
-
-
 
 	/**
 	 * Internal function to extract the data from the lines of the CSV file
 	 * @param dataRows The array containing the lines of the SV file, including header line
+	 * @param mapping The column mapping for the csv file
 	 * @returns An array with the DonationItems that were extracted
 	 */
-	private extractDataLines(dataRows: string[]): Array<DonationItem> {
+	private extractDataLines(dataRows: string[], mapping: ColumnMapping): Array<DonationItem> {
 		this.debugLog('DataStore: Data extracting data lines from online source');
 		const tmpResult: Array<DonationItem> = [];
-		for (let idx = 1; idx < dataRows.length; idx++) {
-			const tmpLineData = this.parseCsvLine(dataRows[idx]);
-			if (tmpLineData.length >= 5) {
+		// we have three simple values (update date does not count) and three localizable ones; so calculate the min number of columns
+		const minColumns = 3 + (mapping.languages.length * 3);
+		for (let idx = 2; idx < dataRows.length; idx++) {
+			const tmpLineData = this.parseCsvLine(dataRows[idx].trim());
+			if (tmpLineData.length >= minColumns) {
 				const tmpObject: DonationItem = {
-					article: tmpLineData[0].toString(),
+					article: {},
 					campaignKey: tmpLineData[1].toString(),
-					neededOverall: Number.parseInt(tmpLineData[2].toString()),
-					alreadyDonated: Number.parseInt(tmpLineData[3].toString()),
-					remainingNeed: Number.parseInt(tmpLineData[4].toString()),
-					unit: tmpLineData[5].toString()
+					neededOverall: Number.parseInt(tmpLineData[mapping.need].toString()),
+					alreadyDonated: Number.parseInt(tmpLineData[mapping.donated].toString()),
+					remainingNeed: (Number.parseInt(tmpLineData[mapping.need].toString()) - Number.parseInt(tmpLineData[mapping.donated].toString())),
+					unit: {},
+					formLink: {}
+				}
+				for (const lang of mapping.languages) {
+					tmpObject.article[lang] = tmpLineData[mapping.item[lang]].toString();
+					tmpObject.unit[lang] = tmpLineData[mapping.unit[lang]].toString();
+					tmpObject.formLink[lang] = tmpLineData[mapping.form[lang]].toString();					
 				}
 				tmpResult.push(tmpObject);
 			}
@@ -403,6 +455,8 @@ export default class DataStore {
 
 	/**
 	 * Helper function to split a line of a CSV file into an array of the contained values
+	 * Known limitation: this parser can not deal with empty columns;
+	 * all columns need to have content that is not a whitespace!
 	 * @param lineContent The raw single line of the CSV file
 	 * @returns An array with the extracted values
 	 */
@@ -422,7 +476,7 @@ export default class DataStore {
 	}
 
 	/**
-	 * Internal helper to print debug messages to teh console log (if activated in teh config)
+	 * Internal helper to print debug messages to the console log (if activated in the config)
 	 * @param message The message (or object) to log
 	 */
 	private debugLog(message: any) {
@@ -430,5 +484,13 @@ export default class DataStore {
 			console.debug(message);
 		 }
 	}
+
+	/**
+	 * Internal helper to print error messages to the console log
+	 * @param message The message (or object) to log
+	 */
+	 private errorLog(message: any) {
+		console.error(message);
+ }
 
 }
