@@ -1,10 +1,10 @@
 export interface Campaign {
   Key: string;
-  Title: string;
   CampaignType: 'civilianSupport' | 'medicalSupport' | 'civilianProtection' | 'financialSupport' | 'generalSupport' | 'volunteering';
+  Title?: string;
   ShortCampaignDescription?: string;
-  TitleImage?: string;
   ShortDonationDescription?: string;
+  TitleImage?: string;
   DetailsFile?: string;
   UrlSlug?: string;
   Status: 'collecting' | 'preparing' | 'transfer' | 'delivered' | 'closed';
@@ -12,5 +12,5 @@ export interface Campaign {
   StartDate: Date;
   CollectionEndDate?: Date;
   RegistrationFormUrl?: string;
-  Languages?: { [languageKey: string]: Pick<Campaign, 'Title' | 'ShortCampaignDescription' | 'ShortDonationDescription'> };
+  Languages?: { [languageKey: string]: { Title: string; ShortCampaignDescription?: string; ShortDonationDescription?: string } };
 }
