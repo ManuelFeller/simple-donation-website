@@ -416,7 +416,7 @@ export default class DataStore {
           campaignKey: tmpLineData[mapping.campaignId].toString(),
           neededOverall: Number.parseInt(tmpLineData[mapping.need].toString()),
           alreadyDonated: Number.parseInt(tmpLineData[mapping.donated].toString()),
-          remainingNeed: Number.parseInt(tmpLineData[mapping.need].toString()) - Number.parseInt(tmpLineData[mapping.donated].toString()),
+          remainingNeed: Math.max(0, Number.parseInt(tmpLineData[mapping.need].toString()) - Number.parseInt(tmpLineData[mapping.donated].toString())),
           unit: {},
           formLink: {},
         };
