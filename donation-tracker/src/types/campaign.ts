@@ -12,4 +12,5 @@ export interface Campaign {
   StartDate: Date;
   CollectionEndDate?: Date;
   RegistrationFormUrl?: string;
+  Languages?: { [languageKey: string]: Pick<Campaign, 'Title' | 'ShortCampaignDescription' | 'ShortDonationDescription'> };
 }
