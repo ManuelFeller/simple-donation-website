@@ -154,18 +154,17 @@ export default class DataStore {
   public getSecondsUntilRefresh(): number | undefined {
     if (this.isRefreshing) {
       return 0;
+    }
+    if (this.localData === null) {
+      return undefined;
     } else {
-      if (this.localData === null) {
-        return undefined;
-      } else {
-        const time = 1000 * 60 * this.maxDataAgeInMinutes;
-        const newUpdateTime = new Date(this.localData.requestTime).getTime() + time;
-        let remainingSeconds = Math.round((newUpdateTime - Date.now()) / 1000);
-        if (remainingSeconds < 0) {
-          remainingSeconds = 0;
-        }
-        return remainingSeconds;
+      const time = 1000 * 60 * this.maxDataAgeInMinutes;
+      const newUpdateTime = new Date(this.localData.requestTime).getTime() + time;
+      let remainingSeconds = Math.round((newUpdateTime - Date.now()) / 1000);
+      if (remainingSeconds < 0) {
+        remainingSeconds = 0;
       }
+      return remainingSeconds;
     }
   }
 
