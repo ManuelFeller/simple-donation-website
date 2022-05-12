@@ -328,7 +328,7 @@ export default class DataStore {
   private async refreshData() {
     this.isRefreshing = true;
     this.debugLog('DataStore: Data refresh started');
-    let data = await fetch(this.dataSourceUrl, { cache: 'no-store' });
+    const data = await fetch(this.dataSourceUrl, { cache: 'no-store' });
     const content = await data.text();
     const rows = content.split(`\n`);
     const tmpParsedData: DonationList = {
