@@ -347,7 +347,7 @@ export default class DataStore {
 
       this.debugLog('DataStore: Data received');
       // extract line with change timestamp
-      let timestampRow = this.parseCsvLine(rows[1].trim());
+      const timestampRow = this.parseCsvLine(rows[1].trim());
       if (timestampRow.length >= mapping.lastChange + 1) {
         try {
           tmpParsedData.timeStamp = new Date(Date.parse(timestampRow[mapping.lastChange].toString()));
