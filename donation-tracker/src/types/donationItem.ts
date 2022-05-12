@@ -5,7 +5,7 @@ export interface DonationItem {
 	/**
 	 * The name or short description of the item
 	 */
-	article: string,
+	article: {[languageKey: string]: string},
 	/**
 	 * The key to assign this item to any of the ongoing initiatives / campaigns
 	 */
@@ -25,5 +25,9 @@ export interface DonationItem {
 	/**
 	 * The unit for the item (e.g. kg, l, pcs, ...)
 	 */
-	unit: string
+	unit: {[languageKey: string]: string},
+	/**
+	 * The link to the donation registration form 
+	 */
+	formLink: {[languageKey: string]: string}
 }

@@ -5,6 +5,10 @@ import { DonationItem } from "./donationItem"
  */
 export interface DonationList {
 	/**
+	 * The version number of the local data - used to detect an outdated local data model
+	 */
+	version: number;
+	/**
 	 * The timestamp of the last change in the data source
 	 */
 	timeStamp: Date,
