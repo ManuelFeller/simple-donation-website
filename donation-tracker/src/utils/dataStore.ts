@@ -200,16 +200,8 @@ export default class DataStore {
    */
   private isLocalDataVersionOk() {
     this.debugLog('DataStore: Data Version Check');
-    if (typeof this.localData!.version === 'undefined') {
-      // missing version field = outdated
-      return false;
-    } else {
-      if (this.localData!.version !== this.dataVersion) {
-        // version mismatch = outdated
-        return false;
-      }
-    }
-    return true;
+    // version field matches current version
+    return this.localData?.version === this.dataVersion;
   }
 
   /**
@@ -228,11 +220,8 @@ export default class DataStore {
    */
   private registerDataUpdate() {
     if (PageConfiguration.AutoRefresh) {
-      let secondsUntilRefresh = this.getSecondsUntilRefresh();
-      if (secondsUntilRefresh == undefined) {
-        // use default refresh time if it can not be calculated
-        secondsUntilRefresh = 1000 * 60 * this.maxDataAgeInMinutes;
-      }
+      // use default refresh time, if it can not be calculated
+      const secondsUntilRefresh = this.getSecondsUntilRefresh() ?? 1000 * 60 * this.maxDataAgeInMinutes;
       this.debugLog(`DataStore: Registering next data refresh to execute in ${secondsUntilRefresh} seconds`);
       setTimeout(this.refreshData.bind(this), secondsUntilRefresh * 1000);
     }
