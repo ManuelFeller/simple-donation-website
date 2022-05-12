@@ -157,15 +157,10 @@ export default class DataStore {
     }
     if (this.localData === null) {
       return undefined;
-    } else {
-      const time = 1000 * 60 * this.maxDataAgeInMinutes;
-      const newUpdateTime = new Date(this.localData.requestTime).getTime() + time;
-      let remainingSeconds = Math.round((newUpdateTime - Date.now()) / 1000);
-      if (remainingSeconds < 0) {
-        remainingSeconds = 0;
-      }
-      return remainingSeconds;
     }
+    const waitingTime = 1000 * 60 * this.maxDataAgeInMinutes;
+    const nextUpdateTime = new Date(this.localData.requestTime).getTime() + waitingTime;
+    return Math.max(0, Math.round((nextUpdateTime - Date.now()) / 1000));
   }
 
   /**
