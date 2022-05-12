@@ -33,7 +33,22 @@ export default class DataStore {
     let tmpData = null;
     if (typeof localStorage === 'undefined') {
       this.isGatsbyBuild = true;
-      tmpData = `{"version":"${this.dataVersion}","timeStamp":"2025-01-01T01:23:45.678Z","requestTime":"2025-01-01T01:23:45.678Z","data":[{"article":{"en":"Backpack 50-70 lt","de":"Rucksack 50-70 l"},"campaignKey":"demo","neededOverall":10,"alreadyDonated":6,"remainingNeed":4,"unit":{"en":"pcs","de":"Stk"},"formLink":{"en":"https://google.com","de":"https://google.de"}}]}`;
+      tmpData = JSON.stringify({
+        version: this.dataVersion,
+        timeStamp: '2025-01-01T01:23:45.678Z',
+        requestTime: '2025-01-01T01:23:45.678Z',
+        data: [
+          {
+            article: { en: 'Backpack 50-70 lt', de: 'Rucksack 50-70 l' },
+            campaignKey: 'demo',
+            neededOverall: 10,
+            alreadyDonated: 6,
+            remainingNeed: 4,
+            unit: { en: 'pcs', de: 'Stk' },
+            formLink: { en: 'https://google.com', de: 'https://google.de' },
+          },
+        ],
+      });
     } else {
       this.isGatsbyBuild = false;
       tmpData = localStorage.getItem('donationCache');
