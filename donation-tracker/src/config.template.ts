@@ -60,6 +60,14 @@ export default class PageConfiguration {
     PrivacyEmail: 'privacy@domain.tld',
   };
   /**
+   * Mentions of image contributions
+   */
+  static ImageContributions = [
+    'Ehimetalor Akhere Unuabona, "We Love Ukraine" (www.unsplash.com)',
+    'Kokota, "War in Ukraine icon pack" (www.iconfinder.com)',
+    'LINECTOR, "Ukraine icon pack" (www.iconfinder.com)',
+  ];
+  /**
    * The configuration for the campaign(s) that are shown on the generated website
    */
   static CampaignDetails: Campaign[] = [

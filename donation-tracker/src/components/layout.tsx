@@ -128,6 +128,9 @@ const LayoutModule = (props: any) => {
         styleOverrides: {
           title: {
             fontSize: '20px',
+            '&.MuiTypography-h5': {
+              marginBlock: 0,
+            },
           },
         },
       },
