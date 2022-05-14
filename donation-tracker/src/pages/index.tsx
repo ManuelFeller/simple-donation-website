@@ -124,7 +124,7 @@ const IndexPage = () => {
         </Typography>
         <Typography paragraph={true} sx={{ marginBottom: 10 }}>
           <img width="18" height="18" src="/media/GitHub-Mark-32px.png" style={{ marginRight: '8px', marginBottom: '-2px' }} />
-          Unser Quellcode auf <a href="https://github.com/ManuelFeller/simple-donation-website.git"> GitHub</a>
+          Unser Quellcode auf <a href="https://github.com/ManuelFeller/simple-donation-website.git">GitHub</a>
         </Typography>
 
         <UpdateNote />
