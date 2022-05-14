@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 
 import { Box, Typography } from '@mui/material';
 
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const CampaignListing = ({ campaignTypes, statusType }: Props) => {
+  const { t } = useTranslation();
   const data = DataStore.getInstance();
   const campaigns = PageConfiguration.CampaignDetails.filter(({ CampaignType: campaignType }) => campaignTypes.includes(campaignType))
     .filter(({ Status: campaignStatus }) => (statusType === 'closed') === (campaignStatus === 'closed'))
@@ -29,7 +31,7 @@ const CampaignListing = ({ campaignTypes, statusType }: Props) => {
             </Box>
           ))
         ) : (
-          <Typography variant="h5">More to come</Typography>
+          <Typography variant="h5">{t('campaigns.listing.moreToCome')}</Typography>
         )}
       </Box>
     </Box>

@@ -6,6 +6,7 @@
   "menu.start": "Start",
   "menu.about": "Über uns",
   "menu.imprint": "Impressum",
+  "menu.changeLanguage": "🇬🇧 English",
   "imprint.pageTitle": "Impressum",
   "imprint.legalContact": "Kontakt gem. TMG § 5",
   "imprint.cookiePolicy.title": "Cookie Informationen",
@@ -13,5 +14,11 @@
   "imprint.dataPrivacy.title": "Datenschutz",
   "imprint.dataPrivacy.content": "Wir nutzen Google Dienste (Google Forms &amp; Google Spreadsheets) um die Informationen was benötigt wird und was schon gespendet wurde zu verwalten.<br/>Das bedeutet das Google Ihre IP Adresse erhält und auch alle Eingaben in die verlinkten Formulare verarbeitet.<br/>Wir erfordern keinen Login um die Formulare auszufüllen, daher können sie die anonym bleiben indem Sie ein privates Browserfenster zum Ausfüllen benutzen.<br/>Um Ihre eingegebenen Daten zu löschen nachdem Sie diese übermittelt haben benötigen wir folgendes:<1><1>die URL des ausgefüllten Formular</1><1>Datum und Zeit der Übermittlung</1><1>die Daten die Sie übermittelt haben</1></1>Wir benötigen die übermittelten Daten in der Anfrage um den Datensatz eindeutig zu identifizieren - weil wir keine andere Möglichkeit haben einduetig herauszufinden wer was übermittelt hat.<br/>Bitte senden Sie die Anfrage an {{email}}",
   "imprint.imageContributions.title": "Bildbeiträge",
-  "imprint.imageContributions.content": "Für die Bereitstellung der Bilder auf dieser Webseite danken wir:"
+  "imprint.imageContributions.content": "Für die Bereitstellung der Bilder auf dieser Webseite danken wir:",
+  "campaigns.listing.moreToCome": "Mehr demnächst",
+  "campaigns.details.goBackButton": "Zurück",
+  "campaigns.details.donations": "Spenden",
+  "campaigns.details.mobileTooltipHint": "Eine Zeile lange drücken, um die ganze Beschreibung zu sehen",
+  "campaigns.details.registerDonationButton": "Spende registrieren",
+  "campaigns.details.dataRefreshInfo": "Die Daten werden ca. alle {{refreshMinutes}} Minuten im Hintergund aktualisiert - es kann also ein paar Minuten dauern bis Ihre Spendenregistrierung hier angezeiht wird."
 }

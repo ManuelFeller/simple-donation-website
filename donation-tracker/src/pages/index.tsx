@@ -25,7 +25,7 @@ const IndexPage = () => {
       &nbsp;
       <Container maxWidth="lg">
         <Card>
-          <CardHeader title={PageConfiguration.pageTitle} subheader="How can we help people in Ukraine affected by war?"></CardHeader>
+          <CardHeader title={PageConfiguration.pageTitle} subheader="Wie können wir den vom Krieg betroffenen Menschen in der Ukraine helfen?"></CardHeader>
           <CardMedia>
             <StaticImage
               src="../images/ehimetalor-akhere-unuabona-6hzWwYioEo4-unsplash.jpg"
