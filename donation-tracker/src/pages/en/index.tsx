@@ -7,6 +7,8 @@ import { graphql } from 'gatsby';
 import { CardMedia, Container, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
+import MailIcon from '@mui/icons-material/Mail';
+import PolicyIcon from '@mui/icons-material/Policy';
 import ShareIcon from '@mui/icons-material/Share';
 
 import LayoutModule, { emailShareLink } from '../../components/layout';
@@ -67,7 +69,7 @@ const IndexPage = () => {
         <Typography paragraph={true}>Currently the most urgent needs for people within Ukraine:</Typography>
         <CampaignListing campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection']} statusType="running" />
 
-        <Typography variant="h4" id="volunteer">
+        <Typography variant="h4" id="donations">
           Donations
         </Typography>
         <Typography paragraph={true}>
@@ -83,7 +85,7 @@ const IndexPage = () => {
         </Typography>
         <CampaignListing campaignTypes={['volunteering']} statusType="running" />
 
-        <Typography variant="h4" id="volunteer">
+        <Typography variant="h4" id="successful-campaigns">
           Successful campaigns
         </Typography>
         <CampaignListing
@@ -104,14 +106,20 @@ const IndexPage = () => {
           send them to volunteers in Ukraine who deliver aid directly to people in need.
         </Typography>
         <Typography paragraph={true}>
+          <MailIcon sx={{ width: 18, height: 18, marginRight: '8px', marginBottom: '-2px' }} />
           Get in touch: <GetInContactLink />
         </Typography>
-        <Typography paragraph={true} sx={{ display: 'flex' }}>
+        <Typography paragraph={true}>
+          <ShareIcon sx={{ width: 18, height: 18, marginRight: '8px', marginBottom: '-4px' }} />
           <a href={emailShareLink()}>Spread the word</a>
-          <ShareIcon />
         </Typography>
-        <Typography sx={{ marginBottom: 10 }}>
+        <Typography paragraph={true}>
+          <PolicyIcon sx={{ width: 18, height: 18, marginRight: '8px', marginBottom: '-3px' }} />
           <a href="imprint">{t('imprint.pageTitle')}</a>
+        </Typography>
+        <Typography paragraph={true} sx={{ marginBottom: 10 }}>
+          <img width="18" height="18" src="/media/GitHub-Mark-32px.png" style={{ marginRight: '8px', marginBottom: '-2px' }} />
+          Find our source code on <a href="https://github.com/ManuelFeller/simple-donation-website.git"> GitHub</a>
         </Typography>
 
         <UpdateNote />
