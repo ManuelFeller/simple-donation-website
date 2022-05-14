@@ -97,7 +97,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
                 </table>
               </>
             )}
-            {isMobile && (
+            {(isMobile && donationItems.length > 0) && (
               <Typography component="div" sx={{ fontStyle: 'italic' }}>
                 {t('campaigns.details.mobileTooltipHint')}
               </Typography>
