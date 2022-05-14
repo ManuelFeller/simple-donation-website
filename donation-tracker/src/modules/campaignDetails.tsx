@@ -97,7 +97,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
                 </table>
               </>
             )}
-            {(isMobile && donationItems.length > 0) && (
+            {isMobile && donationItems.length > 0 && (
               <Typography component="div" sx={{ fontStyle: 'italic' }}>
                 {t('campaigns.details.mobileTooltipHint')}
               </Typography>
@@ -116,7 +116,9 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
         {donationItems.length > 0 && PageConfiguration.AutoRefresh && (
           <>
             <Typography component="div" sx={{ fontStyle: 'italic' }}>
-              <Trans i18nKey="campaigns.details.dataRefreshInfo" values={{refreshMinutes: PageConfiguration.MaxDataAgeInMinutes}}>...</Trans>
+              <Trans i18nKey="campaigns.details.dataRefreshInfo" values={{ refreshMinutes: PageConfiguration.MaxDataAgeInMinutes }}>
+                ...
+              </Trans>
             </Typography>
             &nbsp;
             <UpdateNote />

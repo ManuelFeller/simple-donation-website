@@ -92,15 +92,15 @@ const LayoutModule = (props: any) => {
     event.preventDefault();
     setAnchorElShare(null);
     const languageIndex = languages.indexOf(language);
-    (languageIndex === 0) ? changeLanguage(languages[1]) : changeLanguage(languages[0]);
-  }
+    languageIndex === 0 ? changeLanguage(languages[1]) : changeLanguage(languages[0]);
+  };
   const generateOtherLanguageLink = () => {
     if (language === 'en') {
       return originalPath;
     } else {
       return '/en'.concat(originalPath);
     }
-  }
+  };
 
   const theme = createTheme({
     palette: {
@@ -238,15 +238,15 @@ const LayoutModule = (props: any) => {
                     {page.name}
                   </Button>
                 ))}
-                <Button
-                  href={generateOtherLanguageLink()}
-                  key="langSwitch"
-                  color="inherit"
-                  sx={{ my: 2, display: 'block', fontFamily: theme.typography.fontFamily }}
-                  onClick={event => handleLanguageSwitchClick(event)}
-                >
-                  {t('menu.changeLanguage')}
-                </Button>
+              <Button
+                href={generateOtherLanguageLink()}
+                key="langSwitch"
+                color="inherit"
+                sx={{ my: 2, display: 'block', fontFamily: theme.typography.fontFamily }}
+                onClick={event => handleLanguageSwitchClick(event)}
+              >
+                {t('menu.changeLanguage')}
+              </Button>
             </Box>
             <Box>
               <IconButton
