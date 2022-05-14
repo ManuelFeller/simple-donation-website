@@ -36,7 +36,7 @@ export const emailShareLink = () => {
 const titleText = PageConfiguration.pageTitle;
 
 const LayoutModule = (props: any) => {
-  const { navigate } = useI18next();
+  const { navigate, language, languages, changeLanguage, originalPath } = useI18next();
   const { t } = useTranslation();
 
   /* ToDo: import this from a central location */
@@ -86,6 +86,21 @@ const LayoutModule = (props: any) => {
     setAnchorElShare(null);
     window.open(itemLink(), '_blank');
   };
+
+  // ToDo: this two functions are is a quick hack for two languages to start with; needs to become better over time
+  const handleLanguageSwitchClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    setAnchorElShare(null);
+    const languageIndex = languages.indexOf(language);
+    (languageIndex === 0) ? changeLanguage(languages[1]) : changeLanguage(languages[0]);
+  }
+  const generateOtherLanguageLink = () => {
+    if (language === 'en') {
+      return originalPath;
+    } else {
+      return '/en'.concat(originalPath);
+    }
+  }
 
   const theme = createTheme({
     palette: {
@@ -196,6 +211,14 @@ const LayoutModule = (props: any) => {
                     <Typography textAlign="center">{page.name}</Typography>
                   </MenuItem>
                 ))}
+                <MenuItem
+                  href={generateOtherLanguageLink()}
+                  key="langSwitchMobile"
+                  color="default"
+                  onClick={event => handleLanguageSwitchClick(event)}
+                >
+                  {t('menu.changeLanguage')}
+                </MenuItem>
               </Menu>
             </Box>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -215,6 +238,15 @@ const LayoutModule = (props: any) => {
                     {page.name}
                   </Button>
                 ))}
+                <Button
+                  href={generateOtherLanguageLink()}
+                  key="langSwitch"
+                  color="inherit"
+                  sx={{ my: 2, display: 'block', fontFamily: theme.typography.fontFamily }}
+                  onClick={event => handleLanguageSwitchClick(event)}
+                >
+                  {t('menu.changeLanguage')}
+                </Button>
             </Box>
             <Box>
               <IconButton
