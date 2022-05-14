@@ -35,7 +35,7 @@ const CampaignCard = ({ campaign, donationItems, big }: Props) => {
     campaign.Status === 'collecting' && campaign.CollectionEndDate
       ? `Raising: transport on ${campaign.CollectionEndDate.toISOString().substring(0, 10)}`
       : campaign.Status === 'closed'
-      ? '🎉   Successfully delivered'
+      ? t('campaign.successfullyDelivered')
       : shortCampaignDescription;
 
   const campaignDetailsUrl = campaign.UrlSlug ? `/campaigns/${campaign.UrlSlug}/` : '';
