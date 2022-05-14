@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { isMobile } from 'react-device-detect';
-import { useTranslation, useI18next, I18nextContext } from 'gatsby-plugin-react-i18next';
+import { useTranslation, useI18next, I18nextContext, Trans } from 'gatsby-plugin-react-i18next';
 
 import { Box, Button, Container, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -59,7 +59,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
       <Container maxWidth="lg">
         <Box marginY={2}>
           <Button href={'/'} onClick={event => handleClickOnLink(event, '/')}>
-            <ChevronLeft /> Back
+            <ChevronLeft /> {t('campaigns.details.goBackButton')}
           </Button>
         </Box>
         <Card sx={{ flex: '0 1 500px', display: 'flex', flexDirection: 'column' }}>
@@ -76,7 +76,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
             {donationItems.length > 0 && (
               <>
                 <Typography variant="h6" mt={2}>
-                  Donations / Spenden
+                  {t('campaigns.details.donations')}
                 </Typography>
                 <Typography variant="subtitle1" marginY={1}>
                   {shortDonationDescription}
@@ -99,14 +99,14 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
             )}
             {isMobile && (
               <Typography component="div" sx={{ fontStyle: 'italic' }}>
-                Long-press a line if you want to see the full item description / Eine Zeile lange drücken um die ganze Beschreibung zu sehen
+                {t('campaigns.details.mobileTooltipHint')}
               </Typography>
             )}
           </CardContent>
           {campaign.RegistrationFormUrl && (
             <CardActions sx={{ justifyContent: 'center' }}>
               <Button variant="contained" href={campaign.RegistrationFormUrl} target="_blank">
-                Register donation / Spende registrieren
+                {t('campaigns.details.registerDonationButton')}
               </Button>
             </CardActions>
           )}
@@ -116,11 +116,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
         {donationItems.length > 0 && PageConfiguration.AutoRefresh && (
           <>
             <Typography component="div" sx={{ fontStyle: 'italic' }}>
-              🇬🇧 The data is refreshed in the background about every {PageConfiguration.MaxDataAgeInMinutes} minutes - so your registered
-              donation may take a few minutes until it is shown here.
-              <br />
-              🇩🇪 Die Daten werden ca. alle {PageConfiguration.MaxDataAgeInMinutes} Minuten im Hintergund aktualisiert - es kann also ein
-              paar Minuten dauern bis Ihre Spendenregistrierung hier angezeiht wird.
+              <Trans i18nKey="campaigns.details.dataRefreshInfo" refreshMinutes={PageConfiguration.MaxDataAgeInMinutes}>...</Trans>
             </Typography>
             &nbsp;
             <UpdateNote />

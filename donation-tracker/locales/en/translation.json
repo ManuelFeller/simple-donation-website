@@ -14,5 +14,10 @@
   "imprint.dataPrivacy.content": "We use services from Google (Google Forms & Google Spreadsheets) to manage the information about what things are needed and for the recording of what was already donated.<br/>This means that Google will receive your IP address and process the data you enter in the forms that are linked on this page.<br/>We do not require any sign in to fill out the forms, so you can do so anonymously via a private browser window.<br/>To delete your entered data after you submitted it we need the following:<1><1>URL of the form you filled</1><1>date and time ouf the form submission</1><1>the data that was entered</1></1>We need the details what you entered to make sure that we remove the correct dataset - as we have no way to identify who submitted what any other way.<br/>Please send your request to {{email}}.",
   "imprint.imageContributions.title": "Image Contributions",
   "imprint.imageContributions.content": "For beeing able to use the images on this website we want to thank:",
-  "campaigns.listing.moretocome": "More to come"
+  "campaigns.listing.moretocome": "More to come",
+  "campaigns.details.goBackButton": "Back",
+  "campaigns.details.donations": "Donations",
+  "campaigns.details.mobileTooltipHint": "Long-press a line if you want to see the full item description",
+  "campaigns.details.registerDonationButton": "Register donation",
+  "campaigns.details.dataRefreshInfo": "The data is refreshed in the background about every {{refreshMinutes}} minutes - so your registered donation may take a few minutes until it is shown here."
 }
