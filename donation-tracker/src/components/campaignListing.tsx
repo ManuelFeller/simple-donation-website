@@ -31,7 +31,7 @@ const CampaignListing = ({ campaignTypes, statusType }: Props) => {
             </Box>
           ))
         ) : (
-          <Typography variant="h5">{t('campaigns.listing.moretocome')}</Typography>
+          <Typography variant="h5">{t('campaigns.listing.moreToCome')}</Typography>
         )}
       </Box>
     </Box>
