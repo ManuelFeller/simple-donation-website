@@ -96,7 +96,7 @@ const IndexPage = () => {
         </Typography>
         <Typography>🚜💙💛</Typography>
         <Typography paragraph={true}>
-          We are a group of employees who work in Ingelheim, Germany. We joined our forces in April 2022 to actively support people in
+          We are a group of colleagues who work in Ingelheim, Germany. We joined our forces in April 2022 to actively support people in
           Ukraine affected by the russian invasion.
         </Typography>
         <Typography paragraph={true}>
