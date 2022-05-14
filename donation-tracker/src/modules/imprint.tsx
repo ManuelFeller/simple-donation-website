@@ -47,7 +47,7 @@ const ImprintModule = (props: any) => {
           <CardHeader title={t('imprint.dataPrivacy.title')} />
           <CardContent>
             <Typography component="div">
-              <Trans i18nKey="imprint.dataPrivacy.content" email={PageConfiguration.ImprintContact.PrivacyEmail}>
+              <Trans i18nKey="imprint.dataPrivacy.content" values={{email: PageConfiguration.ImprintContact.PrivacyEmail}}>
                 ...
                 <ul>
                   <li>...</li>
