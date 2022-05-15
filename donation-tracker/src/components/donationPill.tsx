@@ -8,7 +8,7 @@ import { Campaign } from '../types/campaign';
 const DonationPill = ({ campaign, donationItem }: { donationItem: DonationItem; campaign: Campaign }) => {
   const { t } = useTranslation();
   const langContext = React.useContext(I18nextContext);
-  const donationLink = campaign.Status === 'collecting' ? donationItem.formLink[langContext.language]! : '';
+  const donationLink = campaign.Status !== 'closed' ? donationItem.formLink[langContext.language]! : '';
   return donationItem.remainingNeed ? (
     <Button
       href={donationLink}
