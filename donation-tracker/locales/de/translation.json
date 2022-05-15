@@ -2,6 +2,7 @@
   "campaign.showDetails": "Weitere Kampagniendetails",
   "campaign.complete": "Vollständig",
   "campaign.donate": "Spenden",
+  "campaign.successfullyDelivered": "'🎉   Erfolgreich ausgeliefert",
   "easteregg": "🇩🇪🗿🥚",
   "menu.start": "Start",
   "menu.about": "Über uns",
@@ -18,7 +19,7 @@
   "campaigns.listing.moreToCome": "Mehr demnächst",
   "campaigns.details.goBackButton": "Zurück",
   "campaigns.details.donations": "Spenden",
-  "campaigns.details.mobileTooltipHint": "Eine Zeile lange drücken um die ganze Beschreibung zu sehen",
+  "campaigns.details.mobileTooltipHint": "Eine Zeile lange drücken, um die ganze Beschreibung zu sehen",
   "campaigns.details.registerDonationButton": "Spende registrieren",
   "campaigns.details.dataRefreshInfo": "Die Daten werden ca. alle {{refreshMinutes}} Minuten im Hintergund aktualisiert - es kann also ein paar Minuten dauern bis Ihre Spendenregistrierung hier angezeiht wird."
 }

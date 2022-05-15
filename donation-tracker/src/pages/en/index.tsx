@@ -1,13 +1,13 @@
 import * as React from 'react';
+
 import { useTranslation } from 'gatsby-plugin-react-i18next';
+import { StaticImage } from 'gatsby-plugin-image';
+import { graphql } from 'gatsby';
 
 import { CardMedia, Container, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import ShareIcon from '@mui/icons-material/Share';
-
-import { StaticImage } from 'gatsby-plugin-image';
-import { graphql } from 'gatsby';
 
 import LayoutModule, { emailShareLink } from '../../components/layout';
 import PageMetadata from '../../components/pageMetadata';
@@ -79,7 +79,7 @@ const IndexPage = () => {
           Volunteer
         </Typography>
         <Typography paragraph={true}>
-          If you want to help us, please get in touch per e-mail: <GetInContactLink />
+          If you want to help us, please get in touch via mail: <GetInContactLink />
         </Typography>
         <CampaignListing campaignTypes={['volunteering']} statusType="running" />
 

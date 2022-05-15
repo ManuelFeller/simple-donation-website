@@ -2,6 +2,7 @@
   "campaign.showDetails": "More Campaign Details",
   "campaign.complete": "Complete",
   "campaign.donate": "Donate",
+  "campaign.successfullyDelivered": "'🎉   Successfully delivered",
   "easteregg": "🇬🇧🗿🥚",
   "menu.start": "Start",
   "menu.about": "About us",
@@ -18,7 +19,7 @@
   "campaigns.listing.moreToCome": "More to come",
   "campaigns.details.goBackButton": "Back",
   "campaigns.details.donations": "Donations",
-  "campaigns.details.mobileTooltipHint": "Long-press a line if you want to see the full item description",
+  "campaigns.details.mobileTooltipHint": "Long-press a line, if you want to see the full item description",
   "campaigns.details.registerDonationButton": "Register donation",
   "campaigns.details.dataRefreshInfo": "The data is refreshed in the background about every {{refreshMinutes}} minutes - so your registered donation may take a few minutes until it is shown here."
 }
