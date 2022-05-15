@@ -1,0 +1,5 @@
+<?php
+$remoteCsvUrl = 'YOUR_GOOGLE_DOCS_LINK_HERE';
+$localBufferFile = 'data.csv';
+$localNotesFile = 'lastFetch.json';
+$checkIntervalSeconds = 120; // 2 minutes -> 30 requests per hour = 1440 calls per day max
