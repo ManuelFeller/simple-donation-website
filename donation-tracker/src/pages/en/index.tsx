@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useTranslation } from 'gatsby-plugin-react-i18next';
+import { Link, useTranslation } from 'gatsby-plugin-react-i18next';
 import { StaticImage } from 'gatsby-plugin-image';
 import { graphql } from 'gatsby';
 
@@ -115,7 +115,7 @@ const IndexPage = () => {
         </Typography>
         <Typography paragraph={true}>
           <PolicyIcon sx={{ width: 18, height: 18, marginRight: '8px', marginBottom: '-3px' }} />
-          <a href="imprint">{t('imprint.pageTitle')}</a>
+          <Link to="imprint">{t('imprint.pageTitle')}</Link>
         </Typography>
         <Typography paragraph={true} sx={{ marginBottom: 10 }}>
           <img width="18" height="18" src="/media/GitHub-Mark-32px.png" style={{ marginRight: '8px', marginBottom: '-2px' }} />
