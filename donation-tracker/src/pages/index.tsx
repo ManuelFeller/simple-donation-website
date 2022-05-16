@@ -106,7 +106,7 @@ const IndexPage = () => {
           zusammengeschlossen, um aktiv den Menschen in der Ukraine zu helfen, die von der russischen Invasion betroffen sind.
         </Typography>
         <Typography paragraph={true}>
-          Wir haben Freunde und Familie in der Ukraine und haben daher gute Kenntnis über die Situation vor Ort und wissen daher gut, was
+          Wir haben Freunde und Familie in der Ukraine und haben daher gute Kenntnisse über die Situation vor Ort und wissen daher gut, was
           dringend gebraucht wird. Wir wirken in unserer Freizeit zusammen, um Spenden zu sammeln und diese an freiwillige Helfer in der
           Ukraine zu liefern, die diese Hilfe dann direkt an Menschen in Not weiterreichen.
         </Typography>
