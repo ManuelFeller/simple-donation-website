@@ -111,3 +111,6 @@ donation-tracker/public/**
 donation-tracker/src/config.ts
 
 donation-tracker/src/pages/campaigns/**
+
+donation-tracker/static/api/config.inc.php
+

@@ -8,9 +8,10 @@ import { Campaign } from '../types/campaign';
 const DonationPill = ({ campaign, donationItem }: { donationItem: DonationItem; campaign: Campaign }) => {
   const { t } = useTranslation();
   const langContext = React.useContext(I18nextContext);
+  const donationLink = campaign.Status !== 'closed' ? donationItem.formLink[langContext.language]! : '';
   return donationItem.remainingNeed ? (
     <Button
-      href={donationItem.formLink[langContext.language]!}
+      href={donationLink}
       target="_blank"
       variant="contained"
       sx={{
@@ -24,7 +25,7 @@ const DonationPill = ({ campaign, donationItem }: { donationItem: DonationItem; 
     </Button>
   ) : (
     <Button
-      href={donationItem.formLink[langContext.language]!}
+      href={donationLink}
       target="_blank"
       variant="outlined"
       color="success"
