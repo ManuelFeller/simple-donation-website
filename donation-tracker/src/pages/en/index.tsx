@@ -53,11 +53,12 @@ const IndexPage = () => {
         </Typography>
         <Typography variant="body0" paragraph={true}>
           We are asking you to donate to the campaigns we organise. Every donation counts and helps the people in Ukraine fighting for their
-          lifes to protect the country they were born and raised in.
+          lives to protect the country they were born and raised in.
         </Typography>
         <Typography paragraph={true}>
-          All the information about the needs and whom we could help and support, we get from our friends in Ukraine who are also
-          volunteering and trying to help there. We mainly engage in collecting humanitarian aid and bringing it where it is needed most.
+          We get all the information about the actual needs and whom we could directly help and support from our friends in Ukraine who are
+          also volunteering and trying to help there. We mainly engage in collecting humanitarian aid and bringing it where it is needed the
+          most.
         </Typography>
 
         <Typography variant="h4" id="donation-in-kind">
@@ -66,7 +67,7 @@ const IndexPage = () => {
         <Typography paragraph={true}>
           We regularly update our lists of needs based on information we receive from helpers in Ukraine and the progress of the campaigns.
         </Typography>
-        <Typography paragraph={true}>Currently the most urgent needs for people within Ukraine:</Typography>
+        <Typography paragraph={true}>Currently the most urgent needs for people within Ukraine are:</Typography>
         <CampaignListing campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection']} statusType="running" />
 
         <Typography variant="h4" id="donations">
@@ -102,8 +103,9 @@ const IndexPage = () => {
           Ukraine affected by the russian invasion.
         </Typography>
         <Typography paragraph={true}>
-          We have friends and family members in Ukraine so we know very well what is needed. We collaborate privately to raise donations and
-          send them to volunteers in Ukraine who deliver aid directly to people in need.
+          We have friends and family members in Ukraine so we are very well informed about the current situation and what is urgently
+          needed. We collaborate privately to raise donations and send them to volunteers in Ukraine who deliver aid directly to people in
+          need.
         </Typography>
         <Typography paragraph={true}>
           <MailIcon sx={{ width: 18, height: 18, marginRight: '8px', marginBottom: '-2px' }} />

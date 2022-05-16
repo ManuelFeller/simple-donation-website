@@ -70,7 +70,7 @@ const IndexPage = () => {
           Wir aktualisieren unsere Listen regelmäßig auf Basis der Informationen, die wir von den Helfern in der Ukraine erhalten, ebenso
           wie den Forschritt der Kampagnen.
         </Typography>
-        <Typography paragraph={true}>Die aktuell dringendsten Bedürfnisse für Menschen in der Ukraine:</Typography>
+        <Typography paragraph={true}>Die aktuell dringendsten Bedürfnisse für Menschen in der Ukraine sind:</Typography>
         <CampaignListing campaignTypes={['civilianSupport', 'medicalSupport', 'civilianProtection']} statusType="running" />
 
         <Typography variant="h4" id="donations">
@@ -106,9 +106,9 @@ const IndexPage = () => {
           zusammengeschlossen, um aktiv den Menschen in der Ukraine zu helfen, die von der russischen Invasion betroffen sind.
         </Typography>
         <Typography paragraph={true}>
-          Wir haben Freunde und Familie in der Ukraine und wissen daher gut, was gebraucht wird. Wir wirken in unserer Freizeit zusammen, um
-          Spenden zu sammeln und diese an freiwillige Helfer in der Ukraine zu liefern, die diese Hilfe dann direkt an Menschen in Not
-          weiterreichen.
+          Wir haben Freunde und Familie in der Ukraine und haben daher gute Kenntnis über die Situation vor Ort und wissen daher gut, was
+          dringend gebraucht wird. Wir wirken in unserer Freizeit zusammen, um Spenden zu sammeln und diese an freiwillige Helfer in der
+          Ukraine zu liefern, die diese Hilfe dann direkt an Menschen in Not weiterreichen.
         </Typography>
         <Typography paragraph={true}>
           <MailIcon sx={{ width: 18, height: 18, marginRight: '8px', marginBottom: '-2px' }} />
