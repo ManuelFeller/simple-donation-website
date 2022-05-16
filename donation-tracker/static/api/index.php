@@ -89,9 +89,8 @@ class DataBuffer {
    */
   private function updateLocalDataBufferData($csvData) {
     $notes = new Notes();
-    $lastDataUpdate = $this->extractDataUpdateTime($csvData);
     $notes->lastRead = time();
-    $notes->lastDataUpdate = $lastDataUpdate;
+    $notes->lastDataUpdate = $this->extractDataUpdateTime($csvData);
     // write timestamps
     $this->writeFileContent($this->localNotesFile, json_encode($notes));
     // write buffer-data
