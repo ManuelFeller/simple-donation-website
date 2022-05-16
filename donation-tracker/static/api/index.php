@@ -51,7 +51,7 @@ class DataBuffer {
             // in case we do not get anything from remote server: use local data
             $dataToServe = $tmpLocalData;
             // remember check and persist the timestamp
-            $this->updateLastRemoteCheckTimestamp($notes);
+            $this->updateLastRemoteCheckTimestamp($notes->lastDataUpdate);
           } else {
             $lastDataUpdate = $this->extractDataUpdateTime($tempNewData);
             if ($lastDataUpdate > $notes->lastDataUpdate) {
@@ -62,7 +62,7 @@ class DataBuffer {
               // make sure buffered data is written to output
               $dataToServe = $tmpLocalData;
               // local buffer data is still valid, so update check timestamp
-              $this->updateLastRemoteCheckTimestamp($notes);
+              $this->updateLastRemoteCheckTimestamp($notes->lastDataUpdate);
             }
           }
         } else {
@@ -100,9 +100,12 @@ class DataBuffer {
   /**
    * Function to update the persisted date of the last remote data check
    */
-  private function updateLastRemoteCheckTimestamp($notes) {
+  private function updateLastRemoteCheckTimestamp($lastDataUpdate) {
+    $notes = new Notes();
     // local buffer data is still valid, so update timestamp
     $notes->lastRead = time();
+    // store timestamp of last remote update
+    $notes->lastDataUpdate = $lastDataUpdate;
     // write timestamps
     $this->writeFileContent($this->localNotesFile, json_encode($notes));
   }
