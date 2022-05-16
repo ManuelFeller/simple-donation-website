@@ -56,7 +56,7 @@ class DataBuffer {
             $lastDataUpdate = $this->extractDataUpdateTime($tempNewData);
             if ($lastDataUpdate > $notes->lastDataUpdate) {
               // use newer data and buffer it
-              $dataToServe = $tmpLocalData;
+              $dataToServe = $tempNewData;
               $this->updateLocalDataBufferData($dataToServe);
             } else {
               // make sure buffered data is written to output
