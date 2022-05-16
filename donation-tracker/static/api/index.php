@@ -89,7 +89,7 @@ class DataBuffer {
    */
   private function updateLocalDataBufferData($csvData) {
     $notes = new Notes();
-    $lastDataUpdate = $this->extractDataUpdateTime($dataToServe);
+    $lastDataUpdate = $this->extractDataUpdateTime($csvData);
     $notes->lastRead = time();
     $notes->lastDataUpdate = $lastDataUpdate;
     // write timestamps
