@@ -95,7 +95,7 @@ class DataBuffer {
     // write timestamps
     $this->writeFileContent($this->localNotesFile, json_encode($notes));
     // write buffer-data
-    $this->writeFileContent($this->localBufferFile, $dataToServe);
+    $this->writeFileContent($this->localBufferFile, $csvData);
   }
   
   /**
