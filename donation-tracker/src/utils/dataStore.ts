@@ -3,6 +3,7 @@ import { ColumnMapping } from '../types/columnMapping';
 import { DonationItem } from '../types/donationItem';
 import { DonationList } from '../types/donationList';
 
+type DataStoreSubscriber = (donationList: DonationList) => void;
 /**
  * Class representing the dynamically loaded data (the number if items donated and still needed per donation campaign)
  */
@@ -16,7 +17,7 @@ export default class DataStore {
   private hasLocalData: boolean;
   private isRefreshing: boolean;
   private localData: DonationList | null;
-  private updateSubscribers: Array<Function>;
+  private updateSubscribers: DataStoreSubscriber[];
   private isGatsbyBuild: boolean;
 
   /**
@@ -25,7 +26,7 @@ export default class DataStore {
    */
   private constructor() {
     this.debugLog('DataStore: Creating instance, initializing internal variables');
-    this.updateSubscribers = new Array<Function>();
+    this.updateSubscribers = [];
     this.isRefreshing = false;
     this.localData = null;
     this.hasLocalData = false;
@@ -35,8 +36,8 @@ export default class DataStore {
       this.isGatsbyBuild = true;
       tmpData = JSON.stringify({
         version: this.dataVersion,
-        timeStamp: '2025-01-01T01:23:45.678Z',
-        requestTime: '2025-01-01T01:23:45.678Z',
+        timeStamp: '2021-01-01T01:23:45.678Z',
+        requestTime: '2021-01-01T01:23:45.678Z',
         data: [
           {
             article: { en: 'Backpack 50-70 lt', de: 'Rucksack 50-70 l' },
@@ -72,7 +73,7 @@ export default class DataStore {
    * Register for data change notification - please do not forget to unsubscribe if a component unmounts, so please do NOT use anonymous functions!
    * @param callback Callback function - needs to have have one Date parameter that get the timestamp of the last request
    */
-  public subscribeToDataUpdates(callback: Function) {
+  public subscribeToDataUpdates(callback: DataStoreSubscriber) {
     if (this.updateSubscribers.indexOf(callback) === -1) {
       this.debugLog('DataStore: Adding callback to internal list');
       this.updateSubscribers.push(callback);
@@ -85,7 +86,7 @@ export default class DataStore {
    * Unregister from data change notifications - please do not forget tu unsubscribe if a component unmounts
    * @param callback Callback function that was passed during subscribing
    */
-  public unsubscribeFromDataUpdates(callback: Function) {
+  public unsubscribeFromDataUpdates(callback: DataStoreSubscriber) {
     const currentIndex = this.updateSubscribers.indexOf(callback);
     if (currentIndex !== -1) {
       this.debugLog('DataStore: Removing callback from list');
@@ -371,7 +372,7 @@ export default class DataStore {
         // make sure new check time is persisted:
         localStorage.setItem('donationCache', JSON.stringify(this.localData));
         this.debugLog('DataStore: Local data present, comparing timestamps');
-        if (this.localData!.timeStamp < tmpParsedData.timeStamp) {
+        if (this.localData!.timeStamp.getTime() < tmpParsedData.timeStamp.getTime()) {
           this.debugLog('DataStore: Data online is newer');
           newDataAvailableOnline = true;
         }
@@ -392,7 +393,7 @@ export default class DataStore {
     }
     this.isRefreshing = false;
     // update components
-    this.updateSubscribers.forEach(subscriber => subscriber(this.localData!.requestTime));
+    this.updateSubscribers.forEach(subscriber => subscriber(this.localData!));
     // register next execution of data update
     this.registerDataUpdate();
   }
@@ -416,7 +417,10 @@ export default class DataStore {
           campaignKey: tmpLineData[mapping.campaignId].toString(),
           neededOverall: Number.parseInt(tmpLineData[mapping.need].toString()),
           alreadyDonated: Number.parseInt(tmpLineData[mapping.donated].toString()),
-          remainingNeed: Math.max(0, Number.parseInt(tmpLineData[mapping.need].toString()) - Number.parseInt(tmpLineData[mapping.donated].toString())),
+          remainingNeed: Math.max(
+            0,
+            Number.parseInt(tmpLineData[mapping.need].toString()) - Number.parseInt(tmpLineData[mapping.donated].toString())
+          ),
           unit: {},
           formLink: {},
         };
