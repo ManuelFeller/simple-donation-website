@@ -9,6 +9,7 @@ import DonationRow from './donationRow';
 import DonationPill from './donationPill';
 import CampaignAvatar from './campaignAvatar';
 import { getCampaignShortCampaignDescription, getCampaignShortDonationDescription, getCampaignTitle } from '../utils/campaign';
+import CampaignPhotos from './campaignPhotos';
 
 interface Props {
   campaign: Campaign;
@@ -55,18 +56,7 @@ const CampaignCard = ({ campaign, donationItems, big }: Props) => {
         avatar={<CampaignAvatar campaignType={campaign.CampaignType} title={title} />}
       />
       {campaign.TitleImage && <CardMedia component="img" height="194" image={campaign.TitleImage} />}
-      {campaign.Photos?.length > 0 && (
-        <Box display="flex">
-          {campaign.Photos.map((file, index) => (
-            <CardMedia
-              key={file}
-              component="img"
-              image={file}
-              sx={{ marginLeft: index > 0 ? 1 : 2, marginRight: index < campaign.Photos.length - 1 ? 1 : 2, marginBottom: 2 }}
-            />
-          ))}
-        </Box>
-      )}
+      {campaign.Photos?.length > 0 && <CampaignPhotos imageFiles={campaign.Photos} big={false} />}
       {(shortDonationDescription || (campaign.Status === 'collecting' && donationItems.length > 0)) && (
         <CardContent sx={{ flex: '1 0 auto', paddingBottom: 0 }}>
           {shortDonationDescription && <Typography variant="body2">{shortDonationDescription}</Typography>}
