@@ -20,8 +20,14 @@ import PageMetadata from '../components/pageMetadata';
 import CampaignAvatar from '../components/campaignAvatar';
 import UpdateNote from '../components/updateNote';
 import { getCampaignTitle, getCampaignShortCampaignDescription, getCampaignShortDonationDescription } from '../utils/campaign';
+import CampaignPhotos from '../components/campaignPhotos';
 
-const CampaignDetailsModule = (props: { campaignKey: string; children: any }) => {
+interface Props {
+  campaignKey: string;
+  showDonationDescription?: boolean;
+  children: any;
+}
+const CampaignDetailsModule = (props: Props) => {
   const { navigate } = useI18next();
   const { t } = useTranslation();
   const langContext = React.useContext(I18nextContext);
@@ -69,6 +75,7 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
             avatar={<CampaignAvatar campaignType={campaign.CampaignType} title={title} />}
           />
           {campaign.TitleImage && <CardMedia component="img" height="194" image={campaign.TitleImage} />}
+          {campaign.Photos?.length > 0 && <CampaignPhotos imageFiles={campaign.Photos} big={true} />}
           <CardContent sx={{ flex: '1 0 auto' }}>
             <Typography component="div" marginY={2}>
               {props.children}
@@ -78,9 +85,11 @@ const CampaignDetailsModule = (props: { campaignKey: string; children: any }) =>
                 <Typography variant="h6" mt={2}>
                   {t('campaigns.details.donations')}
                 </Typography>
-                <Typography variant="subtitle1" marginY={1}>
-                  {shortDonationDescription}
-                </Typography>
+                {props.showDonationDescription && (
+                  <Typography variant="subtitle1" marginY={1}>
+                    {shortDonationDescription}
+                  </Typography>
+                )}
                 <table>
                   <tbody>
                     {donationItems.map((donationItem, index) => (
