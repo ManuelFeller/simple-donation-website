@@ -17,7 +17,7 @@ import CampaignListing from '../components/campaignListing';
 import PageConfiguration from '../config';
 import UpdateNote from '../components/updateNote';
 
-const GetInContactLink = () => <a href={PageConfiguration.ImprintContact.ContactEmail}>{PageConfiguration.ImprintContact.ContactEmail}</a>;
+const GetInContactLink = () => <a href={`mailto:${PageConfiguration.ImprintContact.ContactEmail}`}>{PageConfiguration.ImprintContact.ContactEmail}</a>;
 
 const IndexPage = () => {
   const { t } = useTranslation();
