@@ -1,5 +1,4 @@
 <?php
-header('Content-type: text/plain; charset=utf-8');
 
 /**
  * Class to define timestamp notes
@@ -25,12 +24,14 @@ class DataBuffer {
       $remoteCsvDataSource,
       $localNotesFile,
       $localBufferFile,
-      $remoteCheckInterval
+      $remoteCheckInterval,
+      $allowedCorsOrigins
     ) {
     $this->remoteCsvDataSource = $remoteCsvDataSource;
     $this->localNotesFile = $localNotesFile;
     $this->localBufferFile = $localBufferFile;
     $this->remoteCheckInterval = $remoteCheckInterval;
+    $this->sendHeaders($allowedCorsOrigins);
   }
 
   /**
@@ -85,6 +86,14 @@ class DataBuffer {
     }
   }
 
+  private function sendHeaders($allowedCorsOrigins) {
+    header('Content-type: text/plain; charset=utf-8');
+    // the origin allowed for CORS?
+    if (in_array($_SERVER['HTTP_ORIGIN'], $allowedCorsOrigins)) {
+      header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+    }
+  }
+
   /**
    * Function to update the locally persisted data buffer and the timestamps
    */
@@ -136,5 +145,12 @@ class DataBuffer {
 
 // run the data buffer script
 require_once('config.inc.php');
-$api = new DataBuffer($remoteCsvUrl, $localNotesFile, $localBufferFile, $checkIntervalSeconds);
+$api = new DataBuffer(
+  $remoteCsvUrl,
+  $localNotesFile,
+  $localBufferFile,
+  $checkIntervalSeconds,
+  $allowedCorsOrigins
+);
+
 echo $api->getCsvData();
