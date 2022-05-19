@@ -1,5 +1,6 @@
 <?php
-$remoteCsvUrl = 'YOUR_GOOGLE_DOCS_LINK_HERE';
-$localBufferFile = 'data.csv';
-$localNotesFile = 'lastFetch.json';
+$remoteCsvUrl = 'YOUR_GOOGLE_DOCS_LINK_HERE'; // the URL to the CSV export of your Google Spreadsheet (or any other data source)
 $checkIntervalSeconds = 120; // 2 minutes -> 30 requests per hour = 1440 calls per day max
+$allowedCorsOrigins = []; // allowed CORS Origins
+$localBufferFile = 'data.csv'; // no need to change
+$localNotesFile = 'lastFetch.json'; // no need to change
